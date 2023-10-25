@@ -7,6 +7,7 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+// 大驼峰
 // Necessary for Next auth
 model Account {
   id                String  @id @default(cuid())
@@ -44,16 +45,16 @@ model User {
 
   accounts    Account[]
   sessions    Session[]
-  videos      video[]
-  comments    comment[]
-  likes       like[]
-  collections collected[]
-  usertags    usertags[]
-  followers   follow[]    @relation("follower")
-  followings  follow[]    @relation("following")
+  videos      Video[]
+  comments    Comment[]
+  likes       Like[]
+  collections Collected[]
+  usertags    UserTag[]
+  followers   Follow[]    @relation("follower")
+  followings  Follow[]    @relation("following")
 }
 
-model follow {
+model Follow {
   createdAt DateTime @default(now())
 
   followerId  String
@@ -73,7 +74,7 @@ model VerificationToken {
   @@unique([identifier, token])
 }
 
-model video {
+model Video {
   id          String  @id @default(cuid())
   title       String
   description String?
@@ -87,17 +88,17 @@ model video {
   author   User   @relation(fields: [authorId], references: [id])
   authorId String
 
-  comments   comment[] // 评论
-  likes      like[] // 点赞
-  collecteds collected[] // 收藏
-  tags       tag[] // 标签
+  comments   Comment[] // 评论
+  likes      Like[] // 点赞
+  collecteds Collected[] // 收藏
+  tags       Tag[] // 标签
 
   score BigInt // 推荐分数：点赞数  + 评论数 + 收藏数, 用定时任务更新
 
   @@index([id])
 }
 
-model comment {
+model Comment {
   id     String  @id @default(cuid())
   text   String  @db.Text
   imgUrl String?
@@ -108,35 +109,33 @@ model comment {
   commenter   User   @relation(fields: [commenterId], references: [id], onDelete: Cascade)
   commenterId String
 
-  video   video  @relation(fields: [videoId], references: [id], onDelete: Cascade)
+  video   Video  @relation(fields: [videoId], references: [id], onDelete: Cascade)
   videoId String
 }
 
-model like {
-  // createdAt DateTime @default(now())
-
+model Like {
   user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId String
 
-  video   video  @relation(fields: [videoId], references: [id], onDelete: Cascade)
+  video   Video  @relation(fields: [videoId], references: [id], onDelete: Cascade)
   videoId String
 
   @@id([userId, videoId])
 }
 
-model collected {
+model Collected {
   createdAt DateTime @default(now())
 
   user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId String
 
-  video   video  @relation(fields: [videoId], references: [id], onDelete: Cascade)
+  video   Video  @relation(fields: [videoId], references: [id], onDelete: Cascade)
   videoId String
 
   @@id([userId, videoId])
 }
 
-model tag {
+model Tag {
   id          String  @id @default(cuid())
   name        String
   description String?
@@ -144,18 +143,18 @@ model tag {
   createdAt DateTime  @default(now())
   deleteAt  DateTime?
 
-  videos   video[]
-  Usertags usertags[]
+  videos   Video[]
+  usertags UserTag[]
 }
 
-model usertags {
+model UserTag {
   createdAt DateTime @default(now())
-  score     BigInt // user 的 tag 分数：点赞数  + 评论数 + 收藏数*2，用定时任务更新
+  score     BigInt // user 的 Tag 分数：点赞数  + 评论数 + 收藏数*2，用定时任务更新
 
   user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId String
 
-  tag   tag    @relation(fields: [tagId], references: [id], onDelete: Cascade)
+  tag   Tag    @relation(fields: [tagId], references: [id], onDelete: Cascade)
   tagId String
 
   @@id([userId, tagId])
