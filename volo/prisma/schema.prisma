@@ -7,7 +7,6 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-// 大驼峰
 // Necessary for Next auth
 model Account {
   id                String  @id @default(cuid())
@@ -43,18 +42,19 @@ model User {
   emailVerified DateTime?
   avatarUrl     String?
 
-  accounts    Account[]
-  sessions    Session[]
-  videos      Video[]
-  comments    Comment[]
-  likes       Like[]
-  collections Collected[]
-  usertags    UserTag[]
-  followers   Follow[]    @relation("follower")
-  followings  Follow[]    @relation("following")
+  accounts   Account[]
+  sessions   Session[]
+  videos     Video[]
+  comments   Comment[]
+  likes      Like[]
+  userTags   UserTag[]
+  followers  Follow[]     @relation("follower")
+  followings Follow[]     @relation("following")
+  collection Collection[]
 }
 
 model Follow {
+  id        BigInt   @id @default(autoincrement())
   createdAt DateTime @default(now())
 
   followerId  String
@@ -62,8 +62,6 @@ model Follow {
 
   follower  User @relation("follower", fields: [followerId], references: [id])
   following User @relation("following", fields: [followingId], references: [id])
-
-  @@id([followerId, followingId])
 }
 
 model VerificationToken {
@@ -82,20 +80,17 @@ model Video {
   url      String
   coverUrl String
 
-  createdAt DateTime  @default(now())
-  deleteAt  DateTime?
+  createdAt DateTime @default(now())
 
   author   User   @relation(fields: [authorId], references: [id])
   authorId String
 
   comments   Comment[] // 评论
   likes      Like[] // 点赞
-  collecteds Collected[] // 收藏
+  collecteds Collection[] // 收藏
   tags       Tag[] // 标签
 
   score BigInt // 推荐分数：点赞数  + 评论数 + 收藏数, 用定时任务更新
-
-  @@index([id])
 }
 
 model Comment {
@@ -103,27 +98,30 @@ model Comment {
   text   String  @db.Text
   imgUrl String?
 
-  createdAt DateTime  @default(now())
-  deleteAt  DateTime?
+  createdAt DateTime @default(now())
 
-  commenter   User   @relation(fields: [commenterId], references: [id], onDelete: Cascade)
-  commenterId String
+  author   User   @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  authorId String
 
   video   Video  @relation(fields: [videoId], references: [id], onDelete: Cascade)
   videoId String
 }
 
 model Like {
+  id BigInt @id @default(autoincrement())
+
   user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId String
 
   video   Video  @relation(fields: [videoId], references: [id], onDelete: Cascade)
   videoId String
 
-  @@id([userId, videoId])
+  @@unique([userId, videoId])
 }
 
-model Collected {
+model Collection {
+  id BigInt @id @default(autoincrement())
+
   createdAt DateTime @default(now())
 
   user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
@@ -132,7 +130,7 @@ model Collected {
   video   Video  @relation(fields: [videoId], references: [id], onDelete: Cascade)
   videoId String
 
-  @@id([userId, videoId])
+  @@unique([userId, videoId])
 }
 
 model Tag {
@@ -140,14 +138,15 @@ model Tag {
   name        String
   description String?
 
-  createdAt DateTime  @default(now())
-  deleteAt  DateTime?
+  createdAt DateTime @default(now())
 
   videos   Video[]
   usertags UserTag[]
 }
 
 model UserTag {
+  id BigInt @id @default(autoincrement())
+
   createdAt DateTime @default(now())
   score     BigInt // user 的 Tag 分数：点赞数  + 评论数 + 收藏数*2，用定时任务更新
 
@@ -157,5 +156,5 @@ model UserTag {
   tag   Tag    @relation(fields: [tagId], references: [id], onDelete: Cascade)
   tagId String
 
-  @@id([userId, tagId])
+  @@unique([userId, tagId])
 }
