@@ -54,7 +54,6 @@ model User {
 }
 
 model Follow {
-  id        BigInt   @id @default(autoincrement())
   createdAt DateTime @default(now())
 
   followerId  String
@@ -62,6 +61,8 @@ model Follow {
 
   follower  User @relation("follower", fields: [followerId], references: [id])
   following User @relation("following", fields: [followingId], references: [id])
+
+  @@id([followingId, followerId])
 }
 
 model VerificationToken {
@@ -87,8 +88,8 @@ model Video {
 
   comments   Comment[] // 评论
   likes      Like[] // 点赞
-  collecteds Collection[] // 收藏
   tags       Tag[] // 标签
+  collection Collection[]
 
   score BigInt // 推荐分数：点赞数  + 评论数 + 收藏数, 用定时任务更新
 }
@@ -100,37 +101,33 @@ model Comment {
 
   createdAt DateTime @default(now())
 
-  author   User   @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  author   User   @relation(fields: [authorId], references: [id])
   authorId String
 
-  video   Video  @relation(fields: [videoId], references: [id], onDelete: Cascade)
+  video   Video  @relation(fields: [videoId], references: [id])
   videoId String
 }
 
 model Like {
-  id BigInt @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  user      User     @relation(fields: [userId], references: [id])
+  userId    String
 
-  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId String
-
-  video   Video  @relation(fields: [videoId], references: [id], onDelete: Cascade)
+  video   Video  @relation(fields: [videoId], references: [id])
   videoId String
 
   @@unique([userId, videoId])
 }
 
 model Collection {
-  id BigInt @id @default(autoincrement())
-
+  id        String   @id @default(cuid())
   createdAt DateTime @default(now())
+  name      String   @db.VarChar(30)
 
-  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId String
+  owner   User   @relation(fields: [ownerId], references: [id], onDelete: Cascade)
+  ownerId String
 
-  video   Video  @relation(fields: [videoId], references: [id], onDelete: Cascade)
-  videoId String
-
-  @@unique([userId, videoId])
+  videos Video[]
 }
 
 model Tag {
@@ -145,8 +142,6 @@ model Tag {
 }
 
 model UserTag {
-  id BigInt @id @default(autoincrement())
-
   createdAt DateTime @default(now())
   score     BigInt // user 的 Tag 分数：点赞数  + 评论数 + 收藏数*2，用定时任务更新
 
