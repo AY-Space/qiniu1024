@@ -16,6 +16,68 @@ export const metadata = {
   icons: [{ rel: "icon", url: "/favicon.ico" }],
 };
 
+function NavigationRail() {
+  return <div>side</div>;
+}
+
+function AppBar() {
+  return (
+    <div className="flex h-14 items-center justify-between px-8">
+      <div className="flex items-center gap-3">
+        <a href="#">
+          <svg
+            className="h-6 w-6"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            focusable="false"
+          >
+            <path d="M21 6H3V5h18v1zm0 5H3v1h18v-1zm0 6H3v1h18v-1z"></path>
+          </svg>
+        </a>
+        <a href="#">
+          <div>Volo</div>
+        </a>
+      </div>
+      <div className="flex h-10 w-1/2 items-center justify-center gap-4 rounded-full border">
+        <input className="h-10 w-full rounded-l-full" />
+
+        <button className="">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            enable-background="new 0 0 24 24"
+            height="24"
+            viewBox="0 0 24 24"
+            width="24"
+            focusable="false"
+          >
+            <path d="m20.87 20.17-5.59-5.59C16.35 13.35 17 11.75 17 10c0-3.87-3.13-7-7-7s-7 3.13-7 7 3.13 7 7 7c1.75 0 3.35-.65 4.58-1.71l5.59 5.59.7-.71zM10 16c-3.31 0-6-2.69-6-6s2.69-6 6-6 6 2.69 6 6-2.69 6-6 6z"></path>
+          </svg>
+        </button>
+      </div>
+      <div className="flex items-center gap-3">
+        <a href="#">
+          <div>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-6 w-6"
+              viewBox="0 0 24 24"
+              focusable="false"
+            >
+              <path d="M10 20h4c0 1.1-.9 2-2 2s-2-.9-2-2zm10-2.65V19H4v-1.65l2-1.88v-5.15C6 7.4 7.56 5.1 10 4.34v-.38c0-1.42 1.49-2.5 2.99-1.76.65.32 1.01 1.03 1.01 1.76v.39c2.44.75 4 3.06 4 5.98v5.15l2 1.87zm-1 .42-2-1.88v-5.47c0-2.47-1.19-4.36-3.13-5.1-1.26-.53-2.64-.5-3.84.03C8.15 6.11 7 7.99 7 10.42v5.47l-2 1.88V18h14v-.23z"></path>
+            </svg>
+          </div>
+        </a>
+        <button>
+          <img
+            className="rounded-full"
+            src="https://via.placeholder.com/32x32"
+          ></img>
+        </button>
+      </div>
+    </div>
+  );
+}
+
 export default function RootLayout({
   children,
 }: {
@@ -26,9 +88,9 @@ export default function RootLayout({
       <body className={`font-sans ${inter.variable}`}>
         <TRPCReactProvider headers={headers()}>
           <div className="flex h-screen flex-col">
-            <h1>top</h1>
+            <AppBar />
             <div className="flex flex-1 overflow-hidden">
-              <div>side</div>
+              <NavigationRail />
               <div className="flex-1">{children}</div>
             </div>
           </div>
