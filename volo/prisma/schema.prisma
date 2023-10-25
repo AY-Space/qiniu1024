@@ -117,7 +117,7 @@ model Like {
   video   Video  @relation(fields: [videoId], references: [id])
   videoId String
 
-  @@unique([userId, videoId])
+  @@id([userId, videoId])
 }
 
 model Collection {
