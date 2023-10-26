@@ -1,5 +1,6 @@
 "use client";
 
+import { Stack } from "@mui/joy";
 import { useEffect, useRef, useState } from "react";
 
 // VideoDemo Component
@@ -13,7 +14,10 @@ const VideoDemo = ({
   return (
     <div
       id={`video-${videoId}`}
-      className="relative flex h-screen snap-start snap-always justify-center"
+      className="relative flex snap-start snap-always justify-center"
+      style={{
+        height: "calc(100vh - 60px)",
+      }}
     >
       <div className="flex flex-col justify-center bg-slate-800 align-middle">
         <img
@@ -31,7 +35,7 @@ const videos = Array.from({ length: 100 }, (_, i) => i + 1); // static array of 
 
 // VideoContainer Component
 export function VideoContainer() {
-  const [mountedVideos, setMountedVideos] = useState(videos.slice(0, 5)); // initially mount the first 5 videos
+  const [mountedVideos, setMountedVideos] = useState(videos.slice(0, 100)); // initially mount the first 5 videos
   const [activeVideoId, setActiveVideoId] = useState<number>();
   const containerRef = useRef<HTMLDivElement>(null);
   const observer = useRef<IntersectionObserver>(null!);
@@ -58,7 +62,7 @@ export function VideoContainer() {
         });
       },
       {
-        threshold: 0.5, // At least 50% should be visible
+        threshold: 0.6, // At least 50% should be visible
       },
     );
 
@@ -76,9 +80,9 @@ export function VideoContainer() {
   return (
     <div
       ref={containerRef}
-      className="flex max-h-full snap-y snap-mandatory flex-col overflow-y-scroll bg-black align-middle"
+      className="flex h-full snap-y snap-mandatory flex-col overflow-y-scroll align-middle"
     >
-      <div className="flex flex-col">
+      <Stack>
         {mountedVideos.map((videoId) => (
           <VideoDemo
             key={videoId}
@@ -86,7 +90,7 @@ export function VideoContainer() {
             active={videoId === activeVideoId}
           />
         ))}
-      </div>
+      </Stack>
     </div>
   );
 }
