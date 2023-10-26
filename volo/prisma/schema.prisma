@@ -14,13 +14,13 @@ model Account {
   type                     String
   provider                 String
   providerAccountId        String
-  refresh_token            String? @db.Text
+  refresh_token            String?
   refresh_token_expires_in Int?
-  access_token             String? @db.Text
+  access_token             String?
   expires_in               Int?
   token_type               String?
   scope                    String?
-  id_token                 String? @db.Text
+  id_token                 String?
   session_state            String?
   user                     User    @relation(fields: [userId], references: [id], onDelete: Cascade)
 
@@ -37,21 +37,22 @@ model Session {
 
 model User {
   id            String    @id @default(cuid())
-  name          String?
-  signature     String? // 签名
   email         String    @unique
   emailVerified DateTime?
-  avatarUrl     String?
 
-  accounts   Account[]
-  sessions   Session[]
-  videos     Video[]
-  comments   Comment[]
-  likes      Like[]
-  userTags   UserTag[]
-  followers  Follow[]     @relation("follower")
-  followings Follow[]     @relation("following")
-  collection Collection[]
+  name      String? @db.VarChar(30)
+  signature String? // 签名
+  avatarUrl String?
+
+  accounts    Account[]
+  sessions    Session[]
+  videos      Video[]
+  comments    Comment[]
+  likes       Like[]
+  userTags    UserTag[]
+  followers   Follow[]     @relation("follower")
+  followings  Follow[]     @relation("following")
+  collections Collection[]
 }
 
 model Follow {
@@ -87,17 +88,17 @@ model Video {
   author   User   @relation(fields: [authorId], references: [id])
   authorId String
 
-  comments   Comment[] // 评论
-  likes      Like[] // 点赞
-  tags       Tag[] // 标签
-  collection Collection[]
+  comments    Comment[] // 评论
+  likes       Like[] // 点赞
+  tags        Tag[] // 标签
+  collections Collection[] // 收藏
 
   score BigInt // 推荐分数：点赞数  + 评论数 + 收藏数, 用定时任务更新
 }
 
 model Comment {
   id     String  @id @default(cuid())
-  text   String  @db.Text
+  text   String
   imgUrl String?
 
   createdAt DateTime @default(now())
