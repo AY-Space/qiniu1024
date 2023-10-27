@@ -13,6 +13,7 @@ import { Flex } from "./flex";
 import MenuIcon from "@mui/icons-material/Menu";
 import { useState } from "react";
 import { NavigationDrawer } from "./navigation-drawer";
+import Link from "next/link";
 
 export function AppBar() {
   const [navigationDrawer, setNavigationDrawer] = useState(false);
@@ -44,7 +45,9 @@ export function AppBar() {
               <MenuIcon />
             </SvgIcon>
           </IconButton>
-          <Typography level="body-lg">Volo</Typography>
+          <Link href={"/"}>
+            <Typography level="body-lg">Volo</Typography>
+          </Link>
         </Flex>
         <Input
           sx={{

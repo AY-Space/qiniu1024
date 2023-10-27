@@ -25,7 +25,7 @@ export interface UserHomeProps {
 
 export const UserHome = ({ user, uploadedVideos }: UserHomeProps) => {
   return (
-    <Stack>
+    <Stack spacing={4}>
       {user.bannerUrl && (
         <Box
           sx={{
@@ -37,7 +37,7 @@ export const UserHome = ({ user, uploadedVideos }: UserHomeProps) => {
           }}
         />
       )}
-      <Flex>
+      <Flex spacing={4}>
         <Avatar
           src={user.avatarUrl ?? undefined}
           sx={{
@@ -52,7 +52,7 @@ export const UserHome = ({ user, uploadedVideos }: UserHomeProps) => {
         </Stack>
       </Flex>
 
-      <Tabs>
+      <Tabs sx={{ borderRadius: "lg" }}>
         <TabList>
           <Tab variant="plain" color="neutral">
             视频

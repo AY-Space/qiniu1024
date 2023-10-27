@@ -42,7 +42,7 @@ export default async function User({
   const { _count, videos, ...rest } = user;
 
   return (
-    <Container>
+    <Container sx={{ paddingTop: 4 }}>
       <UserHome
         user={{
           ...rest,
