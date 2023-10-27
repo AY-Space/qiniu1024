@@ -18,6 +18,7 @@ export default async function User({
       name: true,
       avatarUrl: true,
       bio: true,
+      bannerUrl: true,
       videos: {
         select: {
           id: true,
