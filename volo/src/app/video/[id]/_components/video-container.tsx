@@ -12,11 +12,14 @@ const VideoDemo = ({
   videoId: number;
 }) => {
   return (
-    <div
+    <Stack
       id={`video-${videoId}`}
-      className="relative flex snap-start snap-always justify-center"
-      style={{
-        height: "calc(100vh - 60px)",
+      justifyContent="center"
+      sx={{
+        height: "calc(100vh - var(--volo-app-bar-height))",
+        scrollSnapAlign: "start",
+        scrollSnapStop: "always",
+        backgroundColor: "primary.900",
       }}
     >
       <div className="flex flex-col justify-center bg-slate-800 align-middle">
@@ -27,7 +30,7 @@ const VideoDemo = ({
           }`}
         />
       </div>
-    </div>
+    </Stack>
   );
 };
 
@@ -78,9 +81,14 @@ export function VideoContainer() {
   }, [mountedVideos]);
 
   return (
-    <div
+    <Stack
       ref={containerRef}
-      className="flex h-full snap-y snap-mandatory flex-col overflow-y-scroll align-middle"
+      sx={{
+        height: "100%",
+        scrollSnapType: "y mandatory",
+        alignItems: "center",
+        overflowY: "scroll",
+      }}
     >
       <Stack>
         {mountedVideos.map((videoId) => (
@@ -91,6 +99,6 @@ export function VideoContainer() {
           />
         ))}
       </Stack>
-    </div>
+    </Stack>
   );
 }

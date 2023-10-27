@@ -1,6 +1,7 @@
 import { Container } from "@mui/joy";
 import { UserHome } from "./_components/user-home";
 import { db } from "~/server/db";
+import { notFound } from "next/navigation";
 
 export default async function User({
   params,
@@ -18,6 +19,7 @@ export default async function User({
       name: true,
       avatarUrl: true,
       bio: true,
+      bannerUrl: true,
       videos: {
         select: {
           id: true,
@@ -36,7 +38,7 @@ export default async function User({
     },
   });
   if (!user) {
-    throw new Error("User not found");
+    notFound();
   }
 
   const { _count, videos, ...rest } = user;

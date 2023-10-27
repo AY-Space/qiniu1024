@@ -12,8 +12,4 @@ export const userInfoRouter = createTRPCRouter({
       }),
     )
     .mutation(({ input }) => {}),
-
-  getSecretMessage: protectedProcedure.query(() => {
-    return "you can now see this secret message!";
-  }),
 });
