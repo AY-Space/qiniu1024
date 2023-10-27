@@ -1,13 +1,12 @@
 import { Stack } from "@mui/joy";
-import { type User } from "@prisma/client";
-
-export type UserDisplay = Pick<User, "id" | "name" | "avatarUrl" | "bio"> & {
-  followings: number;
-  followers: number;
-};
+import { type Video, type User } from "@prisma/client";
 
 export interface UserHomeProps {
-  user: UserDisplay;
+  user: Pick<User, "id" | "name" | "avatarUrl" | "bio"> & {
+    followings: number;
+    followers: number;
+  };
+  uploadedVideos: Pick<Video, "id" | "title" | "coverUrl" | "views">[];
 }
 
 export const UserHome = ({ user }: UserHomeProps) => {

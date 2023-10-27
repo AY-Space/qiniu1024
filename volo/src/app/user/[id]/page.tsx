@@ -18,6 +18,14 @@ export default async function User({
       name: true,
       avatarUrl: true,
       bio: true,
+      videos: {
+        select: {
+          id: true,
+          title: true,
+          coverUrl: true,
+          views: true,
+        },
+      },
 
       _count: {
         select: {
@@ -30,7 +38,8 @@ export default async function User({
   if (!user) {
     throw new Error("User not found");
   }
-  const { _count, ...rest } = user;
+
+  const { _count, videos, ...rest } = user;
 
   return (
     <Container>
@@ -39,6 +48,7 @@ export default async function User({
           ...rest,
           ..._count,
         }}
+        uploadedVideos={videos}
       />
     </Container>
   );
