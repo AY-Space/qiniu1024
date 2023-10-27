@@ -21,9 +21,12 @@ export function AppBar() {
     <Sheet
       sx={{
         px: 2,
-        height: 60,
+        height: "var(--volo-app-bar-height)",
         display: "flex",
         alignItems: "center",
+        position: "sticky",
+        top: 0,
+        zIndex: 100,
       }}
     >
       <NavigationDrawer
