@@ -41,8 +41,9 @@ model User {
   emailVerified DateTime?
 
   name      String? @db.VarChar(30)
-  signature String? // 签名
+  bio       String?
   avatarUrl String?
+  bannerUrl String?
 
   accounts    Account[]
   sessions    Session[]
