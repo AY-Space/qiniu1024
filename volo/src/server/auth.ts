@@ -44,25 +44,25 @@ export const authOptions: NextAuthOptions = {
         id: user.id,
       },
     }),
-    jwt: ({ token, user}) => {
-        if (user) {
-            token.id = user.id;
-        }
+    jwt: ({ token, user }) => {
+      if (user) {
+        token.id = user.id;
+      }
 
-        return token;
-    }
-  },
-    session: { strategy: "jwt" },
-    jwt: {
-        maxAge: 60 * 60 * 24 * 7,
+      return token;
     },
-    secret:env.NEXTAUTH_SECRET,
+  },
+  session: { strategy: "jwt" },
+  jwt: {
+    maxAge: 60 * 60 * 24 * 7,
+  },
+  secret: env.NEXTAUTH_SECRET,
   adapter: PrismaAdapter(db),
   providers: [
-      GitHubProvider({
-            clientId: env.GITHUB_ID,
-            clientSecret: env.GITHUB_SECRET,
-      }),
+    GitHubProvider({
+      clientId: env.GITHUB_ID,
+      clientSecret: env.GITHUB_SECRET,
+    }),
   ],
 };
 
