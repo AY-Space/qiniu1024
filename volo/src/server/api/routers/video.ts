@@ -9,9 +9,27 @@ export const videoRouter = createTRPCRouter({
   list: publicProcedure.query(() => {
     return [];
   }),
-  recommend: protectedProcedure.query(({}) => {
-    return [];
-  }),
+  recommend: publicProcedure
+    .input(
+      z.object({
+        tag: z.array(z.string()),
+      }),
+    )
+    .query(async ({ ctx, input }) => {
+      await ctx.db.video.findMany({
+        where: {
+          tags: {
+            some: {
+              id: {
+                in: input.tag,
+              },
+            },
+          },
+        },
+      });
+      return [];
+    }),
+
   create: protectedProcedure
     .input(
       z.object({

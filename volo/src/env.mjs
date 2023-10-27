@@ -31,6 +31,11 @@ export const env = createEnv({
     // Add ` on ID and SECRET if you want to make sure they're not empty
     GITHUB_ID: z.string(),
     GITHUB_SECRET: z.string(),
+
+    // QINIU KODO
+    QINIU_ACCESS_KEY: z.string(),
+    QINIU_SECRET_KEY: z.string(),
+    QINIU_BUCKET: z.string(),
   },
 
   /**
@@ -53,6 +58,9 @@ export const env = createEnv({
     NEXTAUTH_URL: process.env.NEXTAUTH_URL,
     GITHUB_ID: process.env.GITHUB_ID,
     GITHUB_SECRET: process.env.GITHUB_SECRET,
+    QINIU_ACCESS_KEY: process.env.QINIU_ACCESS_KEY,
+    QINIU_SECRET_KEY: process.env.QINIU_SECRET_KEY,
+    QINIU_BUCKET: process.env.QINIU_BUCKET,
   },
   /**
    * Run `build` or `dev` with `SKIP_ENV_VALIDATION` to skip env validation. This is especially
