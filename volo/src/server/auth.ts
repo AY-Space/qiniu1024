@@ -44,22 +44,25 @@ export const authOptions: NextAuthOptions = {
         id: user.id,
       },
     }),
+    jwt: ({ token, user}) => {
+        if (user) {
+            token.id = user.id;
+        }
+
+        return token;
+    }
   },
+    session: { strategy: "jwt" },
+    jwt: {
+        maxAge: 60 * 60 * 24 * 7,
+    },
+    secret:env.NEXTAUTH_SECRET,
   adapter: PrismaAdapter(db),
   providers: [
       GitHubProvider({
             clientId: env.GITHUB_ID,
             clientSecret: env.GITHUB_SECRET,
       }),
-    /**
-     * ...add more providers here.
-     *
-     * Most other providers require a bit more work than the Discord provider. For example, the
-     * GitHub provider requires you to add the `refresh_token_expires_in` field to the Account
-     * model. Refer to the NextAuth.js docs for the provider you want to use. Example:
-     *
-     * @see https://next-auth.js.org/providers/github
-     */
   ],
 };
 
