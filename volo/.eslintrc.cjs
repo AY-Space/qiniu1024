@@ -42,6 +42,7 @@ const config = {
         format: ["PascalCase"],
       },
     ],
+    "@typescript-eslint/no-empty-function": "warn",
   },
 };
 
