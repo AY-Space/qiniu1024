@@ -16,7 +16,7 @@ import {
 } from "@mui/joy";
 import { ThemeRegistry } from "./_components/theme-registry";
 import SearchIcon from "@mui/icons-material/Search";
-import { HStack } from "./_components/hstack";
+import { Flex } from "./_components/flex";
 import MenuIcon from "@mui/icons-material/Menu";
 
 const inter = Inter({
@@ -69,21 +69,21 @@ function AppBar() {
         alignItems: "center",
       }}
     >
-      <HStack
+      <Flex
         sx={{
           justifyContent: "space-between",
           alignItems: "center",
           flex: 1,
         }}
       >
-        <HStack spacing={1} alignItems="center">
+        <Flex spacing={1} alignItems="center">
           <IconButton>
             <SvgIcon>
               <MenuIcon />
             </SvgIcon>
           </IconButton>
           <Typography level="body-lg">Volo</Typography>
-        </HStack>
+        </Flex>
         <Input
           sx={{
             borderRadius: "xl",
@@ -99,7 +99,7 @@ function AppBar() {
         <button>
           <Avatar>A</Avatar>
         </button>
-      </HStack>
+      </Flex>
     </Sheet>
   );
 }
@@ -120,7 +120,7 @@ export default function RootLayout({
               }}
             >
               <AppBar />
-              <HStack
+              <Flex
                 sx={{
                   flex: 1,
                   overflow: "hidden",
@@ -134,7 +134,7 @@ export default function RootLayout({
                 >
                   {children}
                 </Box>
-              </HStack>
+              </Flex>
             </Stack>
           </ThemeRegistry>
         </TRPCReactProvider>
