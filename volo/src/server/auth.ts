@@ -1,33 +1,24 @@
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
-import {
-  getServerSession,
-  type DefaultSession,
-  type NextAuthOptions,
-} from "next-auth";
-import GitHubProvider from "next-auth/providers/github";
+import { getServerSession, type NextAuthOptions } from "next-auth";
+import Credentials from "next-auth/providers/credentials";
+import GoogleProvider from "next-auth/providers/google";
 
 import { env } from "~/env.mjs";
 import { db } from "~/server/db";
+import { api } from "~/trpc/server";
 
-/**
- * Module augmentation for `next-auth` types. Allows us to add custom properties to the `session`
- * object and keep type safety.
- *
- * @see https://next-auth.js.org/getting-started/typescript#module-augmentation
- */
 declare module "next-auth" {
-  interface Session extends DefaultSession {
-    user: {
-      id: string;
-      // ...other properties
-      // role: UserRole;
-    } & DefaultSession["user"];
+  interface Session {
+    user: User;
+    expires: string;
   }
 
-  // interface User {
-  //   // ...other properties
-  //   // role: UserRole;
-  // }
+  interface User {
+    id: string;
+    email: string;
+    name: string | null;
+    avatar: string | null;
+  }
 }
 
 /**
@@ -38,19 +29,14 @@ declare module "next-auth" {
 export const authOptions: NextAuthOptions = {
   callbacks: {
     session: ({ session, user }) => ({
-      ...session,
       user: {
-        ...session.user,
         id: user.id,
+        email: user.email,
+        name: user.name,
+        avatar: user.avatar,
       },
+      expires: session.expires,
     }),
-    jwt: ({ token, user }) => {
-      if (user) {
-        token.id = user.id;
-      }
-
-      return token;
-    },
   },
   session: { strategy: "jwt" },
   jwt: {
@@ -59,11 +45,52 @@ export const authOptions: NextAuthOptions = {
   secret: env.NEXTAUTH_SECRET,
   adapter: PrismaAdapter(db),
   providers: [
-    GitHubProvider({
-      clientId: env.GITHUB_ID,
-      clientSecret: env.GITHUB_SECRET,
+    GoogleProvider({
+      clientId: env.GOOGLE_CLIENT_ID,
+      clientSecret: env.GOOGLE_CLIENT_SECRET,
+      authorization: {
+        params: {
+          prompt: "consent",
+          access_type: "offline",
+          response_type: "code",
+        },
+      },
+    }),
+    Credentials({
+      name: "Email",
+      credentials: {
+        name: {
+          label: "name",
+          type: "text",
+          placeholder: "login don't need enter the name",
+        },
+        email: {
+          label: "email",
+          type: "text",
+          placeholder: "please enter the email",
+        },
+      },
+      async authorize(credentials, _) {
+        return !credentials?.email
+          ? null
+          : await initUser(credentials.email, credentials.name);
+      },
     }),
   ],
+};
+
+const initUser = async (email: string, name: string | null) => {
+  const user = await api.user.login.query({ name, email });
+
+  if (!user) {
+    return null;
+  }
+  return {
+    id: user.id,
+    name: user.name,
+    email: user.email,
+    avatar: user.avatarUrl,
+  };
 };
 
 /**
