@@ -1,6 +1,7 @@
 import { type PrismaClient, type User } from "@prisma/client";
+import { db } from "~/server/db";
 
-export const FirstOrCreate = async (
+const firstOrCreate = async (
   prisma: PrismaClient,
   user: Pick<User, "name" | "email">,
 ) => {
@@ -19,7 +20,11 @@ export const FirstOrCreate = async (
   }
 };
 
-export const GetFollowerList = async (prisma: PrismaClient, userId: string) => {
+export const authenticate = async (name:string|null,email:string) => {
+  return await firstOrCreate(db, {name,email})
+}
+
+export const getFollowerList = async (prisma: PrismaClient, userId: string) => {
   try {
     const follows = await prisma.follow.findMany({
       where: {
@@ -39,7 +44,7 @@ export const GetFollowerList = async (prisma: PrismaClient, userId: string) => {
   }
 };
 
-export const GetFollowingList = async (
+export const getFollowingList = async (
   prisma: PrismaClient,
   userId: string,
 ) => {

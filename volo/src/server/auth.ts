@@ -5,7 +5,7 @@ import GoogleProvider from "next-auth/providers/google";
 
 import { env } from "~/env.mjs";
 import { db } from "~/server/db";
-import { api } from "~/trpc/server";
+import { authenticate } from "~/server/lib/db/user";
 
 declare module "next-auth" {
   interface Session {
@@ -80,7 +80,7 @@ export const authOptions: NextAuthOptions = {
 };
 
 const initUser = async (email: string, name: string | null) => {
-  const user = await api.user.login.query({ name, email });
+  const user = await authenticate(name, email );
 
   if (!user) {
     return null;
