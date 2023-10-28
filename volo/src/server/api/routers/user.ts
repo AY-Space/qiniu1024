@@ -1,23 +1,15 @@
 import { z } from "zod";
 
-import { createTRPCRouter, protectedProcedure } from "~/server/api/trpc";
 import {
   createTRPCRouter,
+  protectedProcedure,
   publicProcedure,
 } from "~/server/api/trpc";
 
-export const userInfoRouter = createTRPCRouter({
-  update: protectedProcedure
-    .input(
-      z.object({
-        name: z.string().min(4),
-        signature: z.string().max(400),
-        avatarUrl: z.string().url(),
-      }),
-    )
-    .mutation(({ input }) => {}),
 import {
   FirstOrCreate,
+  GetFollowerList,
+  GetFollowingList,
 } from "~/server/lib/db/user";
 
 const login = publicProcedure
@@ -30,7 +22,20 @@ const login = publicProcedure
   .query(({ ctx, input }) => {
     return FirstOrCreate(ctx.db, { email: input.email, name: input.name });
   });
+
+const followerList = protectedProcedure.query(({ ctx }) => {
+  return GetFollowerList(ctx.db, ctx.session.user.id);
+});
+
+const followingList = protectedProcedure.query(({ ctx }) => {
+  return GetFollowingList(ctx.db, ctx.session.user.id);
+});
+
 export const userInfoRouter = createTRPCRouter({
   // only for credential login, email not exists will create a new user
   login: login,
+
+  // get follower/following list
+  followerList: followerList,
+  followingList: followingList,
 });
