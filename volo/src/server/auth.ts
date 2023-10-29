@@ -37,6 +37,15 @@ export const authOptions: NextAuthOptions = {
       },
       expires: session.expires,
     }),
+    jwt: ({ token, user }) => {
+      return {
+        ...token,
+        id: user.id,
+        email: user.email,
+        name: user.name,
+        avatar: user.avatar,
+      }
+    }
   },
   session: { strategy: "jwt" },
   jwt: {
@@ -80,12 +89,8 @@ export const authOptions: NextAuthOptions = {
 };
 
 const initUser = async (email: string, name: string | null) => {
-  const user = await authenticate(name, email );
-
-  if (!user) {
-    return null;
-  }
-  return {
+  const user = await authenticate(name, email);
+  return !user ? null : {
     id: user.id,
     name: user.name,
     email: user.email,
