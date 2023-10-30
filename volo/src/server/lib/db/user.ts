@@ -1,28 +1,58 @@
 import { type PrismaClient, type User } from "@prisma/client";
-import { db } from "~/server/db";
 
-const firstOrCreate = async (
-  prisma: PrismaClient,
-  user: Pick<User, "name" | "email">,
-) => {
+import { db } from "~/server/db";
+import { check, encrypt } from "~/server/lib/util/password";
+
+export const authenticate = async (
+  email: string,
+  password: string,
+): Promise<User | null> => {
   try {
-    return await prisma.user.upsert({
-      where: { email: user.email },
-      update: {},
-      create: {
-        name: user.name ?? user.email,
-        email: user.email,
+    const user = await exists(db, email);
+    if (!user) return await create(db, email, await encrypt(password,email));
+    if (await check(password,user.password)){
+      return user;
+    }
+    throw new Error("Invalid Password");
+  } catch (error) {
+    console.error("Error in Authenticate:", error);
+    throw error;    
+  }
+};
+
+export const exists = async (
+  prisma: PrismaClient,
+  email: string,
+): Promise<User | null> => {
+  try {
+    return await prisma.user.findUnique({
+      where: {
+        email,
       },
     });
   } catch (error) {
-    console.error("Error in FirstOrCreate:", error);
+    console.error("Error in Exists:", error);
     throw error;
   }
 };
 
-export const authenticate = async (name:string|null,email:string) => {
-  return await firstOrCreate(db, {name,email})
-}
+export const create = async (
+  prisma: PrismaClient,
+  email: string,
+  encryptedPassword: string,
+): Promise<User> => {
+  try {
+    return await prisma.user.create({
+      data: {
+        email,
+        password: encryptedPassword,
+      },
+    });
+  } catch (error) {
+    console.error("Error in Create:", error);
+    throw error;
+  }
+};
 
 export const getFollowerList = async (prisma: PrismaClient, userId: string) => {
   try {

@@ -27,9 +27,10 @@ model Account {
 }
 
 model User {
-  id    String  @id @default(cuid())
-  name  String? @db.VarChar(30)
-  email String  @unique
+  id       String  @id @default(cuid())
+  name     String? @db.VarChar(30)
+  email    String  @unique
+  password String  @default("")
 
   bio       String?
   avatarUrl String?
