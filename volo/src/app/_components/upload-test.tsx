@@ -38,7 +38,7 @@ export const UploadTest = () => {
   };
 
   return (
-    <Stack alignItems="center">
+    <Stack alignItems="center" spacing={2}>
       <input type="file" onChange={onFileChange} />
       <Button
         onClick={onUploadClick}
@@ -60,6 +60,7 @@ export const UploadTest = () => {
       >
         Upload
       </Button>
+      <Button color="primary">Hello</Button>
     </Stack>
   );
 };
