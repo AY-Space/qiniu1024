@@ -14,11 +14,12 @@ export const UploadTest = () => {
     setSelectedFile(file ?? null);
   };
 
-  const getUploadToken = api.video.getVideoUploadParameters.useMutation();
+  const getVideoUploadParameters =
+    api.video.getVideoUploadParameters.useMutation();
 
   const onUploadClick = async () => {
     if (selectedFile) {
-      const { key, token } = await getUploadToken.mutateAsync();
+      const { key, token } = await getVideoUploadParameters.mutateAsync();
       upload(selectedFile, key, token, {}, {}).subscribe({
         next: (res) => {
           setProgress(res.total.percent);
@@ -44,9 +45,18 @@ export const UploadTest = () => {
         variant="solid"
         size="lg"
         endDecorator={
-          progress !== null && <CircularProgress determinate value={progress} />
+          progress !== null && (
+            <CircularProgress
+              determinate={getVideoUploadParameters.isSuccess}
+              value={progress}
+            />
+          )
         }
-        disabled={selectedFile === null || progress !== null}
+        disabled={
+          selectedFile === null ||
+          progress !== null ||
+          getVideoUploadParameters.isLoading
+        }
       >
         Upload
       </Button>
