@@ -1,7 +1,6 @@
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import { getServerSession, type NextAuthOptions } from "next-auth";
 import Credentials from "next-auth/providers/credentials";
-import GoogleProvider from "next-auth/providers/google";
 
 import { env } from "~/env.mjs";
 import { db } from "~/server/db";
@@ -28,22 +27,22 @@ declare module "next-auth" {
  */
 export const authOptions: NextAuthOptions = {
   callbacks: {
-    session: ({ session, user }) => ({
+    session: ({ session, token }) => ({
       user: {
-        id: user.id,
-        email: user.email,
-        name: user.name,
-        avatar: user.avatar,
+        id: token.sub,
+        email: token.email,
+        name: token.name,
+        avatar: token.avatar,
       },
       expires: session.expires,
     }),
-    jwt: ({ token, user }) => {
+    jwt: ({ token }) => {
       return {
-        ...token,
-        id: user.id,
-        email: user.email,
-        name: user.name,
-        avatar: user.avatar,
+      ...token,
+      id: token.sub,
+        email: token.email,
+        name: token.name,
+        avatar: token.avatar,
       }
     }
   },
@@ -54,48 +53,39 @@ export const authOptions: NextAuthOptions = {
   secret: env.NEXTAUTH_SECRET,
   adapter: PrismaAdapter(db),
   providers: [
-    GoogleProvider({
-      clientId: env.GOOGLE_CLIENT_ID,
-      clientSecret: env.GOOGLE_CLIENT_SECRET,
-      authorization: {
-        params: {
-          prompt: "consent",
-          access_type: "offline",
-          response_type: "code",
-        },
-      },
-    }),
     Credentials({
       name: "Email",
       credentials: {
-        name: {
-          label: "name",
-          type: "text",
-          placeholder: "login don't need enter the name",
-        },
         email: {
           label: "email",
           type: "text",
           placeholder: "please enter the email",
         },
+        password: {
+          label: "password",
+          type: "password",
+          placeholder: "please enter the password",
+        },
       },
       async authorize(credentials, _) {
-        return !credentials?.email
+        return !credentials?.email || !credentials?.password
           ? null
-          : await initUser(credentials.email, credentials.name);
+          : await initUser(credentials.email, credentials.password);
       },
     }),
   ],
 };
 
-const initUser = async (email: string, name: string | null) => {
-  const user = await authenticate(name, email);
-  return !user ? null : {
-    id: user.id,
-    name: user.name,
-    email: user.email,
-    avatar: user.avatarUrl,
-  };
+const initUser = async (email: string, password: string) => {
+  const user = await authenticate(email, password);
+  return !user
+    ? null
+    : {
+        id: user.id,
+        name: user.name,
+        email: user.email,
+        avatar: user.avatarUrl,
+      };
 };
 
 /**
