@@ -9,7 +9,8 @@
     "dev": "next dev",
     "postinstall": "prisma generate",
     "lint": "next lint",
-    "start": "next start"
+    "start": "next start",
+    "script": "tsx"
   },
   "dependencies": {
     "@emotion/react": "^11.11.1",
@@ -42,6 +43,8 @@
   },
   "devDependencies": {
     "@types/eslint": "^8.44.2",
+    "dotenv": "^16.3.1",
+    "tsx": "^3.14.0",
     "@types/node": "^18.16.0",
     "@types/react": "^18.2.20",
     "@types/react-dom": "^18.2.7",
