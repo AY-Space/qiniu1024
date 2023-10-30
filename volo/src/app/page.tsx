@@ -1,3 +1,5 @@
+import { UploadTest } from "./_components/upload-test";
+
 export default function Home() {
-  return <div>Hello!</div>;
+  return <UploadTest />;
 }

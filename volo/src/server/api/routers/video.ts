@@ -4,6 +4,7 @@ import {
   publicProcedure,
 } from "~/server/api/trpc";
 import { z } from "zod";
+import { createUploadParameters } from "~/server/lib/util/kodo";
 
 export const videoRouter = createTRPCRouter({
   list: publicProcedure.query(() => {
@@ -12,21 +13,25 @@ export const videoRouter = createTRPCRouter({
   recommend: publicProcedure
     .input(
       z.object({
-        tag: z.array(z.string()),
+        tag: z.array(z.string()).optional(),
       }),
     )
-    .query(async ({ ctx, input }) => {
-      await ctx.db.video.findMany({
-        where: {
-          tags: {
-            some: {
-              id: {
-                in: input.tag,
+    .query(async ({ ctx, input: { tag } }) => {
+      await ctx.db.video.findMany(
+        tag
+          ? {
+              where: {
+                tags: {
+                  some: {
+                    id: {
+                      in: tag,
+                    },
+                  },
+                },
               },
-            },
-          },
-        },
-      });
+            }
+          : undefined,
+      );
       return [];
     }),
 
@@ -51,11 +56,9 @@ export const videoRouter = createTRPCRouter({
         },
       });
     }),
-  upload: protectedProcedure
-    .input(z.object({ files: z.array(z.string()) }))
-    .mutation(({ input }) => {
-      return input.files.forEach((file) => {
-        return file; // convert file to upload url
-      });
-    }),
+
+  getVideoUploadParameters: publicProcedure.mutation(({ ctx }) => {
+    console.log("UploadToken");
+    return createUploadParameters();
+  }),
 });
