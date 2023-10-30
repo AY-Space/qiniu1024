@@ -29,10 +29,6 @@ export const env = createEnv({
       process.env.VERCEL ? z.string() : z.string().url(),
     ),
 
-    // Google ThirdParty Login
-    GOOGLE_CLIENT_ID: z.string(),
-    GOOGLE_CLIENT_SECRET: z.string(),
-
     // QINIU KODO
     QINIU_ACCESS_KEY: z.string(),
     QINIU_SECRET_KEY: z.string(),
@@ -57,8 +53,6 @@ export const env = createEnv({
     NODE_ENV: process.env.NODE_ENV,
     NEXTAUTH_SECRET: process.env.NEXTAUTH_SECRET,
     NEXTAUTH_URL: process.env.NEXTAUTH_URL,
-    GOOGLE_CLIENT_ID: process.env.GOOGLE_CLIENT_ID,
-    GOOGLE_CLIENT_SECRET: process.env.GOOGLE_CLIENT_SECRET,
     QINIU_ACCESS_KEY: process.env.QINIU_ACCESS_KEY,
     QINIU_SECRET_KEY: process.env.QINIU_SECRET_KEY,
     QINIU_BUCKET: process.env.QINIU_BUCKET,
