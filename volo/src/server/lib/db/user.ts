@@ -1,23 +1,18 @@
 import { type PrismaClient, type User } from "@prisma/client";
 
 import { db } from "~/server/db";
-import { check, encrypt } from "~/server/lib/util/password";
+import { compare, hash } from "bcrypt";
 
 export const authenticate = async (
   email: string,
   password: string,
 ): Promise<User | null> => {
-  try {
-    const user = await exists(db, email);
-    if (!user) return await create(db, email, await encrypt(password,email));
-    if (await check(password,user.password)){
-      return user;
-    }
-    throw new Error("Invalid Password");
-  } catch (error) {
-    console.error("Error in Authenticate:", error);
-    throw error;    
+  const user = await exists(db, email);
+  if (!user) return await create(db, email, await hash(password, email));
+  if (await compare(password, user.password)) {
+    return user;
   }
+  throw new Error("Invalid Password");
 };
 
 export const exists = async (
