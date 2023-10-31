@@ -5,6 +5,10 @@
 await import("./src/env.mjs");
 
 /** @type {import("next").NextConfig} */
-const config = {};
+const config = {
+  images: {
+    domains: ["localhost"],
+  },
+};
 
 export default config;

@@ -1,19 +1,16 @@
 "use client";
 
 import { Stack } from "@mui/joy";
+import { type Video } from "@prisma/client";
+import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 
 // VideoDemo Component
-const VideoDemo = ({
-  active = false,
-  videoId,
-}: {
-  active?: boolean;
-  videoId: number;
-}) => {
+const VideoDemo = ({ active, video }: { active: boolean; video: Video }) => {
+  delete video.score;
   return (
     <Stack
-      id={`video-${videoId}`}
+      id={`volo-video-${video.id}`}
       justifyContent="center"
       sx={{
         height: "calc(100vh - var(--volo-app-bar-height))",
@@ -23,45 +20,49 @@ const VideoDemo = ({
       }}
     >
       <div className="flex flex-col justify-center bg-slate-800 align-middle">
-        <img
-          src="https://via.placeholder.com/360x640"
+        <Image
+          alt="video cover"
+          src={`http://localhost:3080/bilibili-image?${new URLSearchParams({
+            url: video.coverUrl.replace("http://", "https://"),
+          }).toString()}`}
+          width={320}
+          height={200}
           className={`border-4 ${
             active ? "border-red-500" : "border-slate-500"
           }`}
         />
       </div>
+      <div>{JSON.stringify(video, null, 2)}</div>
     </Stack>
   );
 };
 
-const videos = Array.from({ length: 100 }, (_, i) => i + 1); // static array of videos [1, 2, ..., 100]
-
 // VideoContainer Component
-export function VideoContainer() {
-  const [mountedVideos, setMountedVideos] = useState(videos.slice(0, 100)); // initially mount the first 5 videos
-  const [activeVideoId, setActiveVideoId] = useState<number>();
+export function VideoContainer({ videos }: { videos: Video[] }) {
+  const [mountedVideos, setMountedVideos] = useState(videos.slice(0, 10)); // initially mount the first 5 videos
+  const [activeVideoId, setActiveVideoId] = useState<string | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const observer = useRef<IntersectionObserver>(null!);
 
-  const bufferSize = 4;
+  // const bufferSize = 4;
 
   useEffect(() => {
     observer.current = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
-          const videoId = parseInt(entry.target.id.split("-")[1]!);
-          const activeIndex = videos.indexOf(videoId);
-          const buffer = activeIndex + bufferSize + 1;
+          const videoId = entry.target.id.split("-")[2];
+          if (!videoId) throw new Error("videoId is null");
+          // const buffer = activeIndex + bufferSize + 1;
 
           if (!entry.isIntersecting) return;
 
           setActiveVideoId(videoId);
 
-          if (buffer <= mountedVideos.length) return;
+          // if (buffer <= mountedVideos.length) return;
 
           // const start = Math.max(0, activeIndex - n);
-          const end = Math.min(videos.length, buffer);
-          setMountedVideos(videos.slice(0, end));
+          // const end = Math.min(videos.length, buffer);
+          // setMountedVideos(videos.slice(0, end));
         });
       },
       {
@@ -70,8 +71,8 @@ export function VideoContainer() {
     );
 
     // Observe the video elements
-    mountedVideos.forEach((videoId) => {
-      const videoElement = document.getElementById(`video-${videoId}`);
+    mountedVideos.forEach(({ id }) => {
+      const videoElement = document.getElementById(`volo-video-${id}`);
       if (videoElement) observer.current.observe(videoElement);
     });
 
@@ -91,11 +92,11 @@ export function VideoContainer() {
       }}
     >
       <Stack>
-        {mountedVideos.map((videoId) => (
+        {mountedVideos.map((video) => (
           <VideoDemo
-            key={videoId}
-            videoId={videoId}
-            active={videoId === activeVideoId}
+            key={video.id}
+            video={video}
+            active={video.id === activeVideoId}
           />
         ))}
       </Stack>

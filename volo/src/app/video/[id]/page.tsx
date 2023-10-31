@@ -1,13 +1,15 @@
 import { Stack } from "@mui/joy";
 import { VideoContainer } from "./_components/video-container";
+import { db } from "~/server/db";
 
-export default function Video({
+export default async function Video({
   params: { id },
 }: {
   params: {
     id: string;
   };
 }) {
+  const videos = await db.video.findMany();
   return (
     <Stack
       sx={{
@@ -15,7 +17,7 @@ export default function Video({
         overflow: "hidden",
       }}
     >
-      <VideoContainer />
+      <VideoContainer videos={videos} />
     </Stack>
   );
 }
