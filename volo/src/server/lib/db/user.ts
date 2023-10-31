@@ -24,16 +24,11 @@ export const exists = async (
   prisma: PrismaClient,
   email: string,
 ): Promise<User | null> => {
-  try {
-    return await prisma.user.findUnique({
-      where: {
-        email,
-      },
-    });
-  } catch (error) {
-    console.error("Error in Exists:", error);
-    throw error;
-  }
+  return await prisma.user.findUnique({
+    where: {
+      email,
+    },
+  });
 };
 
 export const create = async (
@@ -41,58 +36,43 @@ export const create = async (
   email: string,
   encryptedPassword: string,
 ): Promise<User> => {
-  try {
-    return await prisma.user.create({
-      data: {
-        email,
-        password: encryptedPassword,
-      },
-    });
-  } catch (error) {
-    console.error("Error in Create:", error);
-    throw error;
-  }
+  return await prisma.user.create({
+    data: {
+      email,
+      password: encryptedPassword,
+    },
+  });
 };
 
 export const getFollowerList = async (prisma: PrismaClient, userId: string) => {
-  try {
-    const follows = await prisma.follow.findMany({
-      where: {
-        followingId: userId,
-      },
-      select: {
-        follower: true,
-      },
-    });
+  const follows = await prisma.follow.findMany({
+    where: {
+      followingId: userId,
+    },
+    select: {
+      follower: true,
+    },
+  });
 
-    return follows.map((follow) => {
-      return follow.follower;
-    });
-  } catch (error) {
-    console.error("Error in GetFollowerList:", error);
-    throw error;
-  }
+  return follows.map((follow) => {
+    return follow.follower;
+  });
 };
 
 export const getFollowingList = async (
   prisma: PrismaClient,
   userId: string,
 ) => {
-  try {
-    const follows = await prisma.follow.findMany({
-      where: {
-        followerId: userId,
-      },
-      select: {
-        following: true,
-      },
-    });
+  const follows = await prisma.follow.findMany({
+    where: {
+      followerId: userId,
+    },
+    select: {
+      following: true,
+    },
+  });
 
-    return follows.map((follow) => {
-      return follow.following;
-    });
-  } catch (error) {
-    console.error("Error in GetFollowerList:", error);
-    throw error;
-  }
+  return follows.map((follow) => {
+    return follow.following;
+  });
 };

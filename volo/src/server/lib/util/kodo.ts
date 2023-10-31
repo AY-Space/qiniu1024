@@ -8,7 +8,6 @@ export const createUploadParameters = () => {
   const key = createId();
   const token = new rs.PutPolicy({
     scope: `${env.QINIU_BUCKET}:${key}`,
-    // expires: 60,
   }).uploadToken(mac);
   return {
     token,

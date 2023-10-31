@@ -1,14 +1,6 @@
+import { createTRPCRouter, protectedProcedure } from "~/server/api/trpc";
 
-import {
-  createTRPCRouter,
-  protectedProcedure
-} from "~/server/api/trpc";
-
-import {
-  getFollowerList,
-  getFollowingList,
-} from "~/server/lib/db/user";
-
+import { getFollowerList, getFollowingList } from "~/server/lib/db/user";
 
 const followerList = protectedProcedure.query(({ ctx }) => {
   return getFollowerList(ctx.db, ctx.session.user.id);

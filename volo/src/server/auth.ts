@@ -38,13 +38,13 @@ export const authOptions: NextAuthOptions = {
     }),
     jwt: ({ token }) => {
       return {
-      ...token,
-      id: token.sub,
+        ...token,
+        id: token.sub,
         email: token.email,
         name: token.name,
         avatar: token.avatar,
-      }
-    }
+      };
+    },
   },
   session: { strategy: "jwt" },
   jwt: {

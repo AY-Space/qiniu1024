@@ -27,11 +27,10 @@ model Account {
 }
 
 model User {
-  id       String  @id @default(cuid())
-  name     String? @db.VarChar(30)
-  email    String  @unique
-  password String  @default("")
-
+  id        String  @id @default(cuid())
+  name      String? @db.VarChar(30)
+  email     String  @unique
+  password  String  @default("")
   bio       String?
   avatarUrl String?
   bannerUrl String?
@@ -47,8 +46,7 @@ model User {
 }
 
 model Follow {
-  createdAt DateTime @default(now())
-
+  createdAt   DateTime @default(now())
   followerId  String
   followingId String
 
@@ -59,49 +57,43 @@ model Follow {
 }
 
 model Video {
-  id          String  @id @default(cuid())
+  id          String   @id @default(cuid())
+  createdAt   DateTime @default(now())
   title       String
   description String?
+  url         String
+  coverUrl    String
+  views       BigInt   @default(0)
+  authorId    String
 
-  url      String
-  coverUrl String
-
-  createdAt DateTime @default(now())
-
-  views Int @default(0)
-
-  author   User   @relation(fields: [authorId], references: [id])
-  authorId String
+  author User @relation(fields: [authorId], references: [id])
 
   comments    Comment[] // 评论
   likes       Like[] // 点赞
-  tags        Tag[] // 标签
   collections Collection[] // 收藏
 
-  score BigInt @default(0) // 推荐分数：点赞数  + 评论数 + 收藏数, 用定时任务更新
+  videotags VideoTag[] // 视频标签
 }
 
 model Comment {
-  id     String  @id @default(cuid())
-  text   String
-  imgUrl String?
-
+  id        String   @id @default(cuid())
   createdAt DateTime @default(now())
+  text      String
+  imgUrl    String?
+  authorId  String
+  videoId   String
 
-  author   User   @relation(fields: [authorId], references: [id])
-  authorId String
-
-  video   Video  @relation(fields: [videoId], references: [id])
-  videoId String
+  author User  @relation(fields: [authorId], references: [id])
+  video  Video @relation(fields: [videoId], references: [id])
 }
 
 model Like {
   createdAt DateTime @default(now())
-  user      User     @relation(fields: [userId], references: [id])
   userId    String
+  videoId   String
 
-  video   Video  @relation(fields: [videoId], references: [id])
-  videoId String
+  user  User  @relation(fields: [userId], references: [id])
+  video Video @relation(fields: [videoId], references: [id])
 
   @@id([userId, videoId])
 }
@@ -110,33 +102,42 @@ model Collection {
   id        String   @id @default(cuid())
   createdAt DateTime @default(now())
   name      String   @db.VarChar(30)
+  ownerId   String
 
-  owner   User   @relation(fields: [ownerId], references: [id], onDelete: Cascade)
-  ownerId String
-
+  owner  User    @relation(fields: [ownerId], references: [id], onDelete: Cascade)
   videos Video[]
 }
 
 model Tag {
-  id          String  @id @default(cuid())
+  id          String   @id @default(cuid())
   name        String
   description String?
+  createdAt   DateTime @default(now())
 
-  createdAt DateTime @default(now())
-
-  videos   Video[]
-  usertags UserTag[]
+  videotags VideoTag[]
+  usertags  UserTag[]
 }
 
 model UserTag {
   createdAt DateTime @default(now())
+  userId    String
+  tagId     String
   score     BigInt // user 的 Tag 分数：点赞数  + 评论数 + 收藏数*2，用定时任务更新
 
-  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId String
-
-  tag   Tag    @relation(fields: [tagId], references: [id], onDelete: Cascade)
-  tagId String
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  tag  Tag  @relation(fields: [tagId], references: [id], onDelete: Cascade)
 
   @@unique([userId, tagId])
+}
+
+model VideoTag {
+  createdAt DateTime @default(now())
+  videoId   String
+  tagId     String
+  score     BigInt // video 的 tag 分数：点赞数 + 评论数 + 收藏数*2，用定时任务更新
+
+  video Video @relation(fields: [videoId], references: [id], onDelete: Cascade)
+  tag   Tag   @relation(fields: [tagId], references: [id], onDelete: Cascade)
+
+  @@unique([videoId, tagId])
 }
