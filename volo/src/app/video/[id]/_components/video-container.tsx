@@ -2,42 +2,12 @@
 
 import { Stack } from "@mui/joy";
 import { type Video } from "@prisma/client";
-import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
-import { getBilibiliImageUrl } from "~/app/utils";
-
-// VideoDemo Component
-const VideoDemo = ({ active, video }: { active: boolean; video: Video }) => {
-  return (
-    <Stack
-      id={`volo-video-${video.id}`}
-      justifyContent="center"
-      sx={{
-        height: "calc(100vh - var(--volo-app-bar-height))",
-        scrollSnapAlign: "start",
-        scrollSnapStop: "always",
-        backgroundColor: "primary.900",
-      }}
-    >
-      <div className="flex flex-col justify-center bg-slate-800 align-middle">
-        <Image
-          alt="video cover"
-          src={getBilibiliImageUrl(video.coverUrl)}
-          width={320}
-          height={200}
-          className={`border-4 ${
-            active ? "border-red-500" : "border-slate-500"
-          }`}
-        />
-      </div>
-      <div>{JSON.stringify(video, null, 2)}</div>
-    </Stack>
-  );
-};
+import { VideoPlayer } from "./video-player";
 
 // VideoContainer Component
 export function VideoContainer({ videos }: { videos: Video[] }) {
-  const [mountedVideos, setMountedVideos] = useState(videos.slice(0, 10)); // initially mount the first 5 videos
+  const [mountedVideos, setMountedVideos] = useState(videos.slice(0, 10));
   const [activeVideoId, setActiveVideoId] = useState<string | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const observer = useRef<IntersectionObserver>(null!);
@@ -91,7 +61,7 @@ export function VideoContainer({ videos }: { videos: Video[] }) {
     >
       <Stack>
         {mountedVideos.map((video) => (
-          <VideoDemo
+          <VideoPlayer
             key={video.id}
             video={video}
             active={video.id === activeVideoId}
