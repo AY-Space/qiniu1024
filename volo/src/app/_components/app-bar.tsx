@@ -1,6 +1,6 @@
 "use client";
 
-import { Avatar, IconButton, Input, Sheet, Typography } from "@mui/joy";
+import { Avatar, Grid, IconButton, Input, Sheet, Typography } from "@mui/joy";
 import SearchIcon from "@mui/icons-material/Search";
 import { Flex } from "./flex";
 import MenuIcon from "@mui/icons-material/Menu";
@@ -28,33 +28,41 @@ export function AppBar() {
         onClose={() => setNavigationDrawer(false)}
       />
 
-      <Flex
+      <Grid
+        container
         sx={{
-          justifyContent: "space-between",
-          alignItems: "center",
           flex: 1,
         }}
+        columns={3}
       >
-        <Flex spacing={1} alignItems="center">
-          <IconButton onClick={() => setNavigationDrawer(true)}>
-            <MenuIcon />
-          </IconButton>
-          <Link href={"/"}>
-            <Typography level="body-lg">Volo</Typography>
-          </Link>
-        </Flex>
-        <Input
-          sx={{
-            borderRadius: "xl",
-          }}
-          size="lg"
-          placeholder="搜索"
-          endDecorator={<SearchIcon />}
-        />
-        <button>
-          <Avatar>A</Avatar>
-        </button>
-      </Flex>
+        <Grid xs={1}>
+          <Flex spacing={1} alignItems="center" height="100%">
+            <IconButton onClick={() => setNavigationDrawer(true)}>
+              <MenuIcon />
+            </IconButton>
+            <Link href={"/"}>
+              <Typography level="body-lg">Volo</Typography>
+            </Link>
+          </Flex>
+        </Grid>
+        <Grid xs={1}>
+          <Input
+            sx={{
+              borderRadius: "xl",
+            }}
+            size="lg"
+            placeholder="搜索"
+            endDecorator={<SearchIcon />}
+          />
+        </Grid>
+        <Grid xs={1}>
+          <Flex justifyContent="flex-end">
+            <button>
+              <Avatar>A</Avatar>
+            </button>
+          </Flex>
+        </Grid>
+      </Grid>
     </Sheet>
   );
 }
