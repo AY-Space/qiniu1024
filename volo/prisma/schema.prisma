@@ -114,8 +114,8 @@ model Tag {
   description String?
   createdAt   DateTime @default(now())
 
-  videotags VideoTag[]
-  usertags  UserTag[]
+  videoTags VideoTag[]
+  userTags  UserTag[]
 }
 
 model UserTag {
@@ -127,7 +127,7 @@ model UserTag {
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
   tag  Tag  @relation(fields: [tagId], references: [id], onDelete: Cascade)
 
-  @@unique([userId, tagId])
+  @@id([userId, tagId])
 }
 
 model VideoTag {
@@ -139,5 +139,5 @@ model VideoTag {
   video Video @relation(fields: [videoId], references: [id], onDelete: Cascade)
   tag   Tag   @relation(fields: [tagId], references: [id], onDelete: Cascade)
 
-  @@unique([videoId, tagId])
+  @@id([videoId, tagId])
 }
