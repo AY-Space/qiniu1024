@@ -72,7 +72,7 @@ model Video {
   likes       Like[] // 点赞
   collections Collection[] // 收藏
 
-  videotags VideoTag[] // 视频标签
+  videoTags VideoTag[] // 视频标签
 }
 
 model Comment {
