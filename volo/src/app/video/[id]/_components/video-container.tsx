@@ -4,10 +4,10 @@ import { Stack } from "@mui/joy";
 import { type Video } from "@prisma/client";
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
+import { getBilibiliImageUrl } from "~/app/utils";
 
 // VideoDemo Component
 const VideoDemo = ({ active, video }: { active: boolean; video: Video }) => {
-  delete video.score;
   return (
     <Stack
       id={`volo-video-${video.id}`}
@@ -22,9 +22,7 @@ const VideoDemo = ({ active, video }: { active: boolean; video: Video }) => {
       <div className="flex flex-col justify-center bg-slate-800 align-middle">
         <Image
           alt="video cover"
-          src={`http://localhost:3080/bilibili-image?${new URLSearchParams({
-            url: video.coverUrl.replace("http://", "https://"),
-          }).toString()}`}
+          src={getBilibiliImageUrl(video.coverUrl)}
           width={320}
           height={200}
           className={`border-4 ${

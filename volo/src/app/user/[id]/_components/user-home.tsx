@@ -6,6 +6,7 @@ import {
   CardCover,
   Grid,
   Stack,
+  SvgIcon,
   Tab,
   TabList,
   TabPanel,
@@ -14,7 +15,8 @@ import {
 } from "@mui/joy";
 import { type Video, type User } from "@prisma/client";
 import { Flex } from "~/app/_components/flex";
-
+import { getBilibiliImageUrl } from "~/app/utils";
+import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
 export interface UserHomeProps {
   user: Pick<User, "id" | "name" | "avatarUrl" | "bio" | "bannerUrl"> & {
     followings: number;
@@ -25,21 +27,21 @@ export interface UserHomeProps {
 
 export const UserHome = ({ user, uploadedVideos }: UserHomeProps) => {
   return (
-    <Stack spacing={4}>
+    <Stack spacing={3}>
       {user.bannerUrl && (
         <Box
           sx={{
             borderRadius: "lg",
-            backgroundImage: `url(${user.bannerUrl})`,
+            backgroundImage: `url(${getBilibiliImageUrl(user.bannerUrl)})`,
             backgroundSize: "cover",
             backgroundPosition: "center",
             aspectRatio: 4 / 1,
           }}
         />
       )}
-      <Flex spacing={4}>
+      <Flex spacing={3}>
         <Avatar
-          src={user.avatarUrl ?? undefined}
+          src={user.avatarUrl ? getBilibiliImageUrl(user.avatarUrl) : undefined}
           sx={{
             "&": {
               "--Avatar-size": "128px",
@@ -54,15 +56,6 @@ export const UserHome = ({ user, uploadedVideos }: UserHomeProps) => {
 
       <Tabs sx={{ borderRadius: "lg" }}>
         <TabList>
-          <Tab variant="plain" color="neutral">
-            视频
-          </Tab>{" "}
-          <Tab variant="plain" color="neutral">
-            视频
-          </Tab>{" "}
-          <Tab variant="plain" color="neutral">
-            视频
-          </Tab>{" "}
           <Tab variant="plain" color="neutral">
             视频
           </Tab>
@@ -87,6 +80,16 @@ export const UserHome = ({ user, uploadedVideos }: UserHomeProps) => {
   );
 };
 
+const formatNumber = (num: number): string => {
+  if (num >= 1_000_000) {
+    return (num / 1_000_000).toFixed(1) + "M";
+  } else if (num >= 1_000) {
+    return (num / 1_000).toFixed(1) + "K";
+  } else {
+    return num.toString();
+  }
+};
+
 const VideoCard = ({
   video,
 }: {
@@ -102,8 +105,7 @@ const VideoCard = ({
         <Box
           sx={{
             borderRadius: "lg",
-            backgroundImage:
-              "url(https://avatars.githubusercontent.com/u/91730263)",
+            backgroundImage: `url(${getBilibiliImageUrl(video.coverUrl)})`,
             backgroundSize: "cover",
             backgroundPosition: "center",
           }}
@@ -116,7 +118,23 @@ const VideoCard = ({
         }}
       />
       <CardContent sx={{ justifyContent: "flex-end" }}>
-        <Typography level="title-md">{video.title}</Typography>
+        <Flex spacing={1} alignItems="center">
+          <Typography
+            level="title-md"
+            sx={{
+              flex: 1,
+              textOverflow: "ellipsis",
+              overflow: "hidden",
+              whiteSpace: "nowrap",
+            }}
+          >
+            {video.title}
+          </Typography>
+          <SvgIcon size="sm">
+            <RemoveRedEyeIcon />
+          </SvgIcon>
+          <Typography level="body-sm">{formatNumber(video.views)}</Typography>
+        </Flex>
       </CardContent>
     </Card>
   );
