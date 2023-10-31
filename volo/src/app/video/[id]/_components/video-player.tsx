@@ -38,12 +38,7 @@ const VideoControls = ({
         position: variant === "overlay" ? "absolute" : "relative",
       }}
     >
-      <Stack
-        spacing={2}
-        sx={{
-          color: "white",
-        }}
-      >
+      <Stack spacing={2}>
         <Stack alignItems="center">
           <IconButton size="lg" variant={buttonVariant}>
             <ThumbUpIcon />
@@ -97,7 +92,7 @@ export const VideoPlayer = ({ video, active }: VideoPlayerProps) => {
         scrollSnapStop: "always",
         position: "relative",
         maxWidth: "100%",
-        px: 2,
+        p: 2,
       }}
       spacing={2}
     >
@@ -105,6 +100,7 @@ export const VideoPlayer = ({ video, active }: VideoPlayerProps) => {
         sx={{
           borderRadius: "lg",
           overflow: "hidden",
+          maxHeight: "100%",
         }}
       >
         <img alt="video cover" src={getBilibiliImageUrl(video.coverUrl)} />

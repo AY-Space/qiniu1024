@@ -57,6 +57,10 @@ export function VideoContainer({ videos }: { videos: Video[] }) {
         scrollSnapType: "y mandatory",
         alignItems: "center",
         overflowY: "scroll",
+        // Hide scrollbar
+        "::-webkit-scrollbar": {
+          display: "none",
+        },
       }}
     >
       <Stack>
