@@ -82,6 +82,8 @@ model Comment {
   imgUrl    String?
   authorId  String
   videoId   String
+  likes     Int      @default(0)
+  dislikes  Int      @default(0)
 
   author User  @relation(fields: [authorId], references: [id])
   video  Video @relation(fields: [videoId], references: [id])
