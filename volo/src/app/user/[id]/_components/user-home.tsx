@@ -16,6 +16,7 @@ import { type Video, type User } from "@prisma/client";
 import { Flex } from "~/app/_components/flex";
 import { getBilibiliImageUrl } from "~/app/utils";
 import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
+import Link from "next/link";
 export interface UserHomeProps {
   user: Pick<User, "id" | "name" | "avatarUrl" | "bio" | "bannerUrl"> & {
     followings: number;
@@ -102,48 +103,55 @@ const VideoCard = ({
   video: UserHomeProps["uploadedVideos"][0];
 }) => {
   return (
-    <Card
-      sx={{
-        aspectRatio: 4 / 3,
-      }}
-    >
-      <CardCover>
-        <Box
+    <Link href={`/video/${video.id}`}>
+      <Card
+        sx={{
+          aspectRatio: 4 / 3,
+        }}
+      >
+        <CardCover>
+          <Box
+            sx={{
+              borderRadius: "lg",
+              backgroundImage: `url(${getBilibiliImageUrl(video.coverUrl)})`,
+              backgroundSize: "cover",
+              backgroundPosition: "center",
+            }}
+          />
+        </CardCover>
+        <CardCover
           sx={{
-            borderRadius: "lg",
-            backgroundImage: `url(${getBilibiliImageUrl(video.coverUrl)})`,
-            backgroundSize: "cover",
-            backgroundPosition: "center",
+            background:
+              "linear-gradient(to top, rgba(0,0,0,0.4), rgba(0,0,0,0) 200px), linear-gradient(to top, rgba(0,0,0,0.8), rgba(0,0,0,0) 40px)",
           }}
         />
-      </CardCover>
-      <CardCover
-        sx={{
-          background:
-            "linear-gradient(to top, rgba(0,0,0,0.4), rgba(0,0,0,0) 200px), linear-gradient(to top, rgba(0,0,0,0.8), rgba(0,0,0,0) 40px)",
-        }}
-      />
-      <CardContent sx={{ justifyContent: "flex-end" }}>
-        <Flex spacing={1} alignItems="center">
-          <Typography
-            level="title-md"
-            sx={{
-              flex: 1,
-              textOverflow: "ellipsis",
-              overflow: "hidden",
-              whiteSpace: "nowrap",
-            }}
-          >
-            {video.title}
-          </Typography>
-          <Flex spacing="0.3em" alignItems="center">
-            <RemoveRedEyeIcon fontSize="small" />
-            <Typography level="body-sm">
-              {formatNumber(Number(video.views))}
+        <CardContent sx={{ justifyContent: "flex-end" }}>
+          <Flex spacing={1} alignItems="center">
+            <Typography
+              level="title-md"
+              sx={{
+                flex: 1,
+                textOverflow: "ellipsis",
+                overflow: "hidden",
+                whiteSpace: "nowrap",
+              }}
+            >
+              {video.title}
             </Typography>
+            <Flex spacing="0.3em" alignItems="center">
+              <RemoveRedEyeIcon fontSize="small" />
+              <Typography
+                level="body-sm"
+                sx={{
+                  color: "text.secondary",
+                }}
+              >
+                {formatNumber(Number(video.views))}
+              </Typography>
+            </Flex>
           </Flex>
-        </Flex>
-      </CardContent>
-    </Card>
+        </CardContent>
+      </Card>
+    </Link>
   );
 };
