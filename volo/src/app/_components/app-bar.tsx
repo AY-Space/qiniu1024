@@ -1,13 +1,6 @@
 "use client";
 
-import {
-  Avatar,
-  IconButton,
-  Input,
-  Sheet,
-  SvgIcon,
-  Typography,
-} from "@mui/joy";
+import { Avatar, IconButton, Input, Sheet, Typography } from "@mui/joy";
 import SearchIcon from "@mui/icons-material/Search";
 import { Flex } from "./flex";
 import MenuIcon from "@mui/icons-material/Menu";
@@ -44,9 +37,7 @@ export function AppBar() {
       >
         <Flex spacing={1} alignItems="center">
           <IconButton onClick={() => setNavigationDrawer(true)}>
-            <SvgIcon>
-              <MenuIcon />
-            </SvgIcon>
+            <MenuIcon />
           </IconButton>
           <Link href={"/"}>
             <Typography level="body-lg">Volo</Typography>
@@ -58,11 +49,7 @@ export function AppBar() {
           }}
           size="lg"
           placeholder="搜索"
-          endDecorator={
-            <SvgIcon>
-              <SearchIcon />
-            </SvgIcon>
-          }
+          endDecorator={<SearchIcon />}
         />
         <button>
           <Avatar>A</Avatar>

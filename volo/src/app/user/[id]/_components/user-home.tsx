@@ -6,7 +6,6 @@ import {
   CardCover,
   Grid,
   Stack,
-  SvgIcon,
   Tab,
   TabList,
   TabPanel,
@@ -35,7 +34,7 @@ export const UserHome = ({ user, uploadedVideos }: UserHomeProps) => {
             backgroundImage: `url(${getBilibiliImageUrl(user.bannerUrl)})`,
             backgroundSize: "cover",
             backgroundPosition: "center",
-            aspectRatio: 4 / 1,
+            aspectRatio: 5 / 1,
           }}
         />
       )}
@@ -61,11 +60,18 @@ export const UserHome = ({ user, uploadedVideos }: UserHomeProps) => {
           </Tab>
         </TabList>
         <TabPanel>
-          <Grid container columns={6}>
+          <Grid
+            container
+            columns={{
+              xs: 2,
+              sm: 3,
+              md: 4,
+            }}
+          >
             {uploadedVideos.map((e) => (
               <Grid
                 key={e.id}
-                xs={2}
+                xs={1}
                 sx={{
                   p: 1,
                 }}
@@ -84,7 +90,7 @@ const formatNumber = (num: number): string => {
   if (num >= 1_000_000) {
     return (num / 1_000_000).toFixed(1) + "M";
   } else if (num >= 1_000) {
-    return (num / 1_000).toFixed(1) + "K";
+    return (num / 1_000).toFixed(num >= 10000 ? 0 : 1) + "K";
   } else {
     return num.toString();
   }
@@ -130,10 +136,12 @@ const VideoCard = ({
           >
             {video.title}
           </Typography>
-          <SvgIcon size="sm">
-            <RemoveRedEyeIcon />
-          </SvgIcon>
-          <Typography level="body-sm">{formatNumber(video.views)}</Typography>
+          <Flex spacing="0.3em" alignItems="center">
+            <RemoveRedEyeIcon fontSize="small" />
+            <Typography level="body-sm">
+              {formatNumber(Number(video.views))}
+            </Typography>
+          </Flex>
         </Flex>
       </CardContent>
     </Card>
