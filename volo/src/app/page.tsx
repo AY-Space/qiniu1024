@@ -1,5 +1,6 @@
 import { db } from "~/server/db";
-import CommentComponent from "./_components/comment";
+import { CommentComponent } from "./_components/comment_component";
+import { Container, Stack } from "@mui/joy";
 
 export default async function Home() {
   const comments = await db.comment.findMany({
@@ -18,8 +19,15 @@ export default async function Home() {
         },
       },
     },
+    where: { imgUrl: { not: null } },
   });
-  return comments.map((comment) => {
-    <CommentComponent comment={comment} />;
-  });
+  return (
+    <Container>
+      <Stack spacing={4}>
+        {comments.map((comment) => (
+          <CommentComponent comment={comment} key={comment.id} />
+        ))}
+      </Stack>
+    </Container>
+  );
 }
