@@ -1,14 +1,16 @@
-import { Stack } from "@mui/joy";
+"use client";
+
+import { Stack, useColorScheme } from "@mui/joy";
 import { useState, useEffect, useRef, type ReactNode } from "react";
 
 interface VideoPlayerProps {
   src: string;
   playing: boolean;
   loop?: boolean;
-  details: ReactNode;
+  overlay: ReactNode;
 }
 
-const VideoPlayer = ({ src, playing, loop, details }: VideoPlayerProps) => {
+const VideoPlayer = ({ src, playing, loop, overlay }: VideoPlayerProps) => {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [progress, setProgress] = useState<number>(0);
   const [duration, setDuration] = useState<number>(0);
@@ -73,18 +75,33 @@ const VideoPlayer = ({ src, playing, loop, details }: VideoPlayerProps) => {
   // Calculate the percentage of the video that has been played
   const playedPercentage = duration ? (progress / duration) * 100 : 0;
 
+  const colorScheme = useColorScheme();
+  const progressBarColor =
+    colorScheme.colorScheme === "dark"
+      ? `linear-gradient(to right, rgba(255,255,255,0.8) ${playedPercentage}%, rgba(255,255,255,0.2) ${playedPercentage}%)`
+      : `linear-gradient(to right, rgba(0,0,0,0.5) ${playedPercentage}%, rgba(0,0,0,0.2) ${playedPercentage}%)`;
+
+  const overlayGradient =
+    "linear-gradient(to bottom, transparent, rgba(0,0,0,0.8))";
   return (
     <Stack
       sx={{
         height: "100%",
+        width: "100%",
         position: "relative",
       }}
     >
-      <Stack flex={1} alignItems="center" justifyContent="center">
+      <Stack
+        flex={1}
+        alignItems="center"
+        justifyContent="center"
+        width="100%"
+        height="100%"
+      >
         <video
           ref={videoRef}
           onClick={handleVideoClick}
-          className="w-full rounded-lg"
+          className="h-full w-full rounded-lg object-contain"
           loop={loop}
         >
           <source src={src} type="video/mp4" />
@@ -97,9 +114,10 @@ const VideoPlayer = ({ src, playing, loop, details }: VideoPlayerProps) => {
           bottom: 0,
           left: 0,
           right: 0,
+          background: overlayGradient,
         }}
       >
-        {details}
+        {overlay}
         <input
           type="range"
           min="0"
@@ -108,7 +126,7 @@ const VideoPlayer = ({ src, playing, loop, details }: VideoPlayerProps) => {
           onChange={handleProgressChange}
           className="range-thumb:appearance-nonet h-1 w-full cursor-pointer appearance-none rounded-sm bg-transparent"
           style={{
-            background: `linear-gradient(to right, rgba(255,255,255,0.8) ${playedPercentage}%, rgba(255,255,255,0.3) ${playedPercentage}%)`,
+            background: progressBarColor,
           }}
         />
       </Stack>

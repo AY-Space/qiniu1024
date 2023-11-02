@@ -4,7 +4,6 @@
 import {
   Avatar,
   Box,
-  Button,
   Drawer,
   IconButton,
   ModalClose,

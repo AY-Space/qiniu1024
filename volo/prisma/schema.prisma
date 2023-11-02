@@ -40,9 +40,13 @@ model User {
   comments    Comment[]
   likes       Like[]
   tags        Tag[]
-  followers   Follow[]     @relation("follower")
-  followings  Follow[]     @relation("following")
   collections Collection[]
+
+  followedByUsers Follow[] @relation("FollowedBy")
+  usersFollowed   Follow[] @relation("UserFollows")
+
+  likedComments    Comment[] @relation("UserLikeComment")
+  dislikedComments Comment[] @relation("UserDislikeComment")
 }
 
 model Follow {
@@ -50,8 +54,8 @@ model Follow {
   followerId  String
   followingId String
 
-  follower  User @relation("follower", fields: [followerId], references: [id])
-  following User @relation("following", fields: [followingId], references: [id])
+  followedBy  User @relation("FollowedBy", fields: [followingId], references: [id])
+  userFollows User @relation("UserFollows", fields: [followerId], references: [id])
 
   @@id([followingId, followerId])
 }
@@ -82,11 +86,11 @@ model Comment {
   imgUrl    String?
   authorId  String
   videoId   String
-  likes     Int      @default(0)
-  dislikes  Int      @default(0)
 
-  author User  @relation(fields: [authorId], references: [id])
-  video  Video @relation(fields: [videoId], references: [id])
+  author        User   @relation(fields: [authorId], references: [id])
+  video         Video  @relation(fields: [videoId], references: [id])
+  likedUsers    User[] @relation("UserLikeComment")
+  dislikedUsers User[] @relation("UserDislikeComment")
 }
 
 model Like {
