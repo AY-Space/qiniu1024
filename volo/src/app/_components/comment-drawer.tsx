@@ -1,7 +1,19 @@
 "use client";
 // CommentComponent.joy
 
-import { Avatar, Box, Button, IconButton, Stack, Typography } from "@mui/joy";
+import {
+  Avatar,
+  Box,
+  Button,
+  Drawer,
+  IconButton,
+  ModalClose,
+  Stack,
+  Typography,
+  Alert,
+  CircularProgress,
+  Container,
+} from "@mui/joy";
 import Image from "next/image";
 import { getBilibiliImageUrl } from "../utils";
 import dayjs from "dayjs";
@@ -9,6 +21,7 @@ import relativeTime from "dayjs/plugin/relativeTime";
 dayjs.extend(relativeTime);
 import { ThumbDown, ThumbUp } from "@mui/icons-material";
 import { type CommentPublic } from "../../types";
+import { api } from "~/trpc/react";
 
 const Comment = ({ comment }: { comment: CommentPublic }) => {
   return (
@@ -49,7 +62,33 @@ const Comment = ({ comment }: { comment: CommentPublic }) => {
   );
 };
 
+const CommentList = ({ videoId }: { videoId: string }) => {
+  const { data, error, isLoading } = api.video.comments.useQuery({ videoId });
+  return (
+    <Stack spacing={2}>
+      {error && <Alert color="danger">{error.message}</Alert>}
+      {isLoading && <CircularProgress />}
+      {data?.map((comment) => <Comment comment={comment} key={comment.id} />)}
+    </Stack>
+  );
+};
+
 export interface CommentDrawerProps {
   videoId: string;
+  open: boolean;
+  onClose: () => void;
 }
-export const CommentDrawer = ({ videoId }: CommentDrawerProps) => {};
+export const CommentDrawer = ({
+  videoId,
+  open,
+  onClose,
+}: CommentDrawerProps) => {
+  return (
+    <Drawer open={open} onClose={onClose} anchor="right">
+      <ModalClose />
+      <Container sx={{ marginTop: 8 }}>
+        <CommentList videoId={videoId} />
+      </Container>
+    </Drawer>
+  );
+};

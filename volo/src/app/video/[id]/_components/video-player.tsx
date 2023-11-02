@@ -1,6 +1,14 @@
 "use client";
 
-import { IconButton, IconButtonProps, Stack, Typography } from "@mui/joy";
+import {
+  DialogTitle,
+  Drawer,
+  IconButton,
+  IconButtonProps,
+  ModalClose,
+  Stack,
+  Typography,
+} from "@mui/joy";
 import { getBilibiliImageUrl } from "~/app/utils";
 import ThumbUpIcon from "@mui/icons-material/ThumbUp";
 import ThumbDownIcon from "@mui/icons-material/ThumbDown";
@@ -10,6 +18,7 @@ import { useState } from "react";
 import { Flex } from "~/app/_components/flex";
 import { VideoJS } from "./video-js";
 import { VideoPublic } from "~/types";
+import { CommentDrawer } from "~/app/_components/comment-drawer";
 
 const VideoControls = ({
   videoId,
@@ -53,12 +62,11 @@ const VideoControls = ({
           <Typography>{dislikes}</Typography>
         </Stack>
         <Stack alignItems="center">
-          <IconButton size="lg" variant={buttonVariant}>
+          <IconButton size="lg" variant={buttonVariant} onClick={onComment}>
             <CommentIcon />
           </IconButton>
           <Typography>{comments}</Typography>
         </Stack>
-
         <Stack alignItems="center">
           <IconButton size="lg" variant={buttonVariant}>
             <ShareIcon />
@@ -77,6 +85,19 @@ export interface VideoPlayerProps {
 
 export const VideoPlayer = ({ video, active }: VideoPlayerProps) => {
   const [showComments, setShowComments] = useState(false);
+
+  const toggleDrawer =
+    (inOpen: boolean) => (event: React.KeyboardEvent | React.MouseEvent) => {
+      if (
+        event.type === "keydown" &&
+        ((event as React.KeyboardEvent).key === "Tab" ||
+          (event as React.KeyboardEvent).key === "Shift")
+      ) {
+        return;
+      }
+
+      setShowComments(inOpen);
+    };
 
   return (
     <Flex
@@ -119,11 +140,17 @@ export const VideoPlayer = ({ video, active }: VideoPlayerProps) => {
         />
       </Stack>
       <VideoControls
-        comments={0}
-        likes={0}
-        dislikes={0}
+        comments={video.comments}
+        likes={video.likes}
+        dislikes={video.dislikes}
         videoId={video.id}
+        onComment={() => setShowComments(true)}
         variant="side"
+      />
+      <CommentDrawer
+        videoId={video.id}
+        open={showComments}
+        onClose={() => setShowComments(false)}
       />
     </Flex>
   );
