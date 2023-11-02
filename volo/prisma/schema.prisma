@@ -110,8 +110,14 @@ model Collection {
   videos Video[]
 }
 
+enum TagType {
+  Category
+  Tag
+}
+
 model Tag {
   id          String   @id @default(cuid())
+  type        TagType  @default(Tag)
   name        String
   description String?
   createdAt   DateTime @default(now())
