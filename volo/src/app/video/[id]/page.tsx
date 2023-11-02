@@ -1,6 +1,6 @@
 import { Stack } from "@mui/joy";
-import { VideoContainer } from "./_components/video-container";
 import { db } from "~/server/db";
+import { VideoContainer } from "./_components/video-container";
 
 export default async function Video({
   params: { id },
@@ -39,6 +39,7 @@ export default async function Video({
     ..._count,
     ...rest,
     dislikes: 0,
+    isLiked: false
   }));
 
   return (

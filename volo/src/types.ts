@@ -1,4 +1,4 @@
-import { type Comment, type User, type Video } from "@prisma/client";
+import { type Comment, type Tag, type User, type Video } from "@prisma/client";
 
 export type UserPublic = Pick<User, "id" | "name" | "avatarUrl">;
 export type UserDetailedPublic = Pick<
@@ -25,4 +25,7 @@ export type VideoPublic = Pick<
   dislikes: number;
   author: UserPublic;
   comments: number;
+  isLiked: boolean;
 };
+
+export type TagReference = Pick<Tag, "id" | "type">;

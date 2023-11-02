@@ -1,6 +1,7 @@
-import { TagType, type Tag } from "@prisma/client";
+import { TagType } from "@prisma/client";
 import axios from "axios";
 import { env } from "~/env.mjs";
+import { type TagReference } from "~/types";
 
 export enum FeedbackType {
   READALL = "read_all",
@@ -55,7 +56,7 @@ const format = (cursor: Cursor): string => {
 
 axios.defaults.baseURL = env.GORSE_URL + "/api";
 
-const newItem = (itemId: string, tags: Tag[]): Item => ({
+const newItem = (itemId: string, tags: TagReference[]): Item => ({
   Categories: tags
     .filter((tag) => tag.type === TagType.Category)
     .map((tag) => tag.id),
@@ -65,7 +66,7 @@ const newItem = (itemId: string, tags: Tag[]): Item => ({
   Timestamp: new Date(),
 });
 
-const newUser = (userId: string, tags: Tag[]): User => ({
+const newUser = (userId: string, tags: TagReference[]): User => ({
   Labels: tags.filter((tag) => tag.type === TagType.Tag).map((tag) => tag.id),
   UserId: userId,
 });
@@ -81,20 +82,12 @@ const newFeedback = (
   UserId: userId,
 });
 
-export const insertVideo = async (id: string, tags: Tag[]) => {
-  try {
-    await axios.post("/item", newItem(id, tags));
-  } catch (e) {
-    throw e;
-  }
+export const insertVideo = async (id: string, tags: TagReference[]) => {
+  await axios.post("/item", newItem(id, tags));
 };
 
-export const insertUser = async (id: string, tags: Tag[]) => {
-  try {
-    await axios.post("/user", newUser(id, tags));
-  } catch (e) {
-    throw e;
-  }
+export const insertUser = async (id: string, tags: TagReference[]) => {
+  await axios.post("/user", newUser(id, tags));
 };
 
 export const insertFeedback = async (
@@ -102,11 +95,7 @@ export const insertFeedback = async (
   itemId: string,
   feedbackType: FeedbackType,
 ) => {
-  try {
-    await axios.post("/feedback", newFeedback(userId, itemId, feedbackType));
-  } catch (e) {
-    throw e;
-  }
+  await axios.post("/feedback", newFeedback(userId, itemId, feedbackType));
 };
 
 // categoryId: null -> all catgories
@@ -115,14 +104,10 @@ export const getRecommends = async (
   cursor: Cursor,
   categoryId?: string,
 ): Promise<string[]> => {
-  try {
-    const response = await axios.get<string[]>(
-      `/recommend/${userId}/${categoryId ?? ""}?${format(cursor)}`,
-    );
-    return response.data;
-  } catch (e) {
-    throw e;
-  }
+  const response = await axios.get<string[]>(
+    `/recommend/${userId}/${categoryId ?? ""}?${format(cursor)}`,
+  );
+  return response.data;
 };
 
 // categoryId: null -> all catgories
@@ -131,14 +116,10 @@ export const getLatests = async (
   cursor: Cursor,
   categoryId?: string,
 ): Promise<{ Id: string; Score: number }[]> => {
-  try {
-    const response = await axios.get<{ Id: string; Score: number }[]>(
-      `/latest/${categoryId ?? ""}?${format(cursor)}&user-id=${userId}`,
-    );
-    return response.data;
-  } catch (e) {
-    throw e;
-  }
+  const response = await axios.get<{ Id: string; Score: number }[]>(
+    `/latest/${categoryId ?? ""}?${format(cursor)}&user-id=${userId}`,
+  );
+  return response.data;
 };
 
 // categoryId: null -> all catgories
@@ -147,14 +128,10 @@ export const getPopulars = async (
   cursor: Cursor,
   categoryId?: string,
 ): Promise<{ Id: string; Score: number }[]> => {
-  try {
-    const response = await axios.get<{ Id: string; Score: number }[]>(
-      `/popular/${categoryId ?? ""}?${format(cursor)}&user-id=${userId}`,
-    );
-    return response.data;
-  } catch (e) {
-    throw e;
-  }
+  const response = await axios.get<{ Id: string; Score: number }[]>(
+    `/popular/${categoryId ?? ""}?${format(cursor)}&user-id=${userId}`,
+  );
+  return response.data;
 };
 
 export const getItemNeighbors = async (
@@ -162,26 +139,18 @@ export const getItemNeighbors = async (
   cursor: Cursor,
   categoryId?: string,
 ): Promise<{ Id: string; Score: number }[]> => {
-  try {
-    const response = await axios.get<{ Id: string; Score: number }[]>(
-      `/item/${itemId}/neighbors/${categoryId ?? ""}?${format(cursor)}`,
-    );
-    return response.data;
-  } catch (e) {
-    throw e;
-  }
+  const response = await axios.get<{ Id: string; Score: number }[]>(
+    `/item/${itemId}/neighbors/${categoryId ?? ""}?${format(cursor)}`,
+  );
+  return response.data;
 };
 
 export const getUserNeighbors = async (
   userId: string,
   cursor: Cursor,
 ): Promise<{ Id: string; Score: number }[]> => {
-  try {
-    const response = await axios.get<{ Id: string; Score: number }[]>(
-      `/user/${userId}/neighbors?${format(cursor)}`,
-    );
-    return response.data;
-  } catch (e) {
-    throw e;
-  }
+  const response = await axios.get<{ Id: string; Score: number }[]>(
+    `/user/${userId}/neighbors?${format(cursor)}`,
+  );
+  return response.data;
 };
