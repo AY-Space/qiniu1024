@@ -6,36 +6,9 @@ import {
 import { z } from "zod";
 import { createUploadParameters } from "~/server/lib/util/kodo";
 import { db } from "~/server/db";
+import { type CommentPublic } from "~/types";
 
 export const videoRouter = createTRPCRouter({
-  list: publicProcedure.query(() => {
-    return [];
-  }),
-  recommend: publicProcedure
-    .input(
-      z.object({
-        tag: z.array(z.string()).optional(),
-      }),
-    )
-    .query(async ({ ctx, input: { tag } }) => {
-      await ctx.db.video.findMany(
-        tag
-          ? {
-              where: {
-                tags: {
-                  some: {
-                    id: {
-                      in: tag,
-                    },
-                  },
-                },
-              },
-            }
-          : undefined,
-      );
-      return [];
-    }),
-
   create: protectedProcedure
     .input(
       z.object({
@@ -68,7 +41,7 @@ export const videoRouter = createTRPCRouter({
         videoId: z.string(),
       }),
     )
-    .query(async ({ input: { videoId } }) => {
+    .query(async ({ input: { videoId } }): Promise<CommentPublic[]> => {
       return await db.comment.findMany({
         where: {
           videoId,
@@ -78,6 +51,7 @@ export const videoRouter = createTRPCRouter({
           text: true,
           createdAt: true,
           likes: true,
+          dislikes: true,
           imgUrl: true,
           author: {
             select: {
