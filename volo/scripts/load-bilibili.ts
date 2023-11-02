@@ -7,6 +7,7 @@ import "dotenv/config";
 // import tagsJson from "./tags.json";
 // import videoTagJson from "./video_tags.json";
 // import commentJson from "./comments.json";
+// import raw_video_tags from "spider/video_tags.json";
 
 const main = async () => {
   // for (const user of usersJson) {
@@ -69,6 +70,21 @@ const main = async () => {
   //     where: { id: e.id },
   //     create: rest,
   //     update: {},
+  //   });
+  // }
+  // for (const e of raw_video_tags) {
+  //   if (e.bvid === "BV1Wj411d72A") continue;
+  //   await db.video.update({
+  //     where: {
+  //       id: e.bvid,
+  //     },
+  //     data: {
+  //       tags: {
+  //         connect: e.tags
+  //           .map((t) => ({ id: t.tag_id.toString() }))
+  //           .filter((t) => t.id != "0"),
+  //       },
+  //     },
   //   });
   // }
 };
