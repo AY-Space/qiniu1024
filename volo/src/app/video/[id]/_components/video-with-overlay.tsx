@@ -16,7 +16,7 @@ import { useState } from "react";
 import { Flex } from "~/app/_components/flex";
 import { type VideoPublic } from "~/types";
 import VideoPlayer from "./video-player";
-import { CommentDrawer } from "~/app/_components/comment-drawer";
+import { CommentDrawer } from "~/app/video/[id]/_components/comment-drawer";
 
 const VideoControls = ({
   videoId,
@@ -60,7 +60,7 @@ const VideoControls = ({
           <Typography>{dislikes}</Typography>
         </Stack>
         <Stack alignItems="center">
-          <IconButton size="lg" variant={buttonVariant}>
+          <IconButton size="lg" variant={buttonVariant} onClick={onComment}>
             <CommentIcon />
           </IconButton>
           <Typography>{comments}</Typography>

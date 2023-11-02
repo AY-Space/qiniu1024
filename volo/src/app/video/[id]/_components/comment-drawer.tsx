@@ -15,12 +15,12 @@ import {
   Container,
 } from "@mui/joy";
 import Image from "next/image";
-import { getBilibiliImageUrl } from "../utils";
+import { getBilibiliImageUrl } from "../../../utils";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 dayjs.extend(relativeTime);
 import { ThumbDown, ThumbUp } from "@mui/icons-material";
-import { type CommentPublic } from "../../types";
+import { type CommentPublic } from "../../../../types";
 import { api } from "~/trpc/react";
 
 const Comment = ({ comment }: { comment: CommentPublic }) => {
@@ -83,6 +83,7 @@ export const CommentDrawer = ({
   open,
   onClose,
 }: CommentDrawerProps) => {
+  console.log(videoId, open);
   return (
     <Drawer open={open} onClose={onClose} anchor="right">
       <ModalClose />
