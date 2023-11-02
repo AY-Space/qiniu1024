@@ -15,7 +15,7 @@ export const UploadTest = () => {
   };
 
   const getVideoUploadParameters =
-    api.video.getVideoUploadParameters.useMutation();
+    api.video.createVideoUploadParameters.useMutation();
 
   const onUploadClick = async () => {
     if (selectedFile) {

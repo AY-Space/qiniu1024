@@ -18,6 +18,7 @@ export type VideoPublic = Pick<
   "id" | "coverUrl" | "createdAt" | "description" | "title" | "url" | "views"
 > & {
   likes: number;
+  dislikes: number;
   author: UserPublic;
   comments: number;
 };
