@@ -33,7 +33,7 @@ export const env = createEnv({
     QINIU_ACCESS_KEY: z.string(),
     QINIU_SECRET_KEY: z.string(),
     QINIU_BUCKET: z.string(),
-    RECOMMEND_SERVER: z.string().url(),
+    GORSE_URL: z.string().url(),
   },
 
   /**
@@ -57,7 +57,7 @@ export const env = createEnv({
     QINIU_ACCESS_KEY: process.env.QINIU_ACCESS_KEY,
     QINIU_SECRET_KEY: process.env.QINIU_SECRET_KEY,
     QINIU_BUCKET: process.env.QINIU_BUCKET,
-    RECOMMEND_SERVER: process.env.RECOMMEND_SERVER,
+    GORSE_URL: process.env.GORSE_URL,
   },
   /**
    * Run `build` or `dev` with `SKIP_ENV_VALIDATION` to skip env validation. This is especially

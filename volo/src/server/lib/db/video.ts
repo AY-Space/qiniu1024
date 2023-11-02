@@ -1,13 +1,31 @@
-import { type PrismaClient } from "@prisma/client";
+import { type Video } from "@prisma/client";
+import { db } from "~/server/db";
 
-export const getVideoRecommendation = async (
-  prisma: PrismaClient,
+export const getVideos = async (
+  ids: string[],
   userId: string,
-  filters: {
-    initalVideoId?: string;
-    tags?: string[];
-  } = {},
-) => {
-  const data = await prisma.video.findMany({});
-  return data;
+): Promise<Video[]> => {
+  return await db.video.findMany({
+    where: {
+      id: {
+        in: ids,
+      },
+    },
+    include: {
+      tags: true,
+      author: true,
+      likes: {
+        where: {
+          userId: userId,
+        },
+      },
+      _count: {
+        select: {
+          comments: true,
+          likes: true,
+          collections: true,
+        },
+      },
+    },
+  });
 };
