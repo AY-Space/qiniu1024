@@ -36,7 +36,6 @@ export const UploadTest = () => {
       });
     }
   };
-
   return (
     <Stack alignItems="center" spacing={2}>
       <input type="file" onChange={onFileChange} />

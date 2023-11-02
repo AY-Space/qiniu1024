@@ -62,6 +62,23 @@ const updateCategories = async () => {
 
 const main = async () => {
   await updateCategories();
+  await db.video.update({
+    where: {
+      id: "BV1Wj411d72A",
+    },
+    data: {
+      tags: {
+        connect: [
+          {
+            id: "1",
+          },
+          {
+            id: "2",
+          },
+        ],
+      },
+    },
+  });
   // for (const user of usersJson) {
   //   console.log(user.id);
   //   await db.user.upsert({
@@ -141,5 +158,4 @@ const main = async () => {
   // }
 };
 
-// eslint-disable-next-line @typescript-eslint/no-floating-promises
-main();
+void main();

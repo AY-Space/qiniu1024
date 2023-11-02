@@ -7,7 +7,7 @@ import { VideoPlayer } from "./video-player";
 
 // VideoContainer Component
 export function VideoContainer({ videos }: { videos: Video[] }) {
-  const [mountedVideos, setMountedVideos] = useState(videos.slice(0, 10));
+  const [mountedVideos, setMountedVideos] = useState(videos.slice(0, 3));
   const [activeVideoId, setActiveVideoId] = useState<string | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const observer = useRef<IntersectionObserver>(null!);
@@ -53,7 +53,6 @@ export function VideoContainer({ videos }: { videos: Video[] }) {
     <Stack
       ref={containerRef}
       sx={{
-        height: "100%",
         scrollSnapType: "y mandatory",
         alignItems: "center",
         overflowY: "scroll",
@@ -63,15 +62,13 @@ export function VideoContainer({ videos }: { videos: Video[] }) {
         },
       }}
     >
-      <Stack>
-        {mountedVideos.map((video) => (
-          <VideoPlayer
-            key={video.id}
-            video={video}
-            active={video.id === activeVideoId}
-          />
-        ))}
-      </Stack>
+      {mountedVideos.map((video) => (
+        <VideoPlayer
+          key={video.id}
+          video={video}
+          active={video.id === activeVideoId}
+        />
+      ))}
     </Stack>
   );
 }

@@ -9,6 +9,7 @@ import CommentIcon from "@mui/icons-material/Comment";
 import ShareIcon from "@mui/icons-material/Share";
 import { useState } from "react";
 import { Flex } from "~/app/_components/flex";
+import { VideoJS } from "./video-js";
 
 const VideoControls = ({
   videoId,
@@ -87,11 +88,11 @@ export const VideoPlayer = ({ video, active }: VideoPlayerProps) => {
       justifyContent="center"
       alignItems="center"
       sx={{
-        height: "calc(100vh - var(--volo-app-bar-height))",
+        minHeight: "calc(100vh - var(--volo-app-bar-height))",
         scrollSnapAlign: "start",
         scrollSnapStop: "always",
         position: "relative",
-        maxWidth: "100%",
+        width: "100%",
         p: 2,
       }}
       spacing={2}
@@ -100,10 +101,26 @@ export const VideoPlayer = ({ video, active }: VideoPlayerProps) => {
         sx={{
           borderRadius: "lg",
           overflow: "hidden",
-          maxHeight: "100%",
+          height: "100%",
         }}
+        flex={1}
       >
-        <img alt="video cover" src={getBilibiliImageUrl(video.coverUrl)} />
+        {/* <img alt="video cover" src={getBilibiliImageUrl(video.coverUrl)} /> */}
+        <VideoJS
+          options={{
+            sources: [
+              {
+                src: video.url,
+                type: "video/mp4",
+              },
+            ],
+            controls: true,
+            loop: true,
+            fluid: false,
+            fill: true,
+          }}
+          playing={active}
+        />
       </Stack>
       <VideoControls
         comments={0}
