@@ -43,6 +43,7 @@ const config = {
       },
     ],
     "@typescript-eslint/no-empty-function": "warn",
+    "no-useless-catch": "warn",
   },
 };
 
