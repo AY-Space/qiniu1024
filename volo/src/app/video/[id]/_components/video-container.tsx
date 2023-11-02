@@ -2,7 +2,7 @@
 
 import { Stack } from "@mui/joy";
 import { useEffect, useRef, useState } from "react";
-import { VideoPlayer } from "./video-player";
+import { VideoWithOverlay } from "./video-with-overlay";
 import { type VideoPublic } from "~/types";
 
 // VideoContainer Component
@@ -63,7 +63,7 @@ export function VideoContainer({ videos }: { videos: VideoPublic[] }) {
       }}
     >
       {mountedVideos.map((video) => (
-        <VideoPlayer
+        <VideoWithOverlay
           key={video.id}
           video={video}
           active={video.id === activeVideoId}
