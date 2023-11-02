@@ -1,0 +1,44 @@
+version: "3"
+services:
+  app:
+    build:
+      context: ./volo
+      dockerfile: ./volo/Dockerfile
+    restart: always
+    ports:
+      - "3000:3000"
+    depends_on:
+      - recommend
+
+  recommend:
+    image: zhenghaoz/gorse-in-one:latest
+    restart: always
+    ports:
+      - "8088:8088"
+    command: >
+      -c /etc/gorse/config.toml
+      --log-path /var/log/gorse/master.log
+      --cache-path /var/lib/gorse/master_cache.data
+    volumes:
+      - ./gorse/example.config.toml:/etc/gorse/config.toml # important !!
+    
+  cache:
+    image: redis:alpine
+    restart: always
+    ports:
+      - "6379:6379"
+    volumes:
+      - ./redis.conf:/usr/local/etc/redis/redis.conf
+    command: redis-server /usr/local/etc/redis/redis.conf
+
+  db:
+    image: postgres:alpine
+    restart: always
+    environment:
+      POSTGRES_USER: volo
+      POSTGRES_PASSWORD: volo
+      POSTGRES_DB: volo
+    volumes:
+      - ./gorse/schema.sql.sql:/docker-entrypoint-initdb.d/schema.sql
+    ports:
+      - "5432:5432"
