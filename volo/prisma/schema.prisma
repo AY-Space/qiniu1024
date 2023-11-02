@@ -39,7 +39,7 @@ model User {
   videos      Video[]
   comments    Comment[]
   likes       Like[]
-  userTags    Tag[]
+  tags        Tag[]
   followers   Follow[]     @relation("follower")
   followings  Follow[]     @relation("following")
   collections Collection[]
@@ -72,7 +72,7 @@ model Video {
   likes       Like[] // 点赞
   collections Collection[] // 收藏
 
-  videoTags Tag[] // 视频标签
+  tags Tag[] // 视频标签
 }
 
 model Comment {
