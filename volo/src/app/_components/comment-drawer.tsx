@@ -3,15 +3,14 @@
 
 import { Avatar, Box, Button, IconButton, Stack, Typography } from "@mui/joy";
 import Image from "next/image";
-import { type Comment, type User } from "@prisma/client";
 import { getBilibiliImageUrl } from "../utils";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 dayjs.extend(relativeTime);
 import { ThumbDown, ThumbUp } from "@mui/icons-material";
-import { CommentPublic } from "../../types";
+import { type CommentPublic } from "../../types";
 
-export function CommentComponent({ comment }: { comment: CommentPublic }) {
+const Comment = ({ comment }: { comment: CommentPublic }) => {
   return (
     <Stack direction="row" gap={1}>
       {comment.author.avatarUrl && (
@@ -48,4 +47,9 @@ export function CommentComponent({ comment }: { comment: CommentPublic }) {
       </Stack>
     </Stack>
   );
+};
+
+export interface CommentDrawerProps {
+  videoId: string;
 }
+export const CommentDrawer = ({ videoId }: CommentDrawerProps) => {};
