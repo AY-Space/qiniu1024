@@ -19,17 +19,13 @@ export const videoRouter = createTRPCRouter({
         videoId: z.string(),
       }),
     )
-    .query(async ({ input: { videoId } }): Promise<CommentPublic[]> => {
-      return await db.comment.findMany({
-        where: {
-          videoId,
-        },
+    .query(async ({ input: { videoId }, ctx }): Promise<CommentPublic[]> => {
+      const currentUserId = ctx.session?.user.id;
+      const comments = await db.comment.findMany({
         select: {
           id: true,
           text: true,
           createdAt: true,
-          likes: true,
-          dislikes: true,
           imgUrl: true,
           author: {
             select: {
@@ -38,8 +34,34 @@ export const videoRouter = createTRPCRouter({
               avatarUrl: true,
             },
           },
+          _count: {
+            select: {
+              likedUsers: {
+                where: {
+                  id: currentUserId,
+                },
+              },
+              dislikedUsers: {
+                where: {
+                  id: currentUserId,
+                },
+              },
+            },
+          },
+        },
+        where: {
+          videoId,
         },
       });
+      return comments.map(
+        ({ _count: { likedUsers, dislikedUsers }, ...comment }) => ({
+          ...comment,
+          currentUser: {
+            liked: likedUsers > 0,
+            disliked: dislikedUsers > 0,
+          },
+        }),
+      );
     }),
 
   like: protectedProcedure

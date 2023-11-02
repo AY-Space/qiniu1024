@@ -8,7 +8,7 @@ export type UserDetailedPublic = Pick<
 
 export type CommentPublic = Pick<
   Comment,
-  "id" | "text" | "createdAt" | "imgUrl" | "likes" | "dislikes"
+  "id" | "text" | "createdAt" | "imgUrl"
 > & {
   author: UserPublic;
   currentUser?: {
