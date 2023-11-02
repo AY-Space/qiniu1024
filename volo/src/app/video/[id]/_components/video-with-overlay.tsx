@@ -77,6 +77,30 @@ const VideoControls = ({
   );
 };
 
+const VideoOverlay = ({ video }: { video: VideoPublic }) => {
+  return (
+    <Stack spacing={2} p={2}>
+      <Flex spacing={2} alignItems="center">
+        <Avatar
+          src={
+            video.author.avatarUrl !== null
+              ? getBilibiliImageUrl(video.author.avatarUrl)
+              : undefined
+          }
+        />
+        <Stack>
+          <Typography level="title-md">{video.author.name}</Typography>
+          <Typography level="body-xs">
+            {video.createdAt.toLocaleDateString()}
+          </Typography>
+        </Stack>
+      </Flex>
+      <Typography level="title-md">{video.title}</Typography>
+      <Typography level="body-md">{video.description}</Typography>
+    </Stack>
+  );
+};
+
 export interface VideoWithOverlayProps {
   video: VideoPublic;
   active: boolean;
@@ -100,31 +124,12 @@ export const VideoWithOverlay = ({ video, active }: VideoWithOverlayProps) => {
       }}
       spacing={2}
     >
-      <Stack
-        sx={{
-          height: "100%",
-        }}
-        flex={1}
-      >
-        <VideoPlayer
-          playing={active}
-          src={video.url}
-          loop
-          details={
-            <Stack spacing={2}>
-              <Flex>
-                <Avatar
-                  src={
-                    video.author.avatarUrl !== null
-                      ? getBilibiliImageUrl(video.author.avatarUrl)
-                      : undefined
-                  }
-                />
-              </Flex>
-            </Stack>
-          }
-        />
-      </Stack>
+      <VideoPlayer
+        playing={active}
+        src={video.url}
+        loop
+        overlay={<VideoOverlay video={video} />}
+      />
       <VideoControls
         comments={video.comments}
         likes={video.likes}

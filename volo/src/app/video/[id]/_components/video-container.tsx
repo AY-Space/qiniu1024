@@ -7,7 +7,7 @@ import { type VideoPublic } from "~/types";
 
 // VideoContainer Component
 export function VideoContainer({ videos }: { videos: VideoPublic[] }) {
-  const [mountedVideos, setMountedVideos] = useState(videos.slice(0, 3));
+  const [mountedVideos, setMountedVideos] = useState(videos.slice(0, 10));
   const [activeVideoId, setActiveVideoId] = useState<string | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const observer = useRef<IntersectionObserver>(null!);
