@@ -1,12 +1,12 @@
 "use client";
 
 import { Stack } from "@mui/joy";
-import { type Video } from "@prisma/client";
 import { useEffect, useRef, useState } from "react";
 import { VideoPlayer } from "./video-player";
+import { type VideoPublic } from "~/types";
 
 // VideoContainer Component
-export function VideoContainer({ videos }: { videos: Video[] }) {
+export function VideoContainer({ videos }: { videos: VideoPublic[] }) {
   const [mountedVideos, setMountedVideos] = useState(videos.slice(0, 3));
   const [activeVideoId, setActiveVideoId] = useState<string | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);

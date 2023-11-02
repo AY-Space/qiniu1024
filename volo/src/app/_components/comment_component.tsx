@@ -9,14 +9,9 @@ import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 dayjs.extend(relativeTime);
 import { ThumbDown, ThumbUp } from "@mui/icons-material";
+import { CommentPublic } from "../../types";
 
-export function CommentComponent({
-  comment,
-}: {
-  comment: Comment & {
-    author: Pick<User, "id" | "name" | "avatarUrl">;
-  };
-}) {
+export function CommentComponent({ comment }: { comment: CommentPublic }) {
   return (
     <Stack direction="row" gap={1}>
       {comment.author.avatarUrl && (

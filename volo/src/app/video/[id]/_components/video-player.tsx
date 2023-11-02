@@ -1,7 +1,6 @@
 "use client";
 
 import { IconButton, IconButtonProps, Stack, Typography } from "@mui/joy";
-import { type User, type Video } from "@prisma/client";
 import { getBilibiliImageUrl } from "~/app/utils";
 import ThumbUpIcon from "@mui/icons-material/ThumbUp";
 import ThumbDownIcon from "@mui/icons-material/ThumbDown";
@@ -10,6 +9,7 @@ import ShareIcon from "@mui/icons-material/Share";
 import { useState } from "react";
 import { Flex } from "~/app/_components/flex";
 import { VideoJS } from "./video-js";
+import { VideoPublic } from "~/types";
 
 const VideoControls = ({
   videoId,
@@ -71,11 +71,7 @@ const VideoControls = ({
 };
 
 export interface VideoPlayerProps {
-  video: Omit<Video, "authorId"> & {
-    author: Pick<User, "id" | "name" | "avatarUrl">;
-    comments: number;
-    likes: number;
-  };
+  video: VideoPublic;
   active: boolean;
 }
 
