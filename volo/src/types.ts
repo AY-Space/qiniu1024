@@ -11,6 +11,10 @@ export type CommentPublic = Pick<
   "id" | "text" | "createdAt" | "imgUrl" | "likes" | "dislikes"
 > & {
   author: UserPublic;
+  currentUser: {
+    liked: boolean;
+    disliked: boolean;
+  };
 };
 
 export type VideoPublic = Pick<
