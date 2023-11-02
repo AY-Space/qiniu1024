@@ -39,7 +39,7 @@ model User {
   videos      Video[]
   comments    Comment[]
   likes       Like[]
-  userTags    UserTag[]
+  userTags    Tag[]
   followers   Follow[]     @relation("follower")
   followings  Follow[]     @relation("following")
   collections Collection[]
@@ -72,7 +72,7 @@ model Video {
   likes       Like[] // 点赞
   collections Collection[] // 收藏
 
-  videoTags VideoTag[] // 视频标签
+  videoTags Tag[] // 视频标签
 }
 
 model Comment {
@@ -115,31 +115,6 @@ model Tag {
   name        String
   description String?
   createdAt   DateTime @default(now())
-
-  videoTags VideoTag[]
-  userTags  UserTag[]
-}
-
-model UserTag {
-  createdAt DateTime @default(now())
-  userId    String
-  tagId     String
-  score     BigInt // user 的 Tag 分数：点赞数  + 评论数 + 收藏数*2，用定时任务更新
-
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
-  tag  Tag  @relation(fields: [tagId], references: [id], onDelete: Cascade)
-
-  @@id([userId, tagId])
-}
-
-model VideoTag {
-  createdAt DateTime @default(now())
-  videoId   String
-  tagId     String
-  score     BigInt // video 的 tag 分数：点赞数 + 评论数 + 收藏数*2，用定时任务更新
-
-  video Video @relation(fields: [videoId], references: [id], onDelete: Cascade)
-  tag   Tag   @relation(fields: [tagId], references: [id], onDelete: Cascade)
-
-  @@id([videoId, tagId])
+  users       User[]
+  videos      Video[]
 }
