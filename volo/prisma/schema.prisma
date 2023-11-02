@@ -30,7 +30,7 @@ model User {
   id        String  @id @default(cuid())
   name      String? @db.VarChar(30)
   email     String  @unique
-  password  String  @default("")
+  password  String?
   bio       String?
   avatarUrl String?
   bannerUrl String?
