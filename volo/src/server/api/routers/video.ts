@@ -36,16 +36,24 @@ export const videoRouter = createTRPCRouter({
           },
           _count: {
             select: {
-              likedUsers: {
-                where: {
-                  id: currentUserId,
-                },
-              },
-              dislikedUsers: {
-                where: {
-                  id: currentUserId,
-                },
-              },
+              likedUsers: true, // Count of all likes
+              dislikedUsers: true, // Count of all dislikes
+            },
+          },
+          likedUsers: {
+            where: {
+              id: currentUserId,
+            },
+            select: {
+              id: true,
+            },
+          },
+          dislikedUsers: {
+            where: {
+              id: currentUserId,
+            },
+            select: {
+              id: true,
             },
           },
         },
@@ -53,13 +61,16 @@ export const videoRouter = createTRPCRouter({
           videoId,
         },
       });
+
       return comments.map(
-        ({ _count: { likedUsers, dislikedUsers }, ...comment }) => ({
+        ({ likedUsers, dislikedUsers, _count, ...comment }) => ({
           ...comment,
           currentUser: {
-            liked: likedUsers > 0,
-            disliked: dislikedUsers > 0,
+            liked: likedUsers.length > 0,
+            disliked: dislikedUsers.length > 0,
           },
+          likes: _count.likedUsers,
+          dislikes: _count.dislikedUsers,
         }),
       );
     }),

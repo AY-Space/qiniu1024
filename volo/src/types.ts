@@ -10,6 +10,8 @@ export type CommentPublic = Pick<
   Comment,
   "id" | "text" | "createdAt" | "imgUrl"
 > & {
+  likes: number;
+  dislikes: number;
   author: UserPublic;
   currentUser?: {
     liked: boolean;
