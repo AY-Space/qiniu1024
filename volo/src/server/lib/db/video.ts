@@ -1,12 +1,13 @@
-import { db } from "~/server/db";
+import { type PrismaClient } from "@prisma/client";
 import { type VideoPublic } from "~/types";
 
 export const getVideos = async (
+  prisma: PrismaClient,
   ids: string[],
-  userId: string,
+  userId?: string,
 ): Promise<VideoPublic[]> => {
   return (
-    await db.video.findMany({
+    await prisma.video.findMany({
       where: {
         id: {
           in: ids,

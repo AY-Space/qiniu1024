@@ -1,5 +1,5 @@
 import { TagType } from "@prisma/client";
-import axios from "axios";
+import axios_ from "axios";
 import { env } from "~/env.mjs";
 import { type TagReference } from "~/types";
 
@@ -54,7 +54,12 @@ const format = (cursor: Cursor): string => {
   return `n=${setPageSize(cursor.limit)}&offset=${cursor.offset}`;
 };
 
-axios.defaults.baseURL = env.GORSE_URL + "/api";
+const axios = axios_.create({
+  baseURL: env.GORSE_URL + "/api",
+  headers: {
+    "Content-Type": "application/json",
+  },
+});
 
 const newItem = (itemId: string, tags: TagReference[]): Item => ({
   Categories: tags
@@ -82,26 +87,26 @@ const newFeedback = (
   UserId: userId,
 });
 
-export const insertVideo = async (id: string, tags: TagReference[]) => {
-  await axios.post("/item", newItem(id, tags));
+export const insertVideo = async (videoId: string, tags: TagReference[]) => {
+  await axios.post("/item", newItem(videoId, tags));
 };
 
-export const insertUser = async (id: string, tags: TagReference[]) => {
-  await axios.post("/user", newUser(id, tags));
+export const insertUser = async (userId: string, tags: TagReference[]) => {
+  await axios.post("/user", newUser(userId, tags));
 };
 
 export const insertFeedback = async (
   userId: string,
-  itemId: string,
+  videoId: string,
   feedbackType: FeedbackType,
 ) => {
-  await axios.post("/feedback", newFeedback(userId, itemId, feedbackType));
+  await axios.post("/feedback", newFeedback(userId, videoId, feedbackType));
 };
 
 // categoryId: null -> all catgories
 export const getRecommends = async (
-  userId: string,
   cursor: Cursor,
+  userId: string,
   categoryId?: string,
 ): Promise<string[]> => {
   const response = await axios.get<string[]>(
@@ -112,24 +117,26 @@ export const getRecommends = async (
 
 // categoryId: null -> all catgories
 export const getLatests = async (
-  userId: string,
   cursor: Cursor,
+  userId?: string,
   categoryId?: string,
 ): Promise<{ Id: string; Score: number }[]> => {
+  const userQuery = userId ? `user-id=${userId}` : "";
   const response = await axios.get<{ Id: string; Score: number }[]>(
-    `/latest/${categoryId ?? ""}?${format(cursor)}&user-id=${userId}`,
+    `/latest/${categoryId ?? ""}?${format(cursor)}&${userQuery}`,
   );
   return response.data;
 };
 
 // categoryId: null -> all catgories
 export const getPopulars = async (
-  userId: string,
   cursor: Cursor,
+  userId?: string,
   categoryId?: string,
 ): Promise<{ Id: string; Score: number }[]> => {
+  const userQuery = userId ? `user-id=${userId}` : "";
   const response = await axios.get<{ Id: string; Score: number }[]>(
-    `/popular/${categoryId ?? ""}?${format(cursor)}&user-id=${userId}`,
+    `/popular/${categoryId ?? ""}?${format(cursor)}&${userQuery}`,
   );
   return response.data;
 };

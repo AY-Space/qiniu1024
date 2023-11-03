@@ -1,6 +1,7 @@
 import { userInfoRouter } from "~/server/api/routers/user";
-import { createTRPCRouter } from "~/server/api/trpc";
 import { videoRouter } from "~/server/api/routers/video";
+import { createTRPCRouter } from "~/server/api/trpc";
+import { gorseRouter } from "./routers/recommend";
 
 /**
  * This is the primary router for your server.
@@ -10,6 +11,7 @@ import { videoRouter } from "~/server/api/routers/video";
 export const appRouter = createTRPCRouter({
   user: userInfoRouter,
   video: videoRouter,
+  recommend: gorseRouter,
 });
 
 // export type definition of API

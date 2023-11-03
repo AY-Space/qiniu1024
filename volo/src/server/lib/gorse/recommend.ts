@@ -1,39 +1,46 @@
+import { type PrismaClient } from "@prisma/client";
 import { type VideoPublic } from "~/types";
-import { getVideos } from "../lib/db/video";
-import { getLatests, getPopulars, getRecommends, type Cursor } from "./gorse";
+import { getVideos } from "../db/video";
+import { getLatests, getPopulars, getRecommends, type Cursor } from "./base";
 
 // categoryId: null -> all catgories
 export const getLatest = async (
-  userId: string,
+  prisma: PrismaClient,
   cursor: Cursor,
+  userId?: string,
   categoryId?: string,
 ): Promise<VideoPublic[]> => {
   return await getVideos(
-    (await getLatests(userId, cursor, categoryId)).map((v) => v.Id),
+    prisma,
+    (await getLatests(cursor, userId, categoryId)).map((v) => v.Id),
     userId,
   );
 };
 
 // categoryId: null -> all catgories
 export const getPopular = async (
-  userId: string,
+  prisma: PrismaClient,
   cursor: Cursor,
+  userId?: string,
   categoryId?: string,
 ): Promise<VideoPublic[]> => {
   return await getVideos(
-    (await getPopulars(userId, cursor, categoryId)).map((v) => v.Id),
+    prisma,
+    (await getPopulars(cursor, userId, categoryId)).map((v) => v.Id),
     userId,
   );
 };
 
 // categoryId: null -> all catgories
 export const getRecommend = async (
-  userId: string,
+  prisma: PrismaClient,
   cursor: Cursor,
+  userId: string,
   categoryId?: string,
 ): Promise<VideoPublic[]> => {
   return await getVideos(
-    await getRecommends(userId, cursor, categoryId),
+    prisma,
+    await getRecommends(cursor, userId, categoryId),
     userId,
   );
 };
