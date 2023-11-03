@@ -14,6 +14,10 @@ import {
   Container,
   DialogTitle,
   Divider,
+  Button,
+  Textarea,
+  FormControl,
+  FormLabel,
 } from "@mui/joy";
 import Image from "next/image";
 import { getBilibiliImageUrl } from "../../../utils";
@@ -23,6 +27,7 @@ dayjs.extend(relativeTime);
 import { ThumbDown, ThumbUp } from "@mui/icons-material";
 import { type CommentPublic } from "../../../../types";
 import { api } from "~/trpc/react";
+import { useState } from "react";
 
 const Comment = ({ comment }: { comment: CommentPublic }) => {
   return (
@@ -84,13 +89,45 @@ export const CommentDrawer = ({
   open,
   onClose,
 }: CommentDrawerProps) => {
+  const [text, setText] = useState("");
   return (
     <Drawer open={open} onClose={onClose} anchor="right">
-      <DialogTitle>评论</DialogTitle>
       <ModalClose />
       <Container>
+        <DialogTitle sx={{ marginTop: 2 }}>评论</DialogTitle>
         <Divider sx={{ marginTop: 2, marginBottom: 2 }} />
         <CommentList videoId={videoId} />
+      </Container>
+      <Container sx={{ marginBottom: 2 }}>
+        <FormControl>
+          <FormLabel>Your comment</FormLabel>
+          <Textarea
+            placeholder="呐，现在何感想？"
+            onChange={(event) => setText(event.target.value)}
+            endDecorator={
+              <Box display="flex" flexDirection="column">
+                <Typography level="body-xs" sx={{ ml: "auto" }}>
+                  {text.length} 字
+                </Typography>
+                <Box
+                  sx={{
+                    display: "flex",
+                    gap: "var(--Textarea-paddingBlock)",
+                    pt: "var(--Textarea-paddingBlock)",
+                    borderTop: "1px solid",
+                    borderColor: "divider",
+                    flex: "auto",
+                  }}
+                >
+                  <Button sx={{ ml: "auto" }}>发送</Button>
+                </Box>
+              </Box>
+            }
+            sx={{
+              minWidth: 300,
+            }}
+          />
+        </FormControl>
       </Container>
     </Drawer>
   );
