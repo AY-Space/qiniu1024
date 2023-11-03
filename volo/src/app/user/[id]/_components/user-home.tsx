@@ -1,3 +1,5 @@
+"use client";
+
 import {
   Avatar,
   Box,
@@ -19,6 +21,8 @@ import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
 import Link from "next/link";
 import { type VideoPublic, type UserDetailedPublic } from "~/types";
 import { Add, VideoLibrary } from "@mui/icons-material";
+import { useState } from "react";
+import { CreateCollectionModal } from "~/app/_components/create-collection-modal";
 export interface UserHomeProps {
   user: UserDetailedPublic;
   uploadedVideos: VideoPublic[];
@@ -196,6 +200,8 @@ const CollectionTabPanel = ({
   userId: string;
   value: number;
 }) => {
+  const [showCreateCollection, setShowCreateCollection] = useState(false);
+
   return (
     <TabPanel value={value}>
       <Tabs
@@ -204,7 +210,11 @@ const CollectionTabPanel = ({
         sx={{ minWidth: 300, height: 160 }}
       >
         <TabList>
-          <Button variant="plain" startDecorator={<Add />}>
+          <Button
+            variant="plain"
+            startDecorator={<Add />}
+            onClick={() => setShowCreateCollection(true)}
+          >
             创建收藏夹
           </Button>
           <Tab sx={{ display: "flex", alignItems: "space-between" }}>
@@ -237,6 +247,10 @@ const CollectionTabPanel = ({
           <b>Third</b> tab panel
         </TabPanel>
       </Tabs>
+      <CreateCollectionModal
+        showCreateCollection={showCreateCollection}
+        setShowCreateCollection={setShowCreateCollection}
+      />
     </TabPanel>
   );
 };

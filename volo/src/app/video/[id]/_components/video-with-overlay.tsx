@@ -31,6 +31,7 @@ import { type VideoDetailedPublic } from "~/types";
 import VideoPlayer from "./video-player";
 import { CommentDrawer } from "~/app/video/[id]/_components/comment-drawer";
 import { Add } from "@mui/icons-material";
+import { CreateCollectionModal } from "~/app/_components/create-collection-modal";
 
 const VideoControls = ({
   videoId,
@@ -120,6 +121,7 @@ export interface VideoWithOverlayProps {
 export const VideoWithOverlay = ({ video, active }: VideoWithOverlayProps) => {
   const [showComments, setShowComments] = useState(false);
   const [showCollection, setShowCollection] = useState(false);
+  const [showCreateCollection, setShowCreateCollection] = useState(false);
 
   return (
     <Flex
@@ -174,7 +176,7 @@ export const VideoWithOverlay = ({ video, active }: VideoWithOverlayProps) => {
           <DialogContent>
             <List>
               <ListItem>
-                <ListItemButton>
+                <ListItemButton onClick={() => setShowCreateCollection(true)}>
                   <ListItemDecorator>
                     <Add></Add>
                   </ListItemDecorator>
@@ -215,6 +217,10 @@ export const VideoWithOverlay = ({ video, active }: VideoWithOverlayProps) => {
               取消
             </Button>
           </DialogActions>
+          <CreateCollectionModal
+            showCreateCollection={showCreateCollection}
+            setShowCreateCollection={setShowCreateCollection}
+          />
         </ModalDialog>
       </Modal>
     </Flex>
