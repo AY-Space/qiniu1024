@@ -63,15 +63,21 @@ export const videoRouter = createTRPCRouter({
       });
 
       return comments.map(
-        ({ likedUsers, dislikedUsers, _count, ...comment }) => ({
-          ...comment,
-          currentUser: {
-            liked: likedUsers.length > 0,
-            disliked: dislikedUsers.length > 0,
-          },
-          likes: _count.likedUsers,
-          dislikes: _count.dislikedUsers,
-        }),
+        ({ likedUsers, dislikedUsers, _count, ...comment }) => {
+          const currentUser =
+            currentUserId !== undefined
+              ? {
+                  liked: likedUsers.length > 0,
+                  disliked: dislikedUsers.length > 0,
+                }
+              : null;
+          return {
+            ...comment,
+            currentUser,
+            likes: _count.likedUsers,
+            dislikes: _count.dislikedUsers,
+          };
+        },
       );
     }),
 

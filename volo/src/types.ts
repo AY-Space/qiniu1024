@@ -13,10 +13,10 @@ export type CommentPublic = Pick<
   likes: number;
   dislikes: number;
   author: UserPublic;
-  currentUser?: {
+  currentUser: {
     liked: boolean;
     disliked: boolean;
-  };
+  } | null;
 };
 
 export type VideoPublic = Pick<
