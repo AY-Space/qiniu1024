@@ -1,5 +1,5 @@
-import { type VideoDetailedPublic } from "~/types";
 import { type PrismaClient } from "@prisma/client";
+import { type VideoDetailedPublic } from "~/types";
 import { getVideos } from "../db/video";
 import { getLatests, getPopulars, getRecommends, type Cursor } from "./base";
 

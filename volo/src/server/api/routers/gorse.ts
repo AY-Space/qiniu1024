@@ -20,7 +20,7 @@ import {
   getPopular,
   getRecommend,
 } from "~/server/lib/gorse/recommend";
-import { FeedbackType, type VideoPublic } from "~/types";
+import { FeedbackType, type VideoDetailedPublic } from "~/types";
 
 const Cursor = z.object({
   limit: z.number(),
@@ -43,7 +43,7 @@ const TagRef = z.object({
 export const gorseRouter = createTRPCRouter({
   recommend: protectedProcedure
     .input(Query)
-    .query(async ({ ctx, input }): Promise<VideoPublic[]> => {
+    .query(async ({ ctx, input }): Promise<VideoDetailedPublic[]> => {
       return await getRecommend(
         ctx.db,
         input.cursor,
@@ -54,7 +54,7 @@ export const gorseRouter = createTRPCRouter({
 
   popular: publicProcedure
     .input(Query)
-    .query(async ({ ctx, input }): Promise<VideoPublic[]> => {
+    .query(async ({ ctx, input }): Promise<VideoDetailedPublic[]> => {
       return await getPopular(
         ctx.db,
         input.cursor,
@@ -64,7 +64,7 @@ export const gorseRouter = createTRPCRouter({
     }),
   latest: publicProcedure
     .input(Query)
-    .query(async ({ ctx, input }): Promise<VideoPublic[]> => {
+    .query(async ({ ctx, input }): Promise<VideoDetailedPublic[]> => {
       return await getLatest(
         ctx.db,
         input.cursor,
