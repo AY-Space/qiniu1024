@@ -44,10 +44,13 @@ export const getVideos = async (
         },
       },
     })
-  ).map(({ _count, likes, ...rest }) => ({
-    ..._count,
-    ...rest,
-    isLiked: likes.length > 0,
-    dislikes: 0,
-  }));
+  ).map(({ _count, likes, ...rest }) => {
+    const currentUser =
+      userId !== undefined ? { liked: likes.length > 0 } : null;
+    return {
+      ..._count,
+      ...rest,
+      currentUser,
+    };
+  });
 };

@@ -9,7 +9,6 @@ import {
 } from "@mui/joy";
 import { getBilibiliImageUrl } from "~/app/utils";
 import ThumbUpIcon from "@mui/icons-material/ThumbUp";
-import ThumbDownIcon from "@mui/icons-material/ThumbDown";
 import CommentIcon from "@mui/icons-material/Comment";
 import ShareIcon from "@mui/icons-material/Share";
 import { useState } from "react";
@@ -21,16 +20,13 @@ import { CommentDrawer } from "~/app/video/[id]/_components/comment-drawer";
 const VideoControls = ({
   videoId,
   likes,
-  dislikes,
   comments,
   variant,
   onLike,
-  onDislike,
   onComment,
 }: {
   videoId: string;
   likes: number;
-  dislikes: number;
   comments: number;
   variant: "side" | "overlay";
   onLike: () => void;
@@ -52,12 +48,6 @@ const VideoControls = ({
             <ThumbUpIcon />
           </IconButton>
           <span>{likes}</span>
-        </Stack>
-        <Stack alignItems="center">
-          <IconButton size="lg" variant={buttonVariant}>
-            <ThumbDownIcon />
-          </IconButton>
-          <Typography>{dislikes}</Typography>
         </Stack>
         <Stack alignItems="center">
           <IconButton size="lg" variant={buttonVariant} onClick={onComment}>
@@ -133,7 +123,6 @@ export const VideoWithOverlay = ({ video, active }: VideoWithOverlayProps) => {
       <VideoControls
         comments={video.comments}
         likes={video.likes}
-        dislikes={video.dislikes}
         videoId={video.id}
         variant="side"
         onComment={() => setShowComments(true)}

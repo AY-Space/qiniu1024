@@ -32,10 +32,11 @@ export type VideoDetailedPublic = Pick<
   "id" | "coverUrl" | "createdAt" | "description" | "title" | "url" | "views"
 > & {
   likes: number;
-  dislikes: number;
   author: UserPublic;
   comments: number;
-  isLiked: boolean;
+  currentUser: {
+    liked: boolean;
+  } | null;
 };
 
 export type TagReference = Pick<Tag, "id" | "type">;
