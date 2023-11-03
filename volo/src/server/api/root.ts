@@ -1,7 +1,7 @@
 import { userInfoRouter } from "~/server/api/routers/user";
 import { videoRouter } from "~/server/api/routers/video";
 import { createTRPCRouter } from "~/server/api/trpc";
-import { gorseRouter } from "./routers/recommend";
+import { gorseRouter } from "./routers/gorse";
 
 /**
  * This is the primary router for your server.

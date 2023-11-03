@@ -1,6 +1,6 @@
 import { type PrismaClient } from "@prisma/client";
+import { getVideos } from "~/server/lib/db/video";
 import { type VideoPublic } from "~/types";
-import { getVideos } from "../db/video";
 import { getLatests, getPopulars, getRecommends, type Cursor } from "./base";
 
 // categoryId: null -> all catgories
