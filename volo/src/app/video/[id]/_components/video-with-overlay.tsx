@@ -14,7 +14,7 @@ import CommentIcon from "@mui/icons-material/Comment";
 import ShareIcon from "@mui/icons-material/Share";
 import { useState } from "react";
 import { Flex } from "~/app/_components/flex";
-import { type VideoPublic } from "~/types";
+import { type VideoDetailedPublic } from "~/types";
 import VideoPlayer from "./video-player";
 import { CommentDrawer } from "~/app/video/[id]/_components/comment-drawer";
 
@@ -77,7 +77,7 @@ const VideoControls = ({
   );
 };
 
-const VideoOverlay = ({ video }: { video: VideoPublic }) => {
+const VideoOverlay = ({ video }: { video: VideoDetailedPublic }) => {
   return (
     <Stack spacing={2} p={2}>
       <Flex spacing={2} alignItems="center">
@@ -102,7 +102,7 @@ const VideoOverlay = ({ video }: { video: VideoPublic }) => {
 };
 
 export interface VideoWithOverlayProps {
-  video: VideoPublic;
+  video: VideoDetailedPublic;
   active: boolean;
 }
 

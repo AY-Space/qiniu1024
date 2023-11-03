@@ -32,7 +32,7 @@ const Comment = ({ comment }: { comment: CommentPublic }) => {
       )}
       <Stack spacing={1}>
         <Stack>
-          <Typography level="title-lg">{comment.author.name}</Typography>
+          <Typography level="title-md">{comment.author.name}</Typography>
           <Typography level="body-xs">
             {dayjs(comment.createdAt).fromNow()}
           </Typography>
@@ -53,7 +53,7 @@ const Comment = ({ comment }: { comment: CommentPublic }) => {
             <ThumbUp />
             <Typography>{comment.likes}</Typography>
           </IconButton>
-          <IconButton size="sm" style={{ gap: 2 }}>
+          <IconButton size="sm">
             <ThumbDown />
             <Typography>{comment.dislikes}</Typography>
           </IconButton>

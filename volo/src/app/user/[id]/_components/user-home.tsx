@@ -12,17 +12,14 @@ import {
   Tabs,
   Typography,
 } from "@mui/joy";
-import { type Video, type User } from "@prisma/client";
 import { Flex } from "~/app/_components/flex";
 import { getBilibiliImageUrl } from "~/app/utils";
 import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
 import Link from "next/link";
+import { type VideoPublic, type UserDetailedPublic } from "~/types";
 export interface UserHomeProps {
-  user: Pick<User, "id" | "name" | "avatarUrl" | "bio" | "bannerUrl"> & {
-    followings: number;
-    followers: number;
-  };
-  uploadedVideos: Pick<Video, "id" | "title" | "coverUrl" | "views">[];
+  user: UserDetailedPublic;
+  uploadedVideos: VideoPublic[];
 }
 
 export const UserHome = ({ user, uploadedVideos }: UserHomeProps) => {
@@ -50,7 +47,7 @@ export const UserHome = ({ user, uploadedVideos }: UserHomeProps) => {
         />
         <Stack justifyContent="space-evenly">
           <Typography level="h1">{user.name}</Typography>
-          <Typography>{`${user.followers} 粉丝数 · ${user.followings} 关注数`}</Typography>
+          <Typography>{`${user.followers} 粉丝数 · ${user.following} 关注数`}</Typography>
         </Stack>
       </Flex>
 

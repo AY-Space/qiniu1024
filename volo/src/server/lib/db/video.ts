@@ -1,11 +1,11 @@
 import { type PrismaClient } from "@prisma/client";
-import { type VideoPublic } from "~/types";
+import { type VideoDetailedPublic } from "~/types";
 
 export const getVideos = async (
   prisma: PrismaClient,
   ids: string[],
   userId?: string,
-): Promise<VideoPublic[]> => {
+): Promise<VideoDetailedPublic[]> => {
   return (
     await prisma.video.findMany({
       where: {

@@ -26,13 +26,14 @@ export default async function User({
           title: true,
           coverUrl: true,
           views: true,
+          createdAt: true,
         },
       },
 
       _count: {
         select: {
-          followers: true,
-          followings: true,
+          usersFollowed: true,
+          followedByUsers: true,
         },
       },
     },
@@ -48,7 +49,8 @@ export default async function User({
       <UserHome
         user={{
           ...rest,
-          ..._count,
+          followers: _count.followedByUsers,
+          following: _count.usersFollowed,
         }}
         uploadedVideos={videos}
       />
