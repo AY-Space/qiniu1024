@@ -6,36 +6,47 @@ import {
   type IconButtonProps,
   Stack,
   Typography,
+  ModalDialog,
+  Modal,
+  List,
+  ListItem,
+  ListItemButton,
+  ListItemDecorator,
+  ListItemContent,
+  Checkbox,
+  Button,
+  DialogContent,
+  Divider,
+  DialogTitle,
+  DialogActions,
 } from "@mui/joy";
 import { getBilibiliImageUrl } from "~/app/utils";
 import ThumbUpIcon from "@mui/icons-material/ThumbUp";
-import ThumbDownIcon from "@mui/icons-material/ThumbDown";
 import CommentIcon from "@mui/icons-material/Comment";
 import ShareIcon from "@mui/icons-material/Share";
+import StarIcon from "@mui/icons-material/Star";
 import { useState } from "react";
 import { Flex } from "~/app/_components/flex";
-import { type VideoPublic } from "~/types";
+import { type VideoDetailedPublic } from "~/types";
 import VideoPlayer from "./video-player";
 import { CommentDrawer } from "~/app/video/[id]/_components/comment-drawer";
 
 const VideoControls = ({
   videoId,
   likes,
-  dislikes,
   comments,
   variant,
   onLike,
-  onDislike,
   onComment,
+  onCollection,
 }: {
   videoId: string;
   likes: number;
-  dislikes: number;
   comments: number;
   variant: "side" | "overlay";
   onLike: () => void;
-  onDislike: () => void;
   onComment: () => void;
+  onCollection: () => void;
 }) => {
   const buttonVariant: IconButtonProps["variant"] =
     variant === "overlay" ? "plain" : "soft";
@@ -54,18 +65,17 @@ const VideoControls = ({
           <span>{likes}</span>
         </Stack>
         <Stack alignItems="center">
-          <IconButton size="lg" variant={buttonVariant}>
-            <ThumbDownIcon />
-          </IconButton>
-          <Typography>{dislikes}</Typography>
-        </Stack>
-        <Stack alignItems="center">
           <IconButton size="lg" variant={buttonVariant} onClick={onComment}>
             <CommentIcon />
           </IconButton>
           <Typography>{comments}</Typography>
         </Stack>
-
+        <Stack alignItems="center">
+          <IconButton size="lg" variant={buttonVariant} onClick={onCollection}>
+            <StarIcon />
+          </IconButton>
+          <Typography>收藏</Typography>
+        </Stack>
         <Stack alignItems="center">
           <IconButton size="lg" variant={buttonVariant}>
             <ShareIcon />
@@ -77,7 +87,7 @@ const VideoControls = ({
   );
 };
 
-const VideoOverlay = ({ video }: { video: VideoPublic }) => {
+const VideoOverlay = ({ video }: { video: VideoDetailedPublic }) => {
   return (
     <Stack spacing={2} p={2}>
       <Flex spacing={2} alignItems="center">
@@ -102,12 +112,13 @@ const VideoOverlay = ({ video }: { video: VideoPublic }) => {
 };
 
 export interface VideoWithOverlayProps {
-  video: VideoPublic;
+  video: VideoDetailedPublic;
   active: boolean;
 }
 
 export const VideoWithOverlay = ({ video, active }: VideoWithOverlayProps) => {
   const [showComments, setShowComments] = useState(false);
+  const [showCollection, setShowCollection] = useState(false);
 
   return (
     <Flex
@@ -133,9 +144,9 @@ export const VideoWithOverlay = ({ video, active }: VideoWithOverlayProps) => {
       <VideoControls
         comments={video.comments}
         likes={video.likes}
-        dislikes={video.dislikes}
         videoId={video.id}
         variant="side"
+        onCollection={() => setShowCollection(true)}
         onComment={() => setShowComments(true)}
       />
       <CommentDrawer
@@ -143,6 +154,68 @@ export const VideoWithOverlay = ({ video, active }: VideoWithOverlayProps) => {
         open={showComments}
         videoId={video.id}
       />
+
+      <Modal open={showCollection} onClose={() => setShowCollection(false)}>
+        <ModalDialog variant="outlined" role="alertdialog">
+          <DialogTitle>
+            <Typography
+              component="h2"
+              id="modal-title"
+              level="h4"
+              textColor="inherit"
+              fontWeight="lg"
+              mb={1}
+            >
+              选择收藏夹
+            </Typography>
+          </DialogTitle>
+          <Divider />
+          <DialogContent>
+            <List>
+              <ListItem>
+                <ListItemButton>
+                  <ListItemDecorator>
+                    <Checkbox overlay onChange={() => {}} />
+                  </ListItemDecorator>
+                  <ListItemContent>收藏夹名</ListItemContent>
+                </ListItemButton>
+              </ListItem>
+              <ListItem>
+                <ListItemButton>
+                  <ListItemDecorator>
+                    <Checkbox overlay onChange={() => {}} />
+                  </ListItemDecorator>
+                  <ListItemContent>收藏夹名</ListItemContent>
+                </ListItemButton>
+              </ListItem>
+              <ListItem>
+                <ListItemButton>
+                  <ListItemDecorator>
+                    <Checkbox overlay onChange={() => {}} />
+                  </ListItemDecorator>
+                  <ListItemContent>收藏夹名</ListItemContent>
+                </ListItemButton>
+              </ListItem>
+            </List>
+          </DialogContent>
+          <DialogActions>
+            <Button
+              variant="solid"
+              color="success"
+              onClick={() => setShowCollection(false)}
+            >
+              确认
+            </Button>
+            <Button
+              variant="plain"
+              color="neutral"
+              onClick={() => setShowCollection(false)}
+            >
+              取消
+            </Button>
+          </DialogActions>
+        </ModalDialog>
+      </Modal>
     </Flex>
   );
 };

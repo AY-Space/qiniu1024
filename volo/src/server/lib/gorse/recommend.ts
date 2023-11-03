@@ -1,6 +1,6 @@
+import { type VideoDetailedPublic } from "~/types";
 import { type PrismaClient } from "@prisma/client";
-import { getVideos } from "~/server/lib/db/video";
-import { type VideoPublic } from "~/types";
+import { getVideos } from "../db/video";
 import { getLatests, getPopulars, getRecommends, type Cursor } from "./base";
 
 // categoryId: null -> all catgories
@@ -9,7 +9,7 @@ export const getLatest = async (
   cursor: Cursor,
   userId?: string,
   categoryId?: string,
-): Promise<VideoPublic[]> => {
+): Promise<VideoDetailedPublic[]> => {
   return await getVideos(
     prisma,
     (await getLatests(cursor, userId, categoryId)).map((v) => v.Id),
@@ -23,7 +23,7 @@ export const getPopular = async (
   cursor: Cursor,
   userId?: string,
   categoryId?: string,
-): Promise<VideoPublic[]> => {
+): Promise<VideoDetailedPublic[]> => {
   return await getVideos(
     prisma,
     (await getPopulars(cursor, userId, categoryId)).map((v) => v.Id),
@@ -37,7 +37,7 @@ export const getRecommend = async (
   cursor: Cursor,
   userId: string,
   categoryId?: string,
-): Promise<VideoPublic[]> => {
+): Promise<VideoDetailedPublic[]> => {
   return await getVideos(
     prisma,
     await getRecommends(cursor, userId, categoryId),

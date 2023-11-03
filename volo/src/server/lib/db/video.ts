@@ -1,11 +1,11 @@
 import { type PrismaClient } from "@prisma/client";
-import { type VideoPublic } from "~/types";
+import { type VideoDetailedPublic } from "~/types";
 
 export const getVideos = async (
   prisma: PrismaClient,
   ids: string[],
   userId?: string,
-): Promise<VideoPublic[]> => {
+): Promise<VideoDetailedPublic[]> => {
   return (
     await prisma.video.findMany({
       where: {
@@ -44,10 +44,13 @@ export const getVideos = async (
         },
       },
     })
-  ).map(({ _count, likes, ...rest }) => ({
-    ..._count,
-    ...rest,
-    isLiked: likes.length > 0,
-    dislikes: 0,
-  }));
+  ).map(({ _count, likes, ...rest }) => {
+    const currentUser =
+      userId !== undefined ? { liked: likes.length > 0 } : null;
+    return {
+      ..._count,
+      ...rest,
+      currentUser,
+    };
+  });
 };

@@ -3,10 +3,10 @@
 import { Stack } from "@mui/joy";
 import { useEffect, useRef, useState } from "react";
 import { VideoWithOverlay } from "./video-with-overlay";
-import { type VideoPublic } from "~/types";
+import { type VideoDetailedPublic } from "~/types";
 
 // VideoContainer Component
-export function VideoContainer({ videos }: { videos: VideoPublic[] }) {
+export function VideoContainer({ videos }: { videos: VideoDetailedPublic[] }) {
   const [mountedVideos, setMountedVideos] = useState(videos.slice(0, 10));
   const [activeVideoId, setActiveVideoId] = useState<string | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);

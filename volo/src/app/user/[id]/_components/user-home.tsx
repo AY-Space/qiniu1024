@@ -1,4 +1,7 @@
 import {
+  Accordion,
+  AccordionGroup,
+  AccordionSummary,
   Avatar,
   Box,
   Card,
@@ -12,17 +15,14 @@ import {
   Tabs,
   Typography,
 } from "@mui/joy";
-import { type Video, type User } from "@prisma/client";
 import { Flex } from "~/app/_components/flex";
 import { getBilibiliImageUrl } from "~/app/utils";
 import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
 import Link from "next/link";
+import { type VideoPublic, type UserDetailedPublic } from "~/types";
 export interface UserHomeProps {
-  user: Pick<User, "id" | "name" | "avatarUrl" | "bio" | "bannerUrl"> & {
-    followings: number;
-    followers: number;
-  };
-  uploadedVideos: Pick<Video, "id" | "title" | "coverUrl" | "views">[];
+  user: UserDetailedPublic;
+  uploadedVideos: VideoPublic[];
 }
 
 export const UserHome = ({ user, uploadedVideos }: UserHomeProps) => {
@@ -50,7 +50,7 @@ export const UserHome = ({ user, uploadedVideos }: UserHomeProps) => {
         />
         <Stack justifyContent="space-evenly">
           <Typography level="h1">{user.name}</Typography>
-          <Typography>{`${user.followers} 粉丝数 · ${user.followings} 关注数`}</Typography>
+          <Typography>{`${user.followers} 粉丝数 · ${user.following} 关注数`}</Typography>
         </Stack>
       </Flex>
 
@@ -59,29 +59,16 @@ export const UserHome = ({ user, uploadedVideos }: UserHomeProps) => {
           <Tab variant="plain" color="neutral">
             视频
           </Tab>
+          <Tab variant="plain" color="neutral">
+            喜欢
+          </Tab>
+          <Tab variant="plain" color="neutral">
+            收藏
+          </Tab>
         </TabList>
-        <TabPanel>
-          <Grid
-            container
-            columns={{
-              xs: 2,
-              sm: 3,
-              md: 4,
-            }}
-          >
-            {uploadedVideos.map((e) => (
-              <Grid
-                key={e.id}
-                xs={1}
-                sx={{
-                  p: 1,
-                }}
-              >
-                <VideoCard video={e} />
-              </Grid>
-            ))}
-          </Grid>
-        </TabPanel>
+        <VideoTabPanel uploadedVideos={uploadedVideos} value={0} />
+        <LikeTabPanel userId={user.id} value={1} />
+        <CollectionTabPanel userId={user.id} value={2} />
       </Tabs>
     </Stack>
   );
@@ -153,5 +140,118 @@ const VideoCard = ({
         </CardContent>
       </Card>
     </Link>
+  );
+};
+const VideoTabPanel = ({
+  uploadedVideos,
+  value,
+}: {
+  uploadedVideos: VideoPublic[];
+  value: number;
+}) => {
+  return (
+    <TabPanel value={value}>
+      <Grid
+        container
+        columns={{
+          xs: 2,
+          sm: 3,
+          md: 4,
+        }}
+      >
+        {uploadedVideos.map((e) => (
+          <Grid
+            key={e.id}
+            xs={1}
+            sx={{
+              p: 1,
+            }}
+          >
+            <VideoCard video={e} />
+          </Grid>
+        ))}
+      </Grid>
+    </TabPanel>
+  );
+};
+
+const LikeTabPanel = ({ userId, value }: { userId: string; value: number }) => {
+  return (
+    <TabPanel value={value}>
+      <Grid
+        container
+        columns={{
+          xs: 2,
+          sm: 3,
+          md: 4,
+        }}
+      ></Grid>
+    </TabPanel>
+  );
+};
+
+const CollectionTabPanel = ({
+  userId,
+  value,
+}: {
+  userId: string;
+  value: number;
+}) => {
+  return (
+    <TabPanel value={value}>
+      <Grid
+        container
+        columns={{
+          xs: 2,
+          sm: 3,
+          md: 4,
+        }}
+      >
+        <AccordionGroup
+          variant="outlined"
+          transition="0.2s"
+          sx={{
+            borderRadius: "lg",
+            // [`& .${accordionSummaryClasses.button}:hover`]: {
+            //   bgcolor: "transparent",
+            // },
+            // [`& .${accordionDetailsClasses.content}`]: {
+            //   boxShadow: (theme) => `inset 0 1px ${theme.vars.palette.divider}`,
+            //   [`&.${accordionDetailsClasses.expanded}`]: {
+            //     paddingBlock: "0.75rem",
+            //   },
+            // },
+          }}
+        >
+          <Accordion defaultExpanded>
+            <AccordionSummary>
+              <Typography level="h3">First accordion</Typography>
+            </AccordionSummary>
+            {/* <AccordionDetails variant="soft">
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+              eiusmod tempor incididunt ut labore et dolore magna aliqua.
+            </AccordionDetails> */}
+          </Accordion>
+          <Accordion>
+            <AccordionSummary>
+              <Typography level="h3">Second accordion</Typography>
+            </AccordionSummary>
+            {/* <AccordionDetails variant="soft">
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+              eiusmod tempor incididunt ut labore et dolore magna aliqua.
+            </AccordionDetails> */}
+          </Accordion>
+          <Accordion>
+            <AccordionSummary>
+              <Typography level="h3">Third accordion</Typography>
+            </AccordionSummary>
+            {/* <AccordionDetails variant="soft">
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+              eiusmod tempor incididunt ut labore et dolore magna aliqua.
+            </AccordionDetails> */}
+          </Accordion>
+        </AccordionGroup>
+      </Grid>
+    </TabPanel>
   );
 };
