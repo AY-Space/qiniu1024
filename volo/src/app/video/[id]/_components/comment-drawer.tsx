@@ -84,7 +84,6 @@ export const CommentDrawer = ({
   open,
   onClose,
 }: CommentDrawerProps) => {
-  console.log(videoId, open);
   return (
     <Drawer open={open} onClose={onClose} anchor="right">
       <DialogTitle>评论</DialogTitle>
