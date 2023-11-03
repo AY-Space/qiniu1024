@@ -49,7 +49,7 @@ const Comment = ({ comment }: { comment: CommentPublic }) => {
           </Box>
         )}
         <Stack direction="row" spacing={1}>
-          <IconButton size="sm" style={{ gap: 2 }}>
+          <IconButton size="sm">
             <ThumbUp />
             <Typography>{comment.likes}</Typography>
           </IconButton>

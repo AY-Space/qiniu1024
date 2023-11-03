@@ -30,7 +30,6 @@ const VideoControls = ({
   comments: number;
   variant: "side" | "overlay";
   onLike: () => void;
-  onDislike: () => void;
   onComment: () => void;
 }) => {
   const buttonVariant: IconButtonProps["variant"] =
