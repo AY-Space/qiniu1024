@@ -30,6 +30,7 @@ import { Flex } from "~/app/_components/flex";
 import { type VideoDetailedPublic } from "~/types";
 import VideoPlayer from "./video-player";
 import { CommentDrawer } from "~/app/video/[id]/_components/comment-drawer";
+import { Add } from "@mui/icons-material";
 
 const VideoControls = ({
   videoId,
@@ -175,9 +176,9 @@ export const VideoWithOverlay = ({ video, active }: VideoWithOverlayProps) => {
               <ListItem>
                 <ListItemButton>
                   <ListItemDecorator>
-                    <Checkbox overlay onChange={() => {}} />
+                    <Add></Add>
                   </ListItemDecorator>
-                  <ListItemContent>收藏夹名</ListItemContent>
+                  <ListItemContent>创建收藏夹</ListItemContent>
                 </ListItemButton>
               </ListItem>
               <ListItem>

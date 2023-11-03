@@ -1,7 +1,4 @@
 import {
-  Accordion,
-  AccordionGroup,
-  AccordionSummary,
   Avatar,
   Box,
   Card,
@@ -14,12 +11,14 @@ import {
   TabPanel,
   Tabs,
   Typography,
+  Button,
 } from "@mui/joy";
 import { Flex } from "~/app/_components/flex";
 import { getBilibiliImageUrl } from "~/app/utils";
 import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
 import Link from "next/link";
 import { type VideoPublic, type UserDetailedPublic } from "~/types";
+import { Add, VideoLibrary } from "@mui/icons-material";
 export interface UserHomeProps {
   user: UserDetailedPublic;
   uploadedVideos: VideoPublic[];
@@ -199,59 +198,45 @@ const CollectionTabPanel = ({
 }) => {
   return (
     <TabPanel value={value}>
-      <Grid
-        container
-        columns={{
-          xs: 2,
-          sm: 3,
-          md: 4,
-        }}
+      <Tabs
+        aria-label="Vertical tabs"
+        orientation="vertical"
+        sx={{ minWidth: 300, height: 160 }}
       >
-        <AccordionGroup
-          variant="outlined"
-          transition="0.2s"
-          sx={{
-            borderRadius: "lg",
-            // [`& .${accordionSummaryClasses.button}:hover`]: {
-            //   bgcolor: "transparent",
-            // },
-            // [`& .${accordionDetailsClasses.content}`]: {
-            //   boxShadow: (theme) => `inset 0 1px ${theme.vars.palette.divider}`,
-            //   [`&.${accordionDetailsClasses.expanded}`]: {
-            //     paddingBlock: "0.75rem",
-            //   },
-            // },
-          }}
-        >
-          <Accordion defaultExpanded>
-            <AccordionSummary>
-              <Typography level="h3">First accordion</Typography>
-            </AccordionSummary>
-            {/* <AccordionDetails variant="soft">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua.
-            </AccordionDetails> */}
-          </Accordion>
-          <Accordion>
-            <AccordionSummary>
-              <Typography level="h3">Second accordion</Typography>
-            </AccordionSummary>
-            {/* <AccordionDetails variant="soft">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua.
-            </AccordionDetails> */}
-          </Accordion>
-          <Accordion>
-            <AccordionSummary>
-              <Typography level="h3">Third accordion</Typography>
-            </AccordionSummary>
-            {/* <AccordionDetails variant="soft">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua.
-            </AccordionDetails> */}
-          </Accordion>
-        </AccordionGroup>
-      </Grid>
+        <TabList>
+          <Button variant="plain" startDecorator={<Add />}>
+            创建收藏夹
+          </Button>
+          <Tab sx={{ display: "flex", alignItems: "space-between" }}>
+            <VideoLibrary />
+            tab
+          </Tab>
+          <Tab>
+            <VideoLibrary />
+            Second tab
+          </Tab>
+          <Tab>
+            <VideoLibrary />
+            Third tab
+          </Tab>
+        </TabList>
+        <TabPanel value={0}>
+          <Grid
+            container
+            columns={{
+              xs: 2,
+              sm: 3,
+              md: 4,
+            }}
+          ></Grid>
+        </TabPanel>
+        <TabPanel value={1}>
+          <b>Second</b> tab panel
+        </TabPanel>
+        <TabPanel value={2}>
+          <b>Third</b> tab panel
+        </TabPanel>
+      </Tabs>
     </TabPanel>
   );
 };
