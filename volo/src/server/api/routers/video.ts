@@ -1,11 +1,11 @@
+import { z } from "zod";
 import {
   createTRPCRouter,
   protectedProcedure,
   publicProcedure,
 } from "~/server/api/trpc";
-import { z } from "zod";
-import { createUploadParameters } from "~/server/lib/util/kodo";
 import { db } from "~/server/db";
+import { createUploadParameters } from "~/server/lib/util/kodo";
 import { type CommentPublic } from "~/types";
 
 export const videoRouter = createTRPCRouter({

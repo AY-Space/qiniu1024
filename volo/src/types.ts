@@ -40,3 +40,12 @@ export type VideoDetailedPublic = Pick<
 };
 
 export type TagReference = Pick<Tag, "id" | "type">;
+
+export enum FeedbackType {
+  READALL = "read_all",
+  LIKED = "liked",
+  COLLECTED = "collected",
+  SHARED = "shared",
+  READ = "read",
+  LESS = "less",
+}

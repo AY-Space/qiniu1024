@@ -1,16 +1,14 @@
 import { TagType } from "@prisma/client";
 import axios_ from "axios";
 import { env } from "~/env.mjs";
-import { type TagReference } from "~/types";
+import { type FeedbackType, type TagReference } from "~/types";
 
-export enum FeedbackType {
-  READALL = "read_all",
-  LIKED = "liked",
-  COLLECTED = "collected",
-  SHARED = "shared",
-  READ = "read",
-  LESS = "less",
-}
+const axios = axios_.create({
+  baseURL: env.GORSE_URL + "/api",
+  headers: {
+    "Content-Type": "application/json",
+  },
+});
 
 interface Feedback {
   FeedbackType: string;
@@ -54,13 +52,6 @@ const format = (cursor: Cursor): string => {
   return `n=${setPageSize(cursor.limit)}&offset=${cursor.offset}`;
 };
 
-const axios = axios_.create({
-  baseURL: env.GORSE_URL + "/api",
-  headers: {
-    "Content-Type": "application/json",
-  },
-});
-
 const newItem = (itemId: string, tags: TagReference[]): Item => ({
   Categories: tags
     .filter((tag) => tag.type === TagType.Category)
@@ -91,8 +82,26 @@ export const insertVideo = async (videoId: string, tags: TagReference[]) => {
   await axios.post("/item", newItem(videoId, tags));
 };
 
+export const deleteVideo = async (videoId: string) => {
+  await axios.delete(`/item/${videoId}`);
+};
+
+// updateVideo: the new TagReferences will cover the old ones
+export const updateVideo = async (videoId: string, tags: TagReference[]) => {
+  await axios.patch(`/item/${videoId}`, newItem(videoId, tags));
+};
+
 export const insertUser = async (userId: string, tags: TagReference[]) => {
   await axios.post("/user", newUser(userId, tags));
+};
+
+export const deleteUser = async (userId: string) => {
+  await axios.delete(`/user/${userId}`);
+};
+
+// updateUser: the new TagReferences will cover the old ones
+export const updateUser = async (userId: string, tags: TagReference[]) => {
+  await axios.patch(`/user/${userId}`, newUser(userId, tags));
 };
 
 export const insertFeedback = async (
@@ -100,7 +109,15 @@ export const insertFeedback = async (
   videoId: string,
   feedbackType: FeedbackType,
 ) => {
-  await axios.post("/feedback", newFeedback(userId, videoId, feedbackType));
+  await axios.put("/feedback", newFeedback(userId, videoId, feedbackType));
+};
+
+export const deleteFeedback = async (
+  userId: string,
+  videoId: string,
+  feedbackType: FeedbackType,
+) => {
+  await axios.delete(`/feedback/${feedbackType}/${userId}/${videoId}`);
 };
 
 // categoryId: null -> all catgories

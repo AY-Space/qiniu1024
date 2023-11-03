@@ -1,7 +1,7 @@
 import { type PrismaClient, type User } from "@prisma/client";
 
-import { db } from "~/server/db";
 import { compare, hash } from "bcrypt";
+import { db } from "~/server/db";
 
 export const authenticate = async (
   email: string,
@@ -42,38 +42,5 @@ export const create = async (
       email,
       password: encryptedPassword,
     },
-  });
-};
-
-export const getFollowerList = async (prisma: PrismaClient, userId: string) => {
-  const follows = await prisma.follow.findMany({
-    where: {
-      followingId: userId,
-    },
-    select: {
-      follower: true,
-    },
-  });
-
-  return follows.map((follow) => {
-    return follow.follower;
-  });
-};
-
-export const getFollowingList = async (
-  prisma: PrismaClient,
-  userId: string,
-) => {
-  const follows = await prisma.follow.findMany({
-    where: {
-      followerId: userId,
-    },
-    select: {
-      following: true,
-    },
-  });
-
-  return follows.map((follow) => {
-    return follow.following;
   });
 };
