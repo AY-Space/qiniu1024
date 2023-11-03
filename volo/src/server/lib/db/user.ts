@@ -8,7 +8,9 @@ export const authenticate = async (
   password: string,
 ): Promise<User | null> => {
   const user = await exists(db, email);
-  if (!user) return await create(db, email, await hash(password, email));
+  if (!user) {
+    return await create(db, email, await hash(password, 10));
+  }
   if (user.password === null) {
     if (process.env.NODE_ENV === "production") {
       throw new Error("User has no password");
