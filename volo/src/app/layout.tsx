@@ -7,6 +7,7 @@ import { TRPCReactProvider } from "~/trpc/react";
 import { Stack } from "@mui/joy";
 import { ThemeRegistry } from "./_components/theme-registry";
 import { AppBar } from "./_components/app-bar";
+import { getServerAuthSession } from "~/server/auth";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -14,23 +15,24 @@ const inter = Inter({
 });
 
 export const metadata = {
-  title: "Volo",
-  description: "Volo – 短视频平台",
+  title: "Volo | 短视频平台",
+  description: "Volo | 短视频平台",
   icons: [{ rel: "icon", url: "/favicon.ico" }],
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const session = await getServerAuthSession();
   return (
     <html lang="en">
       <body className={`font-sans ${inter.variable}`}>
         <TRPCReactProvider headers={headers()}>
           <ThemeRegistry>
             <Stack>
-              <AppBar />
+              <AppBar currentUser={session?.user} />
               <Stack>{children}</Stack>
             </Stack>
           </ThemeRegistry>

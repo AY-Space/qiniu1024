@@ -1,14 +1,33 @@
 "use client";
 
-import { Avatar, Grid, IconButton, Input, Sheet, Typography } from "@mui/joy";
+import {
+  Avatar,
+  Button,
+  Divider,
+  Dropdown,
+  Grid,
+  IconButton,
+  Input,
+  ListItem,
+  Menu,
+  MenuButton,
+  MenuItem,
+  Sheet,
+  Typography,
+} from "@mui/joy";
 import SearchIcon from "@mui/icons-material/Search";
 import { Flex } from "./flex";
 import MenuIcon from "@mui/icons-material/Menu";
 import { useState } from "react";
 import { NavigationDrawer } from "./navigation-drawer";
 import Link from "next/link";
+import { type Session } from "next-auth";
 
-export function AppBar() {
+export interface AppBarProps {
+  currentUser?: Session["user"];
+}
+
+export function AppBar({ currentUser }: AppBarProps) {
   const [navigationDrawer, setNavigationDrawer] = useState(false);
 
   return (
@@ -56,10 +75,39 @@ export function AppBar() {
           />
         </Grid>
         <Grid xs={1}>
-          <Flex justifyContent="flex-end">
-            <button>
-              <Avatar>A</Avatar>
-            </button>
+          <Flex justifyContent="flex-end" alignItems="center" spacing={1}>
+            {currentUser ? (
+              <Dropdown>
+                <MenuButton
+                  slots={{
+                    root: Avatar,
+                  }}
+                  slotProps={{
+                    root: {
+                      src: currentUser.avatarUrl ?? undefined,
+                      variant: "outlined",
+                    },
+                  }}
+                />
+                <Menu>
+                  {currentUser.name && (
+                    <ListItem color="primary">{currentUser.name}</ListItem>
+                  )}
+                  <ListItem>{currentUser.email}</ListItem>
+                  <Divider />
+                  <MenuItem>
+                    <Link href={`/user/${currentUser.id}`}>个人主页</Link>
+                  </MenuItem>
+                  <MenuItem color="danger">
+                    <Link href="/api/auth/signout">退出登录</Link>
+                  </MenuItem>
+                </Menu>
+              </Dropdown>
+            ) : (
+              <Link href="/api/auth/signin">
+                <Button>登录</Button>
+              </Link>
+            )}
           </Flex>
         </Grid>
       </Grid>

@@ -130,7 +130,7 @@ const VideoActions = ({
           <IconButton size="lg" variant={buttonVariant}>
             <ThumbUpIcon />
           </IconButton>
-          <span>{likes}</span>
+          <Typography>{likes}</Typography>
         </Stack>
         <Stack alignItems="center">
           <IconButton
