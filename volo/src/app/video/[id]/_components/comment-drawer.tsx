@@ -1,5 +1,4 @@
 "use client";
-// CommentComponent.joy
 
 import {
   Avatar,
@@ -30,7 +29,7 @@ import { Flex } from "~/app/_components/flex";
 
 const Comment = ({ comment }: { comment: CommentPublic }) => {
   return (
-    <Stack direction="row" gap={1} paddingY={2}>
+    <Stack direction="row" spacing={1}>
       {comment.author.avatarUrl && (
         <Avatar src={getBilibiliImageUrl(comment.author.avatarUrl)} />
       )}
@@ -74,9 +73,13 @@ const Comment = ({ comment }: { comment: CommentPublic }) => {
 const CommentList = ({ videoId }: { videoId: string }) => {
   const { data, error, isLoading } = api.video.comments.useQuery({ videoId });
   return (
-    <Stack>
+    <Stack spacing={2}>
       {error && <Alert color="danger">{error.message}</Alert>}
-      {isLoading && <CircularProgress />}
+      {isLoading && (
+        <Stack alignItems="center">
+          <CircularProgress />
+        </Stack>
+      )}
       {data?.map((comment) => <Comment comment={comment} key={comment.id} />)}
     </Stack>
   );
@@ -88,16 +91,19 @@ const NewCommentForm = () => {
     <Stack>
       <Divider />
       <Stack spacing={1} p={1}>
-        <Typography level="title-lg">你的评论</Typography>
+        <Typography level="title-lg">发送评论</Typography>
         <Textarea
           placeholder="呐，现在何感想？"
           onChange={(event) => setText(event.target.value)}
           variant="soft"
+          minRows={3}
           endDecorator={
             <>
               <Box flex={1} />
               <Flex alignItems="center" spacing={1}>
-                <Typography level="body-xs">{text.length} 字</Typography>
+                {text.length > 0 && (
+                  <Typography level="body-xs">{text.length} 字</Typography>
+                )}
                 <Button>发送</Button>
               </Flex>
             </>
@@ -151,7 +157,7 @@ export const CommentDrawer = ({
         </Stack>
         <Stack
           sx={{
-            px: 2,
+            p: 2,
             flex: 1,
             overflowY: "auto",
           }}

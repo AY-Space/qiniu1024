@@ -29,11 +29,11 @@ import { useState } from "react";
 import { Flex } from "~/app/_components/flex";
 import { type VideoDetailedPublic } from "~/types";
 import VideoPlayer from "./video-player";
-import { CommentDrawer } from "~/app/video/[id]/_components/comment-drawer";
+import { CommentDrawer } from "./comment-drawer";
 import { Add } from "@mui/icons-material";
 import { CreateCollectionModal } from "~/app/_components/create-collection-modal";
 
-const VideoControls = ({
+const VideoActions = ({
   videoId,
   likes,
   comments,
@@ -144,7 +144,7 @@ export const VideoWithOverlay = ({ video, active }: VideoWithOverlayProps) => {
         loop
         overlay={<VideoOverlay video={video} />}
       />
-      <VideoControls
+      <VideoActions
         comments={video.comments}
         likes={video.likes}
         videoId={video.id}
@@ -152,11 +152,13 @@ export const VideoWithOverlay = ({ video, active }: VideoWithOverlayProps) => {
         onCollection={() => setShowCollection(true)}
         onComment={() => setShowComments(true)}
       />
-      <CommentDrawer
-        onClose={() => setShowComments(false)}
-        open={showComments}
-        videoId={video.id}
-      />
+      {active && (
+        <CommentDrawer
+          onClose={() => setShowComments(false)}
+          open={showComments}
+          videoId={video.id}
+        />
+      )}
 
       <Modal open={showCollection} onClose={() => setShowCollection(false)}>
         <ModalDialog variant="outlined" role="alertdialog">
