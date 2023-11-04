@@ -17,7 +17,6 @@ import {
   Button,
   DialogContent,
   Divider,
-  DialogTitle,
   DialogActions,
   Link as JoyLink,
 } from "@mui/joy";
@@ -45,6 +44,11 @@ const VideoCollectionModal = ({
 }) => {
   const [showCreateCollection, setShowCreateCollection] = useState(false);
   const { data: collections } = api.collection.myCollections.useQuery();
+  const [selectedCollectionIds, setSelectedCollectionIds] = useState(
+    collections?.map((collection) => {
+      return { [collection.id]: false };
+    }),
+  );
 
   return (
     <Modal open={open} onClose={onClose}>
@@ -53,7 +57,7 @@ const VideoCollectionModal = ({
           选择收藏夹
         </Typography>
         <Divider />
-        <DialogContent>
+        <DialogContent sx={{ mb: 2 }}>
           <List>
             <ListItem>
               <ListItemButton onClick={() => setShowCreateCollection(true)}>
@@ -64,13 +68,23 @@ const VideoCollectionModal = ({
               </ListItemButton>
             </ListItem>
             {collections?.map((collection) => (
-              <ListItem key={collection.id}>
-                <ListItemButton>
-                  <ListItemDecorator>
-                    <Checkbox />
-                  </ListItemDecorator>
-                  <ListItemContent>{collection.name}</ListItemContent>
-                </ListItemButton>
+              <ListItem
+                key={collection.id}
+                variant="plain"
+                sx={{ borderRadius: "sm" }}
+              >
+                <Checkbox
+                  label="Wrong Address"
+                  color="neutral"
+                  overlay
+                  checked={collection.id in selectedCollectionIds}
+                  onChange={(event) =>
+                    setSelectedCollectionIds({
+                      ...selectedCollectionIds,
+                      [collection.id]: !selectedCollectionIds[collection.id],
+                    })
+                  }
+                />
               </ListItem>
             ))}
           </List>
