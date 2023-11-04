@@ -36,12 +36,11 @@ export const authOptions: NextAuthOptions = {
       },
       expires: session.expires,
     }),
-    jwt: ({ token }) => {
-      return {
-        ...token,
-        id: token.sub,
-      };
-    },
+    jwt: ({ token, user }) => ({
+      id: user?.id,
+      avatarUrl: user?.avatarUrl ?? undefined,
+      ...token,
+    }),
   },
   session: { strategy: "jwt" },
   secret: env.NEXTAUTH_SECRET,
