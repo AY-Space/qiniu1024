@@ -241,7 +241,7 @@ const VideoOverlay = ({ video }: { video: VideoDetailedPublic }) => {
         </Stack>
       </Flex>
       <Typography level="title-md">{video.title}</Typography>
-      <Flex gap={1}>
+      <Flex gap={1} flexWrap="wrap">
         {categories.map((category) => (
           <Chip key={category.id} size="sm" color="primary">
             {category.name}
@@ -253,7 +253,9 @@ const VideoOverlay = ({ video }: { video: VideoDetailedPublic }) => {
           </Chip>
         ))}
       </Flex>
-      <Typography level="body-md">{video.description}</Typography>
+      <Typography level="body-md" noWrap>
+        {video.description}
+      </Typography>
     </Stack>
   );
 };
