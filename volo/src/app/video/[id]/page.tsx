@@ -32,14 +32,19 @@ export default async function Video({
         createdAt: true,
         description: true,
         url: true,
+        tags: {
+          select: {
+            id: true,
+            name: true,
+            type: true,
+          },
+        },
       },
       take: 50,
     })
   ).map(({ _count, ...rest }) => ({
     ..._count,
     ...rest,
-    dislikes: 0,
-    isLiked: false,
   }));
 
   return (
