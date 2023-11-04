@@ -9,11 +9,7 @@ export const env = createEnv({
   server: {
     DATABASE_URL: z
       .string()
-      .url()
-      .refine(
-        (str) => !str.includes("YOUR_MYSQL_URL_HERE"),
-        "You forgot to change the default URL",
-      ),
+      .url(),
     NODE_ENV: z
       .enum(["development", "test", "production"])
       .default("development"),
@@ -33,7 +29,12 @@ export const env = createEnv({
     QINIU_ACCESS_KEY: z.string(),
     QINIU_SECRET_KEY: z.string(),
     QINIU_BUCKET: z.string(),
+
+    // GORSE
     GORSE_URL: z.string().url(),
+
+    // REIDS
+    REDIS_URL: z.string().url(),
   },
 
   /**
@@ -58,6 +59,7 @@ export const env = createEnv({
     QINIU_SECRET_KEY: process.env.QINIU_SECRET_KEY,
     QINIU_BUCKET: process.env.QINIU_BUCKET,
     GORSE_URL: process.env.GORSE_URL,
+    REDIS_URL: process.env.REDIS_URL,
   },
   /**
    * Run `build` or `dev` with `SKIP_ENV_VALIDATION` to skip env validation. This is especially
