@@ -52,19 +52,31 @@ export function AppBar({ currentUser }: AppBarProps) {
         sx={{
           flex: 1,
         }}
-        columns={3}
+        columns={{
+          xs: 5,
+          sm: 4,
+        }}
       >
         <Grid xs={1}>
           <Flex spacing={1} alignItems="center" height="100%">
             <IconButton onClick={() => setNavigationDrawer(true)}>
               <MenuIcon />
             </IconButton>
-            <Link href={"/"}>
-              <Typography level="body-lg">Volo</Typography>
+            <Link href="/">
+              <Typography
+                level="body-lg"
+                sx={(theme) => ({
+                  [`${theme.breakpoints.down("sm")}`]: {
+                    display: "none",
+                  },
+                })}
+              >
+                Volo
+              </Typography>
             </Link>
           </Flex>
         </Grid>
-        <Grid xs={1}>
+        <Grid xs={3} sm={2}>
           <Input
             sx={{
               borderRadius: "xl",

@@ -7,15 +7,8 @@ import { db } from "~/server/db";
 import { loginOrRegister } from "~/server/lib/db/user";
 
 declare module "next-auth" {
-  interface User {
-    id: string;
-    email: string;
-    name: string | null;
-    avatarUrl: string | null;
-  }
-
   interface Session {
-    user: User;
+    userId: string;
     expires: string;
   }
 }
@@ -28,18 +21,9 @@ declare module "next-auth" {
 export const authOptions: NextAuthOptions = {
   callbacks: {
     session: ({ session, token }) => ({
-      user: {
-        id: token.sub,
-        email: token.email,
-        name: token.name,
-        avatarUrl: token.avatarUrl,
-      },
+      ...session,
+      userId: token.sub,
       expires: session.expires,
-    }),
-    jwt: ({ token, user }) => ({
-      id: user?.id,
-      avatarUrl: user?.avatarUrl ?? undefined,
-      ...token,
     }),
   },
   session: { strategy: "jwt" },

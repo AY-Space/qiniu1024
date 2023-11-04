@@ -47,7 +47,7 @@ export const gorseRouter = createTRPCRouter({
       return await getRecommend(
         ctx.db,
         input.cursor,
-        ctx.session.user.id,
+        ctx.session.userId,
         input.categoryId ?? undefined,
       );
     }),
@@ -58,7 +58,7 @@ export const gorseRouter = createTRPCRouter({
       return await getPopular(
         ctx.db,
         input.cursor,
-        ctx.session?.user.id,
+        ctx.session?.userId,
         input.categoryId ?? undefined,
       );
     }),
@@ -68,7 +68,7 @@ export const gorseRouter = createTRPCRouter({
       return await getLatest(
         ctx.db,
         input.cursor,
-        ctx.session?.user.id,
+        ctx.session?.userId,
         input.categoryId ?? undefined,
       );
     }),
@@ -80,7 +80,7 @@ export const gorseRouter = createTRPCRouter({
       }),
     )
     .mutation(async ({ ctx, input }) => {
-      await insertFeedback(ctx.session.user.id, input.itemId, input.feedback);
+      await insertFeedback(ctx.session.userId, input.itemId, input.feedback);
     }),
 
   deleteFeedback: protectedProcedure
@@ -91,7 +91,7 @@ export const gorseRouter = createTRPCRouter({
       }),
     )
     .mutation(async ({ ctx, input }) => {
-      await deleteFeedback(ctx.session.user.id, input.itemId, input.feedback);
+      await deleteFeedback(ctx.session.userId, input.itemId, input.feedback);
     }),
 
   insertVideo: protectedProcedure
@@ -130,12 +130,12 @@ export const gorseRouter = createTRPCRouter({
       }),
     )
     .mutation(async ({ ctx, input }) => {
-      await insertUser(ctx.session.user.id, input.tags);
+      await insertUser(ctx.session.userId, input.tags);
     }),
 
   // deleteUser: 只有在注销账号的时候才能调用
   deleteUser: protectedProcedure.mutation(async ({ ctx }) => {
-    await deleteUser(ctx.session.user.id);
+    await deleteUser(ctx.session.userId);
   }),
 
   // updateUser: the new TagReferences will cover the old ones
@@ -146,6 +146,6 @@ export const gorseRouter = createTRPCRouter({
       }),
     )
     .mutation(async ({ ctx, input }) => {
-      await updateUser(ctx.session.user.id, input.tags);
+      await updateUser(ctx.session.userId, input.tags);
     }),
 });

@@ -19,7 +19,7 @@ export const videoRouter = createTRPCRouter({
       }),
     )
     .query(async ({ input: { videoId }, ctx }): Promise<CommentPublic[]> => {
-      const currentUserId = ctx.session?.user.id;
+      const currentUserId = ctx.session?.userId;
       const comments = await ctx.db.comment.findMany({
         select: {
           id: true,
@@ -59,6 +59,9 @@ export const videoRouter = createTRPCRouter({
         where: {
           videoId,
         },
+        orderBy: {
+          createdAt: "desc",
+        },
       });
 
       return comments.map(
@@ -96,11 +99,45 @@ export const videoRouter = createTRPCRouter({
           likes: {
             [like ? "connect" : "disconnect"]: {
               userId_videoId: {
-                userId: ctx.session.user.id,
+                userId: ctx.session.userId,
                 videoId,
               },
             },
           },
+        },
+      });
+    }),
+
+  postComment: protectedProcedure
+    .input(
+      z.object({
+        videoId: z.string(),
+        text: z.string().min(1).max(1000),
+        imgUrl: z.string().optional(),
+      }),
+    )
+    .mutation(async ({ ctx, input: { videoId, text, imgUrl } }) => {
+      await ctx.db.comment.create({
+        data: {
+          text,
+          imgUrl,
+          videoId,
+          authorId: ctx.session.userId,
+        },
+      });
+    }),
+
+  deleteComment: protectedProcedure
+    .input(
+      z.object({
+        commentId: z.string(),
+      }),
+    )
+    .mutation(async ({ ctx, input: { commentId } }) => {
+      await ctx.db.comment.delete({
+        where: {
+          id: commentId,
+          authorId: ctx.session.userId,
         },
       });
     }),

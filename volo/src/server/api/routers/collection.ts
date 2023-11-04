@@ -1,13 +1,13 @@
 import { z } from "zod";
-import { createTRPCRouter, protectedProcedure } from "../trpc";
 import { type CollectionPublic } from "~/types";
+import { createTRPCRouter, protectedProcedure } from "../trpc";
 
 export const collectionRouter = createTRPCRouter({
   myCollections: protectedProcedure.query(
     async ({ ctx: { db, session } }): Promise<CollectionPublic[]> => {
       return await db.collection.findMany({
         where: {
-          ownerId: session.user.id,
+          ownerId: session.userId,
         },
         select: {
           id: true,
@@ -30,7 +30,7 @@ export const collectionRouter = createTRPCRouter({
         await db.collection.update({
           where: {
             id: collectionId,
-            ownerId: session.user.id,
+            ownerId: session.userId,
           },
           data: {
             videos: {
@@ -50,11 +50,10 @@ export const collectionRouter = createTRPCRouter({
       }),
     )
     .mutation(async ({ input: { name }, ctx: { db, session } }) => {
-      console.log("session", session);
       await db.collection.create({
         data: {
           name,
-          ownerId: session.user.id,
+          ownerId: session.userId,
         },
       });
     }),

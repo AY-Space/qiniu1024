@@ -8,6 +8,7 @@ import { Stack } from "@mui/joy";
 import { ThemeRegistry } from "./_components/theme-registry";
 import { AppBar } from "./_components/app-bar";
 import { getServerAuthSession } from "~/server/auth";
+import { NextSessionProvider } from "./_components/next-session-provider";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -31,10 +32,12 @@ export default async function RootLayout({
       <body className={`font-sans ${inter.variable}`}>
         <TRPCReactProvider headers={headers()}>
           <ThemeRegistry>
-            <Stack>
-              <AppBar currentUser={session?.user} />
-              <Stack>{children}</Stack>
-            </Stack>
+            <NextSessionProvider session={session}>
+              <Stack>
+                <AppBar currentUser={session?.user} />
+                <Stack>{children}</Stack>
+              </Stack>
+            </NextSessionProvider>
           </ThemeRegistry>
         </TRPCReactProvider>
       </body>

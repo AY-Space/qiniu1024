@@ -69,6 +69,7 @@ export function VideoContainer({ videos }: { videos: VideoDetailedPublic[] }) {
           active={video.id === activeVideoId}
         />
       ))}
+      x
     </Stack>
   );
 }

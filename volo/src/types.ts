@@ -28,6 +28,8 @@ export type CommentPublic = Pick<
   } | null;
 };
 
+export type TagPublic = Pick<Tag, "id" | "name" | "type">;
+
 export type VideoPublic = Pick<
   Video,
   "id" | "coverUrl" | "createdAt" | "title" | "views"
@@ -43,6 +45,8 @@ export type VideoDetailedPublic = Pick<
   currentUser: {
     liked: boolean;
   } | null;
+} & {
+  tags: TagPublic[];
 };
 
 export type CollectionPublic = Pick<Collection, "id" | "name">;
