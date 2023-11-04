@@ -18,6 +18,7 @@ import {
   Textarea,
   FormControl,
   FormLabel,
+  Sheet,
 } from "@mui/joy";
 import Image from "next/image";
 import { getBilibiliImageUrl } from "../../../utils";
@@ -28,6 +29,7 @@ import { ThumbDown, ThumbUp } from "@mui/icons-material";
 import { type CommentPublic } from "../../../../types";
 import { api } from "~/trpc/react";
 import { useState } from "react";
+import { Flex } from "~/app/_components/flex";
 
 const Comment = ({ comment }: { comment: CommentPublic }) => {
   return (
@@ -55,12 +57,16 @@ const Comment = ({ comment }: { comment: CommentPublic }) => {
         )}
         <Stack direction="row" spacing={1}>
           <IconButton size="sm">
-            <ThumbUp />
-            <Typography>{comment.likes}</Typography>
+            <Flex spacing={0.5} alignItems="center" px={0.5}>
+              <ThumbUp />
+              <Typography>{comment.likes}</Typography>
+            </Flex>
           </IconButton>
           <IconButton size="sm">
-            <ThumbDown />
-            <Typography>{comment.dislikes}</Typography>
+            <Flex spacing={0.5} alignItems="center" px={0.5}>
+              <ThumbDown />
+              <Typography>{comment.dislikes}</Typography>
+            </Flex>
           </IconButton>
         </Stack>
       </Stack>
@@ -79,6 +85,32 @@ const CommentList = ({ videoId }: { videoId: string }) => {
   );
 };
 
+const NewCommentForm = () => {
+  const [text, setText] = useState("");
+  return (
+    <Stack>
+      <Divider />
+      <Stack spacing={1} p={1}>
+        <Typography level="title-lg">你的评论</Typography>
+        <Textarea
+          placeholder="呐，现在何感想？"
+          onChange={(event) => setText(event.target.value)}
+          variant="soft"
+          endDecorator={
+            <>
+              <Box flex={1} />
+              <Flex alignItems="center" spacing={1}>
+                <Typography level="body-xs">{text.length} 字</Typography>
+                <Button>发送</Button>
+              </Flex>
+            </>
+          }
+        />
+      </Stack>
+    </Stack>
+  );
+};
+
 export interface CommentDrawerProps {
   videoId: string;
   open: boolean;
@@ -89,46 +121,38 @@ export const CommentDrawer = ({
   open,
   onClose,
 }: CommentDrawerProps) => {
-  const [text, setText] = useState("");
   return (
     <Drawer open={open} onClose={onClose} anchor="right">
-      <ModalClose />
-      <Container>
-        <DialogTitle sx={{ marginTop: 2 }}>评论</DialogTitle>
-        <Divider sx={{ marginTop: 2, marginBottom: 2 }} />
-        <CommentList videoId={videoId} />
-      </Container>
-      <Container sx={{ marginBottom: 2 }}>
-        <FormControl>
-          <FormLabel>Your comment</FormLabel>
-          <Textarea
-            placeholder="呐，现在何感想？"
-            onChange={(event) => setText(event.target.value)}
-            endDecorator={
-              <Box display="flex" flexDirection="column">
-                <Typography level="body-xs" sx={{ ml: "auto" }}>
-                  {text.length} 字
-                </Typography>
-                <Box
-                  sx={{
-                    display: "flex",
-                    gap: "var(--Textarea-paddingBlock)",
-                    pt: "var(--Textarea-paddingBlock)",
-                    borderTop: "1px solid",
-                    borderColor: "divider",
-                    flex: "auto",
-                  }}
-                >
-                  <Button sx={{ ml: "auto" }}>发送</Button>
-                </Box>
-              </Box>
-            }
+      <Stack
+        sx={{
+          height: "100vh",
+        }}
+      >
+        <Stack>
+          <ModalClose />
+
+          <DialogTitle
             sx={{
-              minWidth: 300,
+              p: 1.5,
             }}
-          />
-        </FormControl>
-      </Container>
+          >
+            评论
+          </DialogTitle>
+          <Divider />
+        </Stack>
+        <Stack
+          sx={{
+            px: 2,
+            flex: 1,
+            overflowY: "auto",
+          }}
+        >
+          <CommentList videoId={videoId} />
+        </Stack>
+        <Sheet>
+          <NewCommentForm />
+        </Sheet>
+      </Stack>
     </Drawer>
   );
 };
