@@ -23,7 +23,7 @@ export const authenticate = async (
   throw new Error("Invalid Password");
 };
 
-export const exists = async (
+const exists = async (
   prisma: PrismaClient,
   email: string,
 ): Promise<User | null> => {
@@ -34,7 +34,7 @@ export const exists = async (
   });
 };
 
-export const create = async (
+const create = async (
   prisma: PrismaClient,
   email: string,
   encryptedPassword: string,
