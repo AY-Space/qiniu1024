@@ -35,13 +35,12 @@ export function CreateCollectionModal({
   return (
     <Modal open={open} onClose={onClose}>
       <ModalDialog>
-        <DialogTitle>
-          <Typography level="h4" pb={1}>
-            创建收藏夹
-          </Typography>
-        </DialogTitle>
-        <Divider />
-        <DialogContent>
+        <DialogTitle>创建收藏夹</DialogTitle>
+        <DialogContent
+          sx={{
+            pt: 2,
+          }}
+        >
           <Input
             size="lg"
             placeholder="请输入收藏夹名"

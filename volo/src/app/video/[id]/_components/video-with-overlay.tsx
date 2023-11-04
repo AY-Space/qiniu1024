@@ -49,17 +49,9 @@ const VideoCollectionModal = ({
   return (
     <Modal open={open} onClose={onClose}>
       <ModalDialog variant="outlined" role="alertdialog">
-        <DialogTitle>
-          <Typography
-            id="modal-title"
-            level="h4"
-            textColor="inherit"
-            fontWeight="lg"
-            mb={1}
-          >
-            选择收藏夹
-          </Typography>
-        </DialogTitle>
+        <Typography level="h4" pb={1}>
+          选择收藏夹
+        </Typography>
         <Divider />
         <DialogContent>
           <List>
