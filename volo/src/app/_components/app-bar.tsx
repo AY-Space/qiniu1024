@@ -9,6 +9,7 @@ import {
   IconButton,
   Input,
   ListItem,
+  ListItemDecorator,
   Menu,
   MenuButton,
   MenuItem,
@@ -21,6 +22,7 @@ import MenuIcon from "@mui/icons-material/Menu";
 import { useState } from "react";
 import { NavigationDrawer } from "./navigation-drawer";
 import Link from "next/link";
+import { Home, Logout, Upload } from "@mui/icons-material";
 
 const UserMenu = ({ userId }: { userId: string }) => {
   // const user = api.user.(userId).data;
@@ -39,18 +41,33 @@ const UserMenu = ({ userId }: { userId: string }) => {
         }}
       />
       <Menu>
-        {user.name && <ListItem color="primary">{user.name}</ListItem>}
-        <ListItem>{user.email}</ListItem>
+        {user.name && <MenuItem color="primary">{user.name}</MenuItem>}
+        <MenuItem>{user.email}</MenuItem>
         <Divider />
-        <MenuItem>
-          <Link href="/user">个人主页</Link>
-        </MenuItem>
-        <MenuItem>
-          <Link href={`/upload`}>上传视频</Link>
-        </MenuItem>
-        <MenuItem color="danger">
-          <Link href="/api/auth/signout">退出登录</Link>
-        </MenuItem>
+        <Link href="/user">
+          <MenuItem>
+            <ListItemDecorator>
+              <Home />
+            </ListItemDecorator>
+            个人主页
+          </MenuItem>
+        </Link>
+        <Link href={`/upload`}>
+          <MenuItem>
+            <ListItemDecorator>
+              <Upload />
+            </ListItemDecorator>
+            上传视频
+          </MenuItem>
+        </Link>
+        <Link href="/api/auth/signout">
+          <MenuItem color="danger">
+            <ListItemDecorator>
+              <Logout />
+            </ListItemDecorator>
+            退出登录
+          </MenuItem>
+        </Link>
       </Menu>
     </Dropdown>
   );
