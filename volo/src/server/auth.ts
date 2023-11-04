@@ -4,19 +4,19 @@ import Credentials from "next-auth/providers/credentials";
 
 import { env } from "~/env.mjs";
 import { db } from "~/server/db";
-import { authenticate } from "~/server/lib/db/user";
+import { loginOrRegister } from "~/server/lib/db/user";
 
 declare module "next-auth" {
-  interface Session {
-    user: User;
-    expires: string;
-  }
-
   interface User {
     id: string;
     email: string;
     name: string | null;
-    avatar: string | null;
+    avatarUrl: string | null;
+  }
+
+  interface Session {
+    user: User;
+    expires: string;
   }
 }
 
@@ -32,7 +32,7 @@ export const authOptions: NextAuthOptions = {
         id: token.sub,
         email: token.email,
         name: token.name,
-        avatar: token.avatar,
+        avatarUrl: token.avatarUrl,
       },
       expires: session.expires,
     }),
@@ -40,16 +40,10 @@ export const authOptions: NextAuthOptions = {
       return {
         ...token,
         id: token.sub,
-        email: token.email,
-        name: token.name,
-        avatar: token.avatar,
       };
     },
   },
   session: { strategy: "jwt" },
-  jwt: {
-    maxAge: 60 * 60 * 24 * 7,
-  },
   secret: env.NEXTAUTH_SECRET,
   adapter: PrismaAdapter(db),
   providers: [
@@ -57,35 +51,37 @@ export const authOptions: NextAuthOptions = {
       name: "Email",
       credentials: {
         email: {
-          label: "email",
+          label: "邮箱",
           type: "text",
-          placeholder: "please enter the email",
+          placeholder: "请输入邮箱（若无则自动注册）",
         },
         password: {
-          label: "password",
+          label: "密码",
           type: "password",
-          placeholder: "please enter the password",
+          placeholder: "请输入密码",
         },
       },
-      async authorize(credentials, _) {
-        return !credentials?.email || !credentials?.password
-          ? null
-          : await initUser(credentials.email, credentials.password);
+      authorize: async (credentials, _) => {
+        if (!credentials?.email || !credentials?.password) {
+          return null;
+        }
+        return await auth(credentials.email, credentials.password);
       },
     }),
   ],
 };
 
-const initUser = async (email: string, password: string) => {
-  const user = await authenticate(email, password);
-  return !user
-    ? null
-    : {
-        id: user.id,
-        name: user.name,
-        email: user.email,
-        avatar: user.avatarUrl,
-      };
+const auth = async (email: string, password: string) => {
+  const user = await loginOrRegister(email, password);
+  if (!user) {
+    return null;
+  }
+  return {
+    id: user.id,
+    email: user.email,
+    name: user.name,
+    avatarUrl: user.avatarUrl,
+  };
 };
 
 /**

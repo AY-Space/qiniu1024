@@ -3,13 +3,13 @@ import { type PrismaClient, type User } from "@prisma/client";
 import { compare, hash } from "bcrypt";
 import { db } from "~/server/db";
 
-export const authenticate = async (
+export const loginOrRegister = async (
   email: string,
   password: string,
 ): Promise<User | null> => {
-  const user = await exists(db, email);
+  const user = await findUser(db, email);
   if (!user) {
-    return await create(db, email, await hash(password, 10));
+    return await createUser(db, email, await hash(password, 10));
   }
   if (user.password === null) {
     if (process.env.NODE_ENV === "production") {
@@ -23,7 +23,7 @@ export const authenticate = async (
   throw new Error("Invalid Password");
 };
 
-const exists = async (
+const findUser = async (
   prisma: PrismaClient,
   email: string,
 ): Promise<User | null> => {
@@ -34,7 +34,7 @@ const exists = async (
   });
 };
 
-const create = async (
+const createUser = async (
   prisma: PrismaClient,
   email: string,
   encryptedPassword: string,
@@ -43,6 +43,7 @@ const create = async (
     data: {
       email,
       password: encryptedPassword,
+      name: email,
     },
   });
 };
