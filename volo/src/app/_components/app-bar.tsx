@@ -98,6 +98,9 @@ export function AppBar({ currentUser }: AppBarProps) {
                   <MenuItem>
                     <Link href={`/user/${currentUser.id}`}>个人主页</Link>
                   </MenuItem>
+                  <MenuItem>
+                    <Link href={`/upload`}>上传视频</Link>
+                  </MenuItem>
                   <MenuItem color="danger">
                     <Link href="/api/auth/signout">退出登录</Link>
                   </MenuItem>
