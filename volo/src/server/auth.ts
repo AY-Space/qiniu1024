@@ -45,10 +45,10 @@ export const authOptions: NextAuthOptions = {
         },
       },
       authorize: async (credentials, _) => {
-        if (!credentials?.email || !credentials?.password) {
-          return null;
+        if (credentials?.email && credentials?.password) {
+          return await auth(credentials.email, credentials.password);
         }
-        return await auth(credentials.email, credentials.password);
+        return null;
       },
     }),
   ],
@@ -56,15 +56,7 @@ export const authOptions: NextAuthOptions = {
 
 const auth = async (email: string, password: string) => {
   const user = await loginOrRegister(email, password);
-  if (!user) {
-    return null;
-  }
-  return {
-    id: user.id,
-    email: user.email,
-    name: user.name,
-    avatarUrl: user.avatarUrl,
-  };
+  return user ? { id: user.id } : null;
 };
 
 /**

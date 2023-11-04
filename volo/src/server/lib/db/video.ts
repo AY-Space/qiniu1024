@@ -42,6 +42,13 @@ export const getVideos = async (
             userId: true,
           },
         },
+        tags: {
+          select: {
+            id: true,
+            name: true,
+            type: true,
+          },
+        },
       },
     })
   ).map(({ _count, likes, ...rest }) => {

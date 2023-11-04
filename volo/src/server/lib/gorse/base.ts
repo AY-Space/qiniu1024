@@ -1,7 +1,7 @@
 import { TagType } from "@prisma/client";
 import axios_ from "axios";
 import { env } from "~/env.mjs";
-import { type GorseFeedback, type TagReference } from "~/types";
+import { type GorseFeedback, type TagPublic } from "~/types";
 
 const axios = axios_.create({
   baseURL: env.GORSE_URL + "/api",
@@ -52,7 +52,7 @@ const format = (cursor: Cursor): string => {
   return `n=${setPageSize(cursor.limit)}&offset=${cursor.offset}`;
 };
 
-const newItem = (itemId: string, tags: TagReference[]): Item => ({
+const newItem = (itemId: string, tags: TagPublic[]): Item => ({
   Categories: tags
     .filter((tag) => tag.type === TagType.Category)
     .map((tag) => tag.id),
@@ -62,7 +62,7 @@ const newItem = (itemId: string, tags: TagReference[]): Item => ({
   Timestamp: new Date(),
 });
 
-const newUser = (userId: string, tags: TagReference[]): User => ({
+const newUser = (userId: string, tags: TagPublic[]): User => ({
   Labels: tags.filter((tag) => tag.type === TagType.Tag).map((tag) => tag.id),
   UserId: userId,
 });
@@ -78,7 +78,7 @@ const newFeedback = (
   UserId: userId,
 });
 
-export const insertVideo = async (videoId: string, tags: TagReference[]) => {
+export const insertVideo = async (videoId: string, tags: TagPublic[]) => {
   await axios.post("/item", newItem(videoId, tags));
 };
 
@@ -87,11 +87,11 @@ export const deleteVideo = async (videoId: string) => {
 };
 
 // updateVideo: the new TagReferences will cover the old ones
-export const updateVideo = async (videoId: string, tags: TagReference[]) => {
+export const updateVideo = async (videoId: string, tags: TagPublic[]) => {
   await axios.patch(`/item/${videoId}`, newItem(videoId, tags));
 };
 
-export const insertUser = async (userId: string, tags: TagReference[]) => {
+export const insertUser = async (userId: string, tags: TagPublic[]) => {
   await axios.post("/user", newUser(userId, tags));
 };
 
@@ -100,7 +100,7 @@ export const deleteUser = async (userId: string) => {
 };
 
 // updateUser: the new TagReferences will cover the old ones
-export const updateUser = async (userId: string, tags: TagReference[]) => {
+export const updateUser = async (userId: string, tags: TagPublic[]) => {
   await axios.patch(`/user/${userId}`, newUser(userId, tags));
 };
 
