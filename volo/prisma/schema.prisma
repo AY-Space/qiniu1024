@@ -129,4 +129,6 @@ model Tag {
   createdAt   DateTime @default(now())
   users       User[]
   videos      Video[]
+
+  @@unique([name])
 }
