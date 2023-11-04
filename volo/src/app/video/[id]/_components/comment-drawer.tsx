@@ -108,7 +108,7 @@ const CommentList = ({ videoId }: { videoId: string }) => {
       )}
       {data?.map((comment) => (
         <Comment
-          deleteable={session?.user.id === comment.author.id}
+          deleteable={session?.userId === comment.author.id}
           comment={comment}
           key={comment.id}
           onDelete={() => {
