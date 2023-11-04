@@ -20,6 +20,7 @@ import {
   ModalClose,
   DialogTitle,
   LinearProgress,
+  Chip,
 } from "@mui/joy";
 import { getBilibiliImageUrl } from "~/app/utils";
 import ThumbUpIcon from "@mui/icons-material/ThumbUp";
@@ -207,8 +208,11 @@ const VideoActions = ({
 };
 
 const VideoOverlay = ({ video }: { video: VideoDetailedPublic }) => {
+  const categories = video.tags.filter((tag) => tag.type === "Category");
+  const tags = video.tags.filter((tag) => tag.type === "Tag");
+
   return (
-    <Stack spacing={2} p={2} data-joy-color-scheme="dark">
+    <Stack spacing={1} p={2} data-joy-color-scheme="dark">
       <Flex spacing={2} alignItems="center">
         <Link href={`/user/${video.author.id}`}>
           <Avatar
@@ -237,6 +241,18 @@ const VideoOverlay = ({ video }: { video: VideoDetailedPublic }) => {
         </Stack>
       </Flex>
       <Typography level="title-md">{video.title}</Typography>
+      <Flex gap={1}>
+        {categories.map((category) => (
+          <Chip key={category.id} size="sm" color="primary">
+            {category.name}
+          </Chip>
+        ))}
+        {tags.map((tag) => (
+          <Chip key={tag.id} size="sm">
+            {tag.name}
+          </Chip>
+        ))}
+      </Flex>
       <Typography level="body-md">{video.description}</Typography>
     </Stack>
   );
