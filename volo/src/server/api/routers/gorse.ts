@@ -20,7 +20,7 @@ import {
   getPopular,
   getRecommend,
 } from "~/server/lib/gorse/recommend";
-import { FeedbackType, type VideoDetailedPublic } from "~/types";
+import { GorseFeedback, type VideoDetailedPublic } from "~/types";
 
 const Cursor = z.object({
   limit: z.number(),
@@ -32,7 +32,7 @@ const Query = z.object({
   categoryId: z.string().nullable(),
 });
 
-const FeedbackTypeZ = z.nativeEnum(FeedbackType);
+const FeedbackTypeZ = z.nativeEnum(GorseFeedback);
 const TagTypeZ = z.nativeEnum(TagType);
 
 const TagRef = z.object({

@@ -1,4 +1,10 @@
-import { type Comment, type Tag, type User, type Video } from "@prisma/client";
+import {
+  type Collection,
+  type Comment,
+  type Tag,
+  type User,
+  type Video,
+} from "@prisma/client";
 
 export type UserPublic = Pick<User, "id" | "name" | "avatarUrl">;
 export type UserDetailedPublic = Pick<
@@ -39,9 +45,11 @@ export type VideoDetailedPublic = Pick<
   } | null;
 };
 
+export type CollectionPublic = Pick<Collection, "id" | "name">;
+
 export type TagReference = Pick<Tag, "id" | "type">;
 
-export enum FeedbackType {
+export enum GorseFeedback {
   READALL = "read_all",
   LIKED = "liked",
   COLLECTED = "collected",

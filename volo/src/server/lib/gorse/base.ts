@@ -1,7 +1,7 @@
 import { TagType } from "@prisma/client";
 import axios_ from "axios";
 import { env } from "~/env.mjs";
-import { type FeedbackType, type TagReference } from "~/types";
+import { type GorseFeedback, type TagReference } from "~/types";
 
 const axios = axios_.create({
   baseURL: env.GORSE_URL + "/api",
@@ -70,7 +70,7 @@ const newUser = (userId: string, tags: TagReference[]): User => ({
 const newFeedback = (
   userId: string,
   itemId: string,
-  feedbackType: FeedbackType,
+  feedbackType: GorseFeedback,
 ): Feedback => ({
   FeedbackType: feedbackType,
   ItemId: itemId,
@@ -107,7 +107,7 @@ export const updateUser = async (userId: string, tags: TagReference[]) => {
 export const insertFeedback = async (
   userId: string,
   videoId: string,
-  feedbackType: FeedbackType,
+  feedbackType: GorseFeedback,
 ) => {
   await axios.put("/feedback", newFeedback(userId, videoId, feedbackType));
 };
@@ -115,7 +115,7 @@ export const insertFeedback = async (
 export const deleteFeedback = async (
   userId: string,
   videoId: string,
-  feedbackType: FeedbackType,
+  feedbackType: GorseFeedback,
 ) => {
   await axios.delete(`/feedback/${feedbackType}/${userId}/${videoId}`);
 };
