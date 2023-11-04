@@ -26,7 +26,6 @@ import { api } from "~/trpc/react";
 
 const UserMenu = () => {
   const { data: user } = api.user.currentUser.useQuery();
-  console.log(user);
   return (
     <Dropdown>
       <MenuButton

@@ -45,9 +45,7 @@ const VideoCollectionModal = ({
   const [showCreateCollection, setShowCreateCollection] = useState(false);
   const { data: collections } = api.collection.myCollections.useQuery();
   const [selectedCollectionIds, setSelectedCollectionIds] = useState(
-    collections?.map((collection) => {
-      return { [collection.id]: false };
-    }),
+    new Set<string>(),
   );
 
   return (
@@ -68,20 +66,20 @@ const VideoCollectionModal = ({
               </ListItemButton>
             </ListItem>
             {collections?.map((collection) => (
-              <ListItem
-                key={collection.id}
-                variant="plain"
-                sx={{ borderRadius: "sm" }}
-              >
+              <ListItem key={collection.id}>
                 <Checkbox
-                  label="Wrong Address"
-                  color="neutral"
+                  label={collection.name}
                   overlay
-                  checked={collection.id in selectedCollectionIds}
+                  checked={selectedCollectionIds.has(collection.id)}
                   onChange={(event) =>
-                    setSelectedCollectionIds({
-                      ...selectedCollectionIds,
-                      [collection.id]: !selectedCollectionIds[collection.id],
+                    setSelectedCollectionIds((prev) => {
+                      const next = new Set(prev);
+                      if (event.target.checked) {
+                        next.add(collection.id);
+                      } else {
+                        next.delete(collection.id);
+                      }
+                      return next;
                     })
                   }
                 />
