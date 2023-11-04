@@ -39,7 +39,7 @@ const Comment = ({
   onDelete: () => void;
 }) => {
   return (
-    <Stack direction="row" spacing={1}>
+    <Flex spacing={1}>
       {comment.author.avatarUrl && (
         <Avatar src={getBilibiliImageUrl(comment.author.avatarUrl)} />
       )}
@@ -69,7 +69,7 @@ const Comment = ({
             />
           </Box>
         )}
-        <Stack direction="row" spacing={1}>
+        <Flex spacing={1}>
           <IconButton size="sm">
             <Flex spacing={0.5} alignItems="center" px={0.5}>
               <ThumbUp />
@@ -82,9 +82,9 @@ const Comment = ({
               <Typography>{comment.dislikes}</Typography>
             </Flex>
           </IconButton>
-        </Stack>
+        </Flex>
       </Stack>
-    </Stack>
+    </Flex>
   );
 };
 

@@ -20,6 +20,7 @@ import {
   styled,
 } from "@mui/joy";
 import { Upload, VideoFile } from "@mui/icons-material";
+import { Flex } from "../_components/flex";
 
 const VisuallyHiddenInput = styled("input")`
   clip: rect(0 0 0 0);
@@ -78,7 +79,7 @@ export default function UploadTest() {
                   alignItems="center"
                 >
                   <Typography>{selectedFile?.name ?? "未选择文件"}</Typography>
-                  <Stack direction="row" gap={1}>
+                  <Flex gap={1}>
                     <Button
                       component="label"
                       role={undefined}
@@ -106,7 +107,7 @@ export default function UploadTest() {
                     <Button onClick={() => setSelectedFile(null)}>
                       取消选择
                     </Button>
-                  </Stack>
+                  </Flex>
                 </Stack>
                 <LinearProgress
                   determinate={getVideoUploadParameters.isSuccess}
