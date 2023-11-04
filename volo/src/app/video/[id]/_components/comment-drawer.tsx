@@ -11,13 +11,10 @@ import {
   Typography,
   Alert,
   CircularProgress,
-  Container,
   DialogTitle,
   Divider,
   Button,
   Textarea,
-  FormControl,
-  FormLabel,
   Sheet,
 } from "@mui/joy";
 import Image from "next/image";
@@ -122,7 +119,19 @@ export const CommentDrawer = ({
   onClose,
 }: CommentDrawerProps) => {
   return (
-    <Drawer open={open} onClose={onClose} anchor="right">
+    <Drawer
+      open={open}
+      onClose={onClose}
+      anchor="right"
+      slotProps={{
+        content: {
+          sx: {
+            width: 420,
+            maxWidth: "90vw",
+          },
+        },
+      }}
+    >
       <Stack
         sx={{
           height: "100vh",
