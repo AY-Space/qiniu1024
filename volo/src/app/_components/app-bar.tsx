@@ -8,7 +8,7 @@ import {
   Grid,
   IconButton,
   Input,
-  ListItem,
+  ListItemDecorator,
   Menu,
   MenuButton,
   MenuItem,
@@ -21,13 +21,62 @@ import MenuIcon from "@mui/icons-material/Menu";
 import { useState } from "react";
 import { NavigationDrawer } from "./navigation-drawer";
 import Link from "next/link";
-import { type Session } from "next-auth";
+import { Home, Logout, Upload } from "@mui/icons-material";
+import { api } from "~/trpc/react";
+
+const UserMenu = () => {
+  const { data: user } = api.user.currentUser.useQuery();
+  return (
+    <Dropdown>
+      <MenuButton
+        slots={{
+          root: Avatar,
+        }}
+        slotProps={{
+          root: {
+            src: user?.avatarUrl ?? undefined,
+            variant: "outlined",
+          },
+        }}
+      />
+      <Menu>
+        {user?.name && <MenuItem color="primary">{user.name}</MenuItem>}
+        <MenuItem>{user?.email}</MenuItem>
+        <Divider />
+        <Link href="/user">
+          <MenuItem>
+            <ListItemDecorator>
+              <Home />
+            </ListItemDecorator>
+            个人主页
+          </MenuItem>
+        </Link>
+        <Link href={`/upload`}>
+          <MenuItem>
+            <ListItemDecorator>
+              <Upload />
+            </ListItemDecorator>
+            上传视频
+          </MenuItem>
+        </Link>
+        <Link href="/api/auth/signout">
+          <MenuItem color="danger">
+            <ListItemDecorator>
+              <Logout />
+            </ListItemDecorator>
+            退出登录
+          </MenuItem>
+        </Link>
+      </Menu>
+    </Dropdown>
+  );
+};
 
 export interface AppBarProps {
-  currentUser?: Session["user"];
+  loggedIn: boolean;
 }
 
-export function AppBar({ currentUser }: AppBarProps) {
+export function AppBar({ loggedIn }: AppBarProps) {
   const [navigationDrawer, setNavigationDrawer] = useState(false);
 
   return (
@@ -35,8 +84,6 @@ export function AppBar({ currentUser }: AppBarProps) {
       sx={{
         px: 2,
         height: "var(--volo-app-bar-height)",
-        display: "flex",
-        alignItems: "center",
         position: "sticky",
         top: 0,
         zIndex: 100,
@@ -51,6 +98,12 @@ export function AppBar({ currentUser }: AppBarProps) {
         container
         sx={{
           flex: 1,
+          "& > *": {
+            height: "100%",
+            display: "flex",
+            alignItems: "center",
+          },
+          height: "100%",
         }}
         columns={{
           xs: 5,
@@ -87,34 +140,14 @@ export function AppBar({ currentUser }: AppBarProps) {
           />
         </Grid>
         <Grid xs={1}>
-          <Flex justifyContent="flex-end" alignItems="center" spacing={1}>
-            {currentUser ? (
-              <Dropdown>
-                <MenuButton
-                  slots={{
-                    root: Avatar,
-                  }}
-                  slotProps={{
-                    root: {
-                      src: currentUser.avatarUrl ?? undefined,
-                      variant: "outlined",
-                    },
-                  }}
-                />
-                <Menu>
-                  {currentUser.name && (
-                    <ListItem color="primary">{currentUser.name}</ListItem>
-                  )}
-                  <ListItem>{currentUser.email}</ListItem>
-                  <Divider />
-                  <MenuItem>
-                    <Link href={`/user/${currentUser.id}`}>个人主页</Link>
-                  </MenuItem>
-                  <MenuItem color="danger">
-                    <Link href="/api/auth/signout">退出登录</Link>
-                  </MenuItem>
-                </Menu>
-              </Dropdown>
+          <Flex
+            justifyContent="flex-end"
+            alignItems="center"
+            spacing={1}
+            flex={1}
+          >
+            {loggedIn ? (
+              <UserMenu />
             ) : (
               <Link href="/api/auth/signin">
                 <Button>登录</Button>

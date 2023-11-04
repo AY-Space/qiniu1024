@@ -1,10 +1,31 @@
 import { createTRPCRouter, protectedProcedure } from "~/server/api/trpc";
-import { findUserPublic } from "~/server/lib/db/user";
 import { type UserPublic } from "~/types";
 
 export const userRouter = createTRPCRouter({
-  info: protectedProcedure.query(async ({ ctx }): Promise<UserPublic> => {
-    const user = await findUserPublic(ctx.db, ctx.session.userId);
-    return user!; // session exists, the user exists!
-  }),
+  currentUser: protectedProcedure.query(
+    async ({
+      ctx,
+    }): Promise<
+      UserPublic & {
+        email: string;
+      }
+    > => {
+      const { userId } = ctx.session;
+      const user = await ctx.db.user.findUnique({
+        where: {
+          id: userId,
+        },
+        select: {
+          id: true,
+          name: true,
+          email: true,
+          avatarUrl: true,
+        },
+      });
+      if (!user) {
+        throw new Error("User not found");
+      }
+      return user;
+    },
+  ),
 });
