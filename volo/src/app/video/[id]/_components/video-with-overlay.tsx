@@ -14,19 +14,19 @@ import {
   ListItemDecorator,
   ListItemContent,
   Checkbox,
-  Button,
   DialogContent,
   Divider,
-  DialogActions,
   Link as JoyLink,
-  Chip,
+  ModalClose,
+  DialogTitle,
+  LinearProgress,
 } from "@mui/joy";
 import { getBilibiliImageUrl } from "~/app/utils";
 import ThumbUpIcon from "@mui/icons-material/ThumbUp";
 import CommentIcon from "@mui/icons-material/Comment";
 import ShareIcon from "@mui/icons-material/Share";
 import StarIcon from "@mui/icons-material/Star";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { Flex } from "~/app/_components/flex";
 import { type VideoDetailedPublic } from "~/types";
 import VideoPlayer from "./video-player";
@@ -39,22 +39,56 @@ import Link from "next/link";
 const VideoCollectionModal = ({
   open,
   onClose,
+  videoId,
 }: {
   open: boolean;
   onClose: () => void;
+  videoId: string;
 }) => {
   const [showCreateCollection, setShowCreateCollection] = useState(false);
+  const utils = api.useUtils();
   const { data: collections } = api.collection.myCollections.useQuery();
-  const [selectedCollectionIds, setSelectedCollectionIds] = useState(
-    new Set<string>(),
+
+  const { data: savedCollectionIds } = api.collection.idsWithVideo.useQuery({
+    videoId,
+  });
+  const savedCollectionIdsSet = useMemo(
+    () => new Set(savedCollectionIds ?? []),
+    [savedCollectionIds],
   );
+  const updateVideoCollection = api.collection.updateVideo.useMutation({
+    onSuccess: async () => {
+      await utils.collection.idsWithVideo.invalidate({ videoId });
+    },
+  });
 
   return (
     <Modal open={open} onClose={onClose}>
       <ModalDialog variant="outlined" role="alertdialog">
-        <Typography level="h4" pb={1}>
-          选择收藏夹
-        </Typography>
+        {updateVideoCollection.isLoading && (
+          <LinearProgress
+            sx={{
+              position: "absolute",
+              top: 0,
+              left: 0,
+              right: 0,
+            }}
+          />
+        )}
+        <Flex pb={0.5} alignItems="center">
+          <DialogTitle
+            sx={{
+              flex: 1,
+            }}
+          >
+            选择收藏夹
+          </DialogTitle>
+          <ModalClose
+            sx={{
+              position: "static",
+            }}
+          />
+        </Flex>
         <Divider />
         <DialogContent sx={{ mb: 2 }}>
           <List>
@@ -71,31 +105,21 @@ const VideoCollectionModal = ({
                 <Checkbox
                   label={collection.name}
                   overlay
-                  checked={selectedCollectionIds.has(collection.id)}
-                  onChange={(event) =>
-                    setSelectedCollectionIds((prev) => {
-                      const next = new Set(prev);
-                      if (event.target.checked) {
-                        next.add(collection.id);
-                      } else {
-                        next.delete(collection.id);
-                      }
-                      return next;
-                    })
-                  }
+                  checked={savedCollectionIdsSet.has(collection.id)}
+                  onChange={(event) => {
+                    updateVideoCollection.mutate({
+                      collectionId: collection.id,
+                      videoId,
+                      operation: event.target.checked
+                        ? "connect"
+                        : "disconnect",
+                    });
+                  }}
                 />
               </ListItem>
             ))}
           </List>
         </DialogContent>
-        <DialogActions>
-          <Button variant="solid" color="success" onClick={() => {}}>
-            确认
-          </Button>
-          <Button variant="plain" color="neutral" onClick={onClose}>
-            取消
-          </Button>
-        </DialogActions>
         <CreateCollectionModal
           open={showCreateCollection}
           onClose={() => setShowCreateCollection(false)}
@@ -167,6 +191,7 @@ const VideoActions = ({
             <VideoCollectionModal
               open={showCollection}
               onClose={() => setShowCollection(false)}
+              videoId={videoId}
             />
           )}
         </Stack>
@@ -183,7 +208,7 @@ const VideoActions = ({
 
 const VideoOverlay = ({ video }: { video: VideoDetailedPublic }) => {
   return (
-    <Stack spacing={1} p={2} data-joy-color-scheme="dark">
+    <Stack spacing={2} p={2} data-joy-color-scheme="dark">
       <Flex spacing={2} alignItems="center">
         <Link href={`/user/${video.author.id}`}>
           <Avatar
@@ -212,13 +237,6 @@ const VideoOverlay = ({ video }: { video: VideoDetailedPublic }) => {
         </Stack>
       </Flex>
       <Typography level="title-md">{video.title}</Typography>
-      <Flex gap={1}>
-        {video.tags.map((tag) => (
-          <Chip key={tag.id} size="sm">
-            {tag.name}
-          </Chip>
-        ))}
-      </Flex>
       <Typography level="body-md">{video.description}</Typography>
     </Stack>
   );

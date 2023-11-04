@@ -24,7 +24,7 @@ export function CreateCollectionModal({
   const utils = api.useUtils();
   const [name, setName] = useState("");
 
-  const createCollection = api.collection.createCollection.useMutation({
+  const createCollection = api.collection.create.useMutation({
     onSuccess: async () => {
       await utils.collection.myCollections.invalidate();
       setName("");
