@@ -43,7 +43,7 @@ const UserMenu = ({ userId }: { userId: string }) => {
         <ListItem>{user.email}</ListItem>
         <Divider />
         <MenuItem>
-          <Link href={`/user/${user.id}`}>个人主页</Link>
+          <Link href="/user">个人主页</Link>
         </MenuItem>
         <MenuItem>
           <Link href={`/upload`}>上传视频</Link>
