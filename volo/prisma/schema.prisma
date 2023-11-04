@@ -112,6 +112,8 @@ model Collection {
 
   owner  User    @relation(fields: [ownerId], references: [id], onDelete: Cascade)
   videos Video[]
+
+  @@unique([name, ownerId])
 }
 
 enum TagType {
