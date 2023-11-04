@@ -8,7 +8,6 @@ import {
   Grid,
   IconButton,
   Input,
-  ListItem,
   ListItemDecorator,
   Menu,
   MenuButton,
@@ -23,10 +22,11 @@ import { useState } from "react";
 import { NavigationDrawer } from "./navigation-drawer";
 import Link from "next/link";
 import { Home, Logout, Upload } from "@mui/icons-material";
+import { api } from "~/trpc/react";
 
-const UserMenu = ({ userId }: { userId: string }) => {
-  // const user = api.user.(userId).data;
-  const user = {};
+const UserMenu = () => {
+  const { data: user } = api.user.currentUser.useQuery();
+  console.log(user);
   return (
     <Dropdown>
       <MenuButton
@@ -35,14 +35,14 @@ const UserMenu = ({ userId }: { userId: string }) => {
         }}
         slotProps={{
           root: {
-            src: user.avatarUrl ?? undefined,
+            src: user?.avatarUrl ?? undefined,
             variant: "outlined",
           },
         }}
       />
       <Menu>
-        {user.name && <MenuItem color="primary">{user.name}</MenuItem>}
-        <MenuItem>{user.email}</MenuItem>
+        {user?.name && <MenuItem color="primary">{user.name}</MenuItem>}
+        <MenuItem>{user?.email}</MenuItem>
         <Divider />
         <Link href="/user">
           <MenuItem>
@@ -74,10 +74,10 @@ const UserMenu = ({ userId }: { userId: string }) => {
 };
 
 export interface AppBarProps {
-  currentUserId?: string;
+  loggedIn: boolean;
 }
 
-export function AppBar({ currentUserId }: AppBarProps) {
+export function AppBar({ loggedIn }: AppBarProps) {
   const [navigationDrawer, setNavigationDrawer] = useState(false);
 
   return (
@@ -147,8 +147,8 @@ export function AppBar({ currentUserId }: AppBarProps) {
             spacing={1}
             flex={1}
           >
-            {currentUserId ? (
-              <UserMenu userId={currentUserId} />
+            {loggedIn ? (
+              <UserMenu />
             ) : (
               <Link href="/api/auth/signin">
                 <Button>登录</Button>

@@ -34,7 +34,7 @@ export default async function RootLayout({
           <ThemeRegistry>
             <NextSessionProvider session={session}>
               <Stack>
-                <AppBar currentUserId={session?.userId} />
+                <AppBar loggedIn={!!session?.userId} />
                 <Stack>{children}</Stack>
               </Stack>
             </NextSessionProvider>
