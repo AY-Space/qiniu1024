@@ -21,25 +21,43 @@ import { getBilibiliImageUrl } from "../../../utils";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 dayjs.extend(relativeTime);
-import { ThumbDown, ThumbUp } from "@mui/icons-material";
+import { Delete, ThumbDown, ThumbUp } from "@mui/icons-material";
 import { type CommentPublic } from "../../../../types";
 import { api } from "~/trpc/react";
 import { useState } from "react";
 import { Flex } from "~/app/_components/flex";
+import SendIcon from "@mui/icons-material/Send";
+import { useSession } from "next-auth/react";
 
-const Comment = ({ comment }: { comment: CommentPublic }) => {
+const Comment = ({
+  comment,
+  deleteable,
+  onDelete,
+}: {
+  comment: CommentPublic;
+  deleteable: boolean;
+  onDelete: () => void;
+}) => {
   return (
     <Stack direction="row" spacing={1}>
       {comment.author.avatarUrl && (
         <Avatar src={getBilibiliImageUrl(comment.author.avatarUrl)} />
       )}
-      <Stack spacing={1}>
-        <Stack>
-          <Typography level="title-md">{comment.author.name}</Typography>
-          <Typography level="body-xs">
-            {dayjs(comment.createdAt).fromNow()}
-          </Typography>
-        </Stack>
+      <Stack spacing={1} flex={1}>
+        <Flex alignItems="center">
+          <Stack>
+            <Typography level="title-md">{comment.author.name}</Typography>
+            <Typography level="body-xs">
+              {dayjs(comment.createdAt).fromNow()}
+            </Typography>
+          </Stack>
+          <Box flex={1} />
+          {deleteable && (
+            <IconButton color="danger" size="sm" onClick={onDelete}>
+              <Delete />
+            </IconButton>
+          )}
+        </Flex>
         <Typography>{comment.text}</Typography>
         {comment.imgUrl && (
           <Box width={160} height={160} position={"relative"}>
@@ -72,6 +90,14 @@ const Comment = ({ comment }: { comment: CommentPublic }) => {
 
 const CommentList = ({ videoId }: { videoId: string }) => {
   const { data, error, isLoading } = api.video.comments.useQuery({ videoId });
+  const { data: session } = useSession();
+  const utils = api.useUtils();
+  const deteleComment = api.video.deleteComment.useMutation({
+    onSuccess: async () => {
+      await utils.video.comments.invalidate({ videoId });
+    },
+  });
+
   return (
     <Stack spacing={2}>
       {error && <Alert color="danger">{error.message}</Alert>}
@@ -80,13 +106,31 @@ const CommentList = ({ videoId }: { videoId: string }) => {
           <CircularProgress />
         </Stack>
       )}
-      {data?.map((comment) => <Comment comment={comment} key={comment.id} />)}
+      {data?.map((comment) => (
+        <Comment
+          deleteable={session?.user.id === comment.author.id}
+          comment={comment}
+          key={comment.id}
+          onDelete={() => {
+            deteleComment.mutate({
+              commentId: comment.id,
+            });
+          }}
+        />
+      ))}
     </Stack>
   );
 };
 
-const NewCommentForm = () => {
+const NewCommentForm = ({ videoId }: { videoId: string }) => {
   const [text, setText] = useState("");
+  const utils = api.useUtils();
+  const postComment = api.video.postComment.useMutation({
+    onSuccess: async () => {
+      await utils.video.comments.invalidate({ videoId });
+      setText("");
+    },
+  });
   return (
     <Stack>
       <Divider />
@@ -97,6 +141,8 @@ const NewCommentForm = () => {
           onChange={(event) => setText(event.target.value)}
           variant="soft"
           minRows={3}
+          maxRows={10}
+          value={text}
           endDecorator={
             <>
               <Box flex={1} />
@@ -104,11 +150,27 @@ const NewCommentForm = () => {
                 {text.length > 0 && (
                   <Typography level="body-xs">{text.length} 字</Typography>
                 )}
-                <Button>发送</Button>
+                <Button
+                  disabled={postComment.isLoading}
+                  onClick={() => {
+                    postComment.mutate({
+                      videoId,
+                      text,
+                    });
+                  }}
+                  startDecorator={
+                    postComment.isLoading ? <CircularProgress /> : <SendIcon />
+                  }
+                >
+                  发送
+                </Button>
               </Flex>
             </>
           }
         />
+        {postComment.isError && (
+          <Alert color="danger">{postComment.error?.message}</Alert>
+        )}
       </Stack>
     </Stack>
   );
@@ -166,7 +228,7 @@ export const CommentDrawer = ({
             <CommentList videoId={videoId} />
           </Stack>
           <Sheet>
-            <NewCommentForm />
+            <NewCommentForm videoId={videoId} />
           </Sheet>
         </Stack>
       )}

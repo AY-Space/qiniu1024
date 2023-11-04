@@ -39,7 +39,7 @@ export default async function Video({
     ..._count,
     ...rest,
     dislikes: 0,
-    isLiked: false
+    isLiked: false,
   }));
 
   return (

@@ -59,6 +59,9 @@ export const videoRouter = createTRPCRouter({
         where: {
           videoId,
         },
+        orderBy: {
+          createdAt: "desc",
+        },
       });
 
       return comments.map(
@@ -101,6 +104,40 @@ export const videoRouter = createTRPCRouter({
               },
             },
           },
+        },
+      });
+    }),
+
+  postComment: protectedProcedure
+    .input(
+      z.object({
+        videoId: z.string(),
+        text: z.string().min(1).max(1000),
+        imgUrl: z.string().optional(),
+      }),
+    )
+    .mutation(async ({ ctx, input: { videoId, text, imgUrl } }) => {
+      await ctx.db.comment.create({
+        data: {
+          text,
+          imgUrl,
+          videoId,
+          authorId: ctx.session.user.id,
+        },
+      });
+    }),
+
+  deleteComment: protectedProcedure
+    .input(
+      z.object({
+        commentId: z.string(),
+      }),
+    )
+    .mutation(async ({ ctx, input: { commentId } }) => {
+      await ctx.db.comment.delete({
+        where: {
+          id: commentId,
+          authorId: ctx.session.user.id,
         },
       });
     }),

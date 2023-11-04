@@ -50,7 +50,6 @@ export const collectionRouter = createTRPCRouter({
       }),
     )
     .mutation(async ({ input: { name }, ctx: { db, session } }) => {
-      console.log("session", session);
       await db.collection.create({
         data: {
           name,

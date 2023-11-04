@@ -215,6 +215,7 @@ const VideoOverlay = ({ video }: { video: VideoDetailedPublic }) => {
 export interface VideoWithOverlayProps {
   video: VideoDetailedPublic;
   active: boolean;
+  currentUserId?: string;
 }
 
 export const VideoWithOverlay = ({ video, active }: VideoWithOverlayProps) => {
