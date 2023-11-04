@@ -19,6 +19,7 @@ import {
   Divider,
   DialogTitle,
   DialogActions,
+  Link as JoyLink,
 } from "@mui/joy";
 import { getBilibiliImageUrl } from "~/app/utils";
 import ThumbUpIcon from "@mui/icons-material/ThumbUp";
@@ -33,6 +34,7 @@ import { CommentDrawer } from "./comment-drawer";
 import { Add } from "@mui/icons-material";
 import { CreateCollectionModal } from "~/app/_components/create-collection-modal";
 import { api } from "~/trpc/react";
+import Link from "next/link";
 
 const VideoCollectionModal = ({
   open,
@@ -176,17 +178,29 @@ const VideoActions = ({
 
 const VideoOverlay = ({ video }: { video: VideoDetailedPublic }) => {
   return (
-    <Stack spacing={2} p={2}>
+    <Stack spacing={2} p={2} data-joy-color-scheme="dark">
       <Flex spacing={2} alignItems="center">
-        <Avatar
-          src={
-            video.author.avatarUrl !== null
-              ? getBilibiliImageUrl(video.author.avatarUrl)
-              : undefined
-          }
-        />
+        <Link href={`/user/${video.author.id}`}>
+          <Avatar
+            src={
+              video.author.avatarUrl !== null
+                ? getBilibiliImageUrl(video.author.avatarUrl)
+                : undefined
+            }
+          />
+        </Link>
         <Stack>
-          <Typography level="title-md">{video.author.name}</Typography>
+          <Link href={`/user/${video.author.id}`} passHref>
+            <JoyLink
+              color="neutral"
+              level="title-md"
+              sx={(theme) => ({
+                color: theme.palette.text.primary,
+              })}
+            >
+              {video.author.name}
+            </JoyLink>
+          </Link>
           <Typography level="body-xs">
             {video.createdAt.toLocaleDateString()}
           </Typography>
