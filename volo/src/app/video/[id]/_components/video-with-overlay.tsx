@@ -32,24 +32,88 @@ import VideoPlayer from "./video-player";
 import { CommentDrawer } from "./comment-drawer";
 import { Add } from "@mui/icons-material";
 import { CreateCollectionModal } from "~/app/_components/create-collection-modal";
+import { api } from "~/trpc/react";
+
+const VideoCollectionModal = ({
+  open,
+  onClose,
+}: {
+  open: boolean;
+  onClose: () => void;
+}) => {
+  const [showCreateCollection, setShowCreateCollection] = useState(false);
+  const { data: collections } = api.collection.myCollections.useQuery();
+
+  return (
+    <Modal open={open} onClose={onClose}>
+      <ModalDialog variant="outlined" role="alertdialog">
+        <DialogTitle>
+          <Typography
+            id="modal-title"
+            level="h4"
+            textColor="inherit"
+            fontWeight="lg"
+            mb={1}
+          >
+            选择收藏夹
+          </Typography>
+        </DialogTitle>
+        <Divider />
+        <DialogContent>
+          <List>
+            <ListItem>
+              <ListItemButton onClick={() => setShowCreateCollection(true)}>
+                <ListItemDecorator>
+                  <Add />
+                </ListItemDecorator>
+                <ListItemContent>创建收藏夹</ListItemContent>
+              </ListItemButton>
+            </ListItem>
+            {collections?.map((collection) => (
+              <ListItem key={collection.id}>
+                <ListItemButton>
+                  <ListItemDecorator>
+                    <Checkbox />
+                  </ListItemDecorator>
+                  <ListItemContent>{collection.name}</ListItemContent>
+                </ListItemButton>
+              </ListItem>
+            ))}
+          </List>
+        </DialogContent>
+        <DialogActions>
+          <Button variant="solid" color="success" onClick={() => {}}>
+            确认
+          </Button>
+          <Button variant="plain" color="neutral" onClick={onClose}>
+            取消
+          </Button>
+        </DialogActions>
+        <CreateCollectionModal
+          open={showCreateCollection}
+          onClose={() => setShowCreateCollection(false)}
+        />
+      </ModalDialog>
+    </Modal>
+  );
+};
 
 const VideoActions = ({
   videoId,
   likes,
   comments,
   variant,
-  onLike,
-  onComment,
-  onCollection,
+  active,
 }: {
   videoId: string;
   likes: number;
   comments: number;
   variant: "side" | "overlay";
-  onLike: () => void;
-  onComment: () => void;
-  onCollection: () => void;
+  active: boolean;
 }) => {
+  const [showComments, setShowComments] = useState(false);
+  const [showCollection, setShowCollection] = useState(false);
+
   const buttonVariant: IconButtonProps["variant"] =
     variant === "overlay" ? "plain" : "soft";
   return (
@@ -67,16 +131,37 @@ const VideoActions = ({
           <span>{likes}</span>
         </Stack>
         <Stack alignItems="center">
-          <IconButton size="lg" variant={buttonVariant} onClick={onComment}>
+          <IconButton
+            size="lg"
+            variant={buttonVariant}
+            onClick={() => setShowComments(true)}
+          >
             <CommentIcon />
           </IconButton>
           <Typography>{comments}</Typography>
+          {active && (
+            <CommentDrawer
+              onClose={() => setShowComments(false)}
+              open={showComments}
+              videoId={videoId}
+            />
+          )}
         </Stack>
         <Stack alignItems="center">
-          <IconButton size="lg" variant={buttonVariant} onClick={onCollection}>
+          <IconButton
+            size="lg"
+            variant={buttonVariant}
+            onClick={() => setShowCollection(true)}
+          >
             <StarIcon />
           </IconButton>
           <Typography>收藏</Typography>
+          {active && (
+            <VideoCollectionModal
+              open={showCollection}
+              onClose={() => setShowCollection(false)}
+            />
+          )}
         </Stack>
         <Stack alignItems="center">
           <IconButton size="lg" variant={buttonVariant}>
@@ -119,10 +204,6 @@ export interface VideoWithOverlayProps {
 }
 
 export const VideoWithOverlay = ({ video, active }: VideoWithOverlayProps) => {
-  const [showComments, setShowComments] = useState(false);
-  const [showCollection, setShowCollection] = useState(false);
-  const [showCreateCollection, setShowCreateCollection] = useState(false);
-
   return (
     <Flex
       id={`volo-video-${video.id}`}
@@ -148,83 +229,9 @@ export const VideoWithOverlay = ({ video, active }: VideoWithOverlayProps) => {
         comments={video.comments}
         likes={video.likes}
         videoId={video.id}
+        active={active}
         variant="side"
-        onCollection={() => setShowCollection(true)}
-        onComment={() => setShowComments(true)}
       />
-      {active && (
-        <CommentDrawer
-          onClose={() => setShowComments(false)}
-          open={showComments}
-          videoId={video.id}
-        />
-      )}
-
-      <Modal open={showCollection} onClose={() => setShowCollection(false)}>
-        <ModalDialog variant="outlined" role="alertdialog">
-          <DialogTitle>
-            <Typography
-              component="h2"
-              id="modal-title"
-              level="h4"
-              textColor="inherit"
-              fontWeight="lg"
-              mb={1}
-            >
-              选择收藏夹
-            </Typography>
-          </DialogTitle>
-          <Divider />
-          <DialogContent>
-            <List>
-              <ListItem>
-                <ListItemButton onClick={() => setShowCreateCollection(true)}>
-                  <ListItemDecorator>
-                    <Add></Add>
-                  </ListItemDecorator>
-                  <ListItemContent>创建收藏夹</ListItemContent>
-                </ListItemButton>
-              </ListItem>
-              <ListItem>
-                <ListItemButton>
-                  <ListItemDecorator>
-                    <Checkbox overlay onChange={() => {}} />
-                  </ListItemDecorator>
-                  <ListItemContent>收藏夹名</ListItemContent>
-                </ListItemButton>
-              </ListItem>
-              <ListItem>
-                <ListItemButton>
-                  <ListItemDecorator>
-                    <Checkbox overlay onChange={() => {}} />
-                  </ListItemDecorator>
-                  <ListItemContent>收藏夹名</ListItemContent>
-                </ListItemButton>
-              </ListItem>
-            </List>
-          </DialogContent>
-          <DialogActions>
-            <Button
-              variant="solid"
-              color="success"
-              onClick={() => setShowCollection(false)}
-            >
-              确认
-            </Button>
-            <Button
-              variant="plain"
-              color="neutral"
-              onClick={() => setShowCollection(false)}
-            >
-              取消
-            </Button>
-          </DialogActions>
-          <CreateCollectionModal
-            showCreateCollection={showCreateCollection}
-            setShowCreateCollection={setShowCreateCollection}
-          />
-        </ModalDialog>
-      </Modal>
     </Flex>
   );
 };

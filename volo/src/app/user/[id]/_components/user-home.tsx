@@ -248,8 +248,8 @@ const CollectionTabPanel = ({
         </TabPanel>
       </Tabs>
       <CreateCollectionModal
-        showCreateCollection={showCreateCollection}
-        setShowCreateCollection={setShowCreateCollection}
+        open={showCreateCollection}
+        onClose={() => setShowCreateCollection(false)}
       />
     </TabPanel>
   );

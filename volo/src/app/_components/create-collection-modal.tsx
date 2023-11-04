@@ -9,51 +9,63 @@ import {
   DialogTitle,
   DialogActions,
   Input,
+  Alert,
 } from "@mui/joy";
-import { type SetStateAction } from "react";
+import { useState } from "react";
+import { api } from "~/trpc/react";
 
 export function CreateCollectionModal({
-  showCreateCollection,
-  setShowCreateCollection,
+  open,
+  onClose,
 }: {
-  showCreateCollection: boolean;
-  setShowCreateCollection: (value: SetStateAction<boolean>) => void;
+  open: boolean;
+  onClose: () => void;
 }) {
+  const utils = api.useUtils();
+  const [name, setName] = useState("");
+
+  const createCollection = api.collection.createCollection.useMutation({
+    onSuccess: async () => {
+      await utils.collection.myCollections.invalidate();
+      setName("");
+      onClose();
+    },
+  });
+
   return (
-    <Modal
-      open={showCreateCollection}
-      onClose={() => setShowCreateCollection(false)}
-    >
+    <Modal open={open} onClose={onClose}>
       <ModalDialog>
         <DialogTitle>
-          <Typography
-            component="h2"
-            id="modal-title"
-            level="h4"
-            textColor="inherit"
-            fontWeight="lg"
-            mb={1}
-          >
+          <Typography level="h4" pb={1}>
             创建收藏夹
           </Typography>
         </DialogTitle>
         <Divider />
         <DialogContent>
-          <Input size="lg" placeholder="请输入收藏夹名" />
+          <Input
+            size="lg"
+            placeholder="请输入收藏夹名"
+            onChange={(event) => setName(event.target.value)}
+            value={name}
+            error={createCollection.isError}
+          />
+          {createCollection.isError && (
+            <Alert color="danger" size="sm">
+              {createCollection.error?.message}
+            </Alert>
+          )}
         </DialogContent>
         <DialogActions>
           <Button
             variant="solid"
             color="success"
-            onClick={() => setShowCreateCollection(false)}
+            onClick={() => {
+              createCollection.mutate({ name });
+            }}
           >
             确认
           </Button>
-          <Button
-            variant="plain"
-            color="neutral"
-            onClick={() => setShowCreateCollection(false)}
-          >
+          <Button variant="plain" color="neutral" onClick={onClose}>
             取消
           </Button>
         </DialogActions>

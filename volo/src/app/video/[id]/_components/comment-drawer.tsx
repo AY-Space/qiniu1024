@@ -138,36 +138,38 @@ export const CommentDrawer = ({
         },
       }}
     >
-      <Stack
-        sx={{
-          height: "100vh",
-        }}
-      >
-        <Stack>
-          <ModalClose />
-
-          <DialogTitle
-            sx={{
-              p: 1.5,
-            }}
-          >
-            评论
-          </DialogTitle>
-          <Divider />
-        </Stack>
+      {open && (
         <Stack
           sx={{
-            p: 2,
-            flex: 1,
-            overflowY: "auto",
+            height: "100vh",
           }}
         >
-          <CommentList videoId={videoId} />
+          <Stack>
+            <ModalClose />
+
+            <DialogTitle
+              sx={{
+                p: 1.5,
+              }}
+            >
+              评论
+            </DialogTitle>
+            <Divider />
+          </Stack>
+          <Stack
+            sx={{
+              p: 2,
+              flex: 1,
+              overflowY: "auto",
+            }}
+          >
+            <CommentList videoId={videoId} />
+          </Stack>
+          <Sheet>
+            <NewCommentForm />
+          </Sheet>
         </Stack>
-        <Sheet>
-          <NewCommentForm />
-        </Sheet>
-      </Stack>
+      )}
     </Drawer>
   );
 };
