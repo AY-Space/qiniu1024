@@ -21,6 +21,7 @@ declare module "next-auth" {
 export const authOptions: NextAuthOptions = {
   callbacks: {
     session: ({ session, token }) => ({
+      ...session,
       userId: token.sub,
       expires: session.expires,
     }),
