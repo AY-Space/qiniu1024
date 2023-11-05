@@ -33,10 +33,14 @@ const Comment = ({
   comment,
   deleteAble: deleteAble,
   onDelete,
+  onLike,
+  onDislike,
 }: {
   comment: CommentPublic;
   deleteAble: boolean;
   onDelete: () => void;
+  onLike?: () => void;
+  onDislike?: () => void;
 }) => {
   return (
     <Flex spacing={1}>
@@ -70,16 +74,32 @@ const Comment = ({
           </Box>
         )}
         <Flex spacing={1}>
-          <IconButton size="sm">
+          <IconButton
+            size="sm"
+            color={comment.currentUser?.liked ? "primary" : "neutral"}
+            onClick={onLike}
+          >
             <Flex spacing={0.5} alignItems="center" px={0.5}>
               <ThumbUp />
-              <Typography>{comment.likes}</Typography>
+              <Typography
+                color={comment.currentUser?.liked ? "primary" : "neutral"}
+              >
+                {comment.likes}
+              </Typography>
             </Flex>
           </IconButton>
-          <IconButton size="sm">
+          <IconButton
+            size="sm"
+            color={comment.currentUser?.disliked ? "warning" : "neutral"}
+            onClick={onDislike}
+          >
             <Flex spacing={0.5} alignItems="center" px={0.5}>
               <ThumbDown />
-              <Typography>{comment.dislikes}</Typography>
+              <Typography
+                color={comment.currentUser?.disliked ? "warning" : "neutral"}
+              >
+                {comment.dislikes}
+              </Typography>
             </Flex>
           </IconButton>
         </Flex>
@@ -98,6 +118,14 @@ const CommentList = ({ videoId }: { videoId: string }) => {
     },
   });
 
+  const mutationOptions = {
+    onSuccess: () => {
+      void utils.video.comments.invalidate({ videoId });
+    },
+  };
+  const like = api.comment.like.useMutation(mutationOptions);
+  const dislike = api.comment.dislike.useMutation(mutationOptions);
+
   return (
     <Stack spacing={2}>
       {error && <Alert color="danger">{error.message}</Alert>}
@@ -108,6 +136,20 @@ const CommentList = ({ videoId }: { videoId: string }) => {
       )}
       {data?.map((comment) => (
         <Comment
+          onLike={() => {
+            like.mutate({
+              commentId: comment.id,
+              operation: comment.currentUser?.liked ? "disconnect" : "connect",
+            });
+          }}
+          onDislike={() => {
+            dislike.mutate({
+              commentId: comment.id,
+              operation: comment.currentUser?.disliked
+                ? "disconnect"
+                : "connect",
+            });
+          }}
           deleteAble={session?.userId === comment.author.id}
           comment={comment}
           key={comment.id}
