@@ -6,18 +6,12 @@ export default async function HistoryPage() {
   const videos = await db.video.findMany({ take: 10 });
 
   return (
-    <Container
-      sx={{
-        height: "calc(100vh - var(--volo-app-bar-height))",
-      }}
-    >
+    <Container>
       <List>
         {videos.map((video) => (
-          <ListItem key={video.id}>
-            <Card sx={{ height: 200, display: "flex" }}>
-              <Typography>{video.createdAt.toISOString()}</Typography>
-              <VideoCard video={video} />
-            </Card>
+          <ListItem key={video.id} sx={{ height: 200 }}>
+            <Typography>{video.createdAt.toISOString()}</Typography>
+            <VideoCard video={video} />
           </ListItem>
         ))}
       </List>
