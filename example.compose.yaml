@@ -8,6 +8,8 @@ services:
     ports:
       - "3000:3000"
     depends_on:
+      - cache
+      - db
       - recommend
 
   recommend:
@@ -21,14 +23,15 @@ services:
       --cache-path /var/lib/gorse/master_cache.data
     volumes:
       - ./gorse/example.config.toml:/etc/gorse/config.toml # important !!
+    depends_on:
+      - cache
+      - db
     
   cache:
     image: redis:alpine
     restart: always
     ports:
       - "6379:6379"
-    volumes:
-      - ./redis.conf:/usr/local/etc/redis/redis.conf
     command: redis-server /usr/local/etc/redis/redis.conf
 
   db:
@@ -37,8 +40,7 @@ services:
     environment:
       POSTGRES_USER: volo
       POSTGRES_PASSWORD: volo
-      POSTGRES_DB: volo
     volumes:
-      - ./gorse/schema.sql.sql:/docker-entrypoint-initdb.d/schema.sql
+      - ./gorse/schema.sql.sql:/docker-entrypoint-initdb.d/schema.sql # create schema for gorse
     ports:
       - "5432:5432"
