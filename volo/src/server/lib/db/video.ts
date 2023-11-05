@@ -4,7 +4,6 @@ import { type VideoDetailedPublic } from "~/types";
 export const getVideos = async (
   prisma: PrismaClient,
   ids: string[],
-  userId?: string,
 ): Promise<VideoDetailedPublic[]> => {
   return (
     await prisma.video.findMany({
@@ -34,14 +33,6 @@ export const getVideos = async (
         createdAt: true,
         description: true,
         url: true,
-        likes: {
-          where: {
-            userId: userId,
-          },
-          select: {
-            userId: true,
-          },
-        },
         tags: {
           select: {
             id: true,
@@ -51,13 +42,10 @@ export const getVideos = async (
         },
       },
     })
-  ).map(({ _count, likes, ...rest }) => {
-    const currentUser =
-      userId !== undefined ? { liked: likes.length > 0 } : null;
+  ).map(({ _count, ...rest }) => {
     return {
       ..._count,
       ...rest,
-      currentUser,
     };
   });
 };

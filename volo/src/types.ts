@@ -43,14 +43,15 @@ export type VideoDetailedPublic = Pick<
   likes: number;
   author: UserPublic;
   comments: number;
-  currentUser: {
-    liked: boolean;
-  } | null;
 } & {
   tags: TagPublic[];
 };
 
 export type CollectionPublic = Pick<Collection, "id" | "name">;
+
+export type CollectionWithVideos = CollectionPublic & {
+  videos: VideoPublic[];
+};
 
 export enum GorseFeedback {
   READALL = "read_all",
