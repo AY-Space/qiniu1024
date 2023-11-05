@@ -97,6 +97,7 @@ export default function UploadTest() {
                       请选择文件
                       <VisuallyHiddenInput
                         type="file"
+                        accept="video/*"
                         onChange={onFileChange}
                       />
                     </Button>
@@ -176,17 +177,6 @@ export default function UploadTest() {
             </CardActions>
           </CardContent>
         </Card>
-
-        {/* <Card>
-          <CardActions>
-            <Button variant="soft" size="sm">
-              存草稿
-            </Button>
-            <Button variant="solid" size="sm">
-              立即投稿
-            </Button>
-          </CardActions>
-        </Card> */}
       </Stack>
     </Container>
   );
