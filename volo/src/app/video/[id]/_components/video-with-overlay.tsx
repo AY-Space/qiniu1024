@@ -224,13 +224,19 @@ const VideoOverlay = ({ video }: { video: VideoDetailedPublic }) => {
           />
         </Link>
         <Stack>
-          <Link href={`/user/${video.author.id}`} passHref>
+          <Link
+            href={`/user/${video.author.id}`}
+            style={{
+              color: "var(--joy-palette-text-primary)",
+            }}
+          >
             <JoyLink
-              color="neutral"
               level="title-md"
+              color="neutral"
               sx={{
                 color: "var(--joy-palette-text-primary)",
               }}
+              component="span"
             >
               {video.author.name}
             </JoyLink>

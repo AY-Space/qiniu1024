@@ -4,9 +4,14 @@ import { Sheet } from "@mui/joy";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { VideoWithOverlay } from "./video-with-overlay";
 import { api } from "~/trpc/react";
+import { type VideoDetailedPublic } from "~/types";
 
 // VideoContainer Component
-export function VideoContainer() {
+export function VideoContainer({
+  initalVideo,
+}: {
+  initalVideo?: VideoDetailedPublic;
+}) {
   const [activeVideoId, setActiveVideoId] = useState<string | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const observer = useRef<IntersectionObserver>(null!);
@@ -18,12 +23,18 @@ export function VideoContainer() {
       },
       {
         getNextPageParam: (lastPage) => lastPage.nextCursor,
+        refetchInterval: false,
+        refetchOnMount: false,
+        refetchOnWindowFocus: false,
       },
     );
 
   const mountedVideos = useMemo(
-    () => data?.pages.flatMap((page) => page.videos) ?? [],
-    [data],
+    () => [
+      ...(initalVideo ? [initalVideo] : []),
+      ...(data?.pages.flatMap((page) => page.videos) ?? []),
+    ],
+    [initalVideo, data],
   );
 
   // const bufferSize = 4;
