@@ -21,7 +21,7 @@ import MenuIcon from "@mui/icons-material/Menu";
 import { useState } from "react";
 import { NavigationDrawer } from "./navigation-drawer";
 import Link from "next/link";
-import { Home, Logout, Upload } from "@mui/icons-material";
+import { History, Home, Logout, Upload } from "@mui/icons-material";
 import { api } from "~/trpc/react";
 
 const UserMenu = () => {
@@ -49,6 +49,14 @@ const UserMenu = () => {
               <Home />
             </ListItemDecorator>
             个人主页
+          </MenuItem>
+        </Link>
+        <Link href={`/history`}>
+          <MenuItem>
+            <ListItemDecorator>
+              <History />
+            </ListItemDecorator>
+            历史记录
           </MenuItem>
         </Link>
         <Link href={`/upload`}>

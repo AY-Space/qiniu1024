@@ -3,11 +3,7 @@ import { Grid } from "@mui/joy";
 import { type VideoPublic } from "~/types";
 import { VideoCard } from "./video-card";
 
-export const VideoGrid = ({
-  uploadedVideos,
-}: {
-  uploadedVideos: VideoPublic[];
-}) => {
+export const VideoGrid = ({ videos: videos }: { videos: VideoPublic[] }) => {
   return (
     <Grid
       container
@@ -17,7 +13,7 @@ export const VideoGrid = ({
         md: 4,
       }}
     >
-      {uploadedVideos.map((e) => (
+      {videos.map((e) => (
         <Grid
           key={e.id}
           xs={1}

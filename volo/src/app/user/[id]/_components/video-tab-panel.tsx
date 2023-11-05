@@ -4,15 +4,15 @@ import { VideoGrid } from "~/app/_components/video-tab-panel";
 import { type VideoPublic } from "~/types";
 
 export const VideoTabPanel = ({
-  uploadedVideos,
+  videos,
   value,
 }: {
-  uploadedVideos: VideoPublic[];
+  videos: VideoPublic[];
   value: number;
 }) => {
   return (
     <TabPanel value={value}>
-      <VideoGrid uploadedVideos={uploadedVideos} />
+      <VideoGrid videos={videos} />
     </TabPanel>
   );
 };

@@ -54,7 +54,7 @@ export const UserHome = ({ user, uploadedVideos }: UserHomeProps) => {
             收藏
           </Tab>
         </TabList>
-        <VideoTabPanel uploadedVideos={uploadedVideos} value={0} />
+        <VideoTabPanel videos={uploadedVideos} value={0} />
         <LikeTabPanel userId={user.id} value={1} />
         <CollectionTabPanel userId={user.id} value={2} />
       </Tabs>
