@@ -1,6 +1,6 @@
 "use client";
 
-import { Stack } from "@mui/joy";
+import { Sheet, Stack } from "@mui/joy";
 import { useEffect, useRef, useState } from "react";
 import { VideoWithOverlay } from "./video-with-overlay";
 import { type VideoDetailedPublic } from "~/types";
@@ -50,7 +50,7 @@ export function VideoContainer({ videos }: { videos: VideoDetailedPublic[] }) {
   }, [mountedVideos]);
 
   return (
-    <Stack
+    <Sheet
       ref={containerRef}
       sx={{
         scrollSnapType: "y mandatory",
@@ -60,7 +60,10 @@ export function VideoContainer({ videos }: { videos: VideoDetailedPublic[] }) {
         "::-webkit-scrollbar": {
           display: "none",
         },
+        display: "flex",
+        flexDirection: "column",
       }}
+      data-joy-color-scheme="dark"
     >
       {mountedVideos.map((video) => (
         <VideoWithOverlay
@@ -69,7 +72,6 @@ export function VideoContainer({ videos }: { videos: VideoDetailedPublic[] }) {
           active={video.id === activeVideoId}
         />
       ))}
-      x
-    </Stack>
+    </Sheet>
   );
 }

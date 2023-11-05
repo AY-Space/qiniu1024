@@ -212,7 +212,7 @@ const VideoOverlay = ({ video }: { video: VideoDetailedPublic }) => {
   const tags = video.tags.filter((tag) => tag.type === "Tag");
 
   return (
-    <Stack spacing={1} p={2} data-joy-color-scheme="dark">
+    <Stack spacing={1} p={2}>
       <Flex spacing={2} alignItems="center">
         <Link href={`/user/${video.author.id}`}>
           <Avatar
@@ -228,9 +228,9 @@ const VideoOverlay = ({ video }: { video: VideoDetailedPublic }) => {
             <JoyLink
               color="neutral"
               level="title-md"
-              sx={(theme) => ({
-                color: theme.palette.text.primary,
-              })}
+              sx={{
+                color: "var(--joy-palette-text-primary)",
+              }}
             >
               {video.author.name}
             </JoyLink>
