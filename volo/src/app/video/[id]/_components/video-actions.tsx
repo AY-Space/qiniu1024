@@ -1,13 +1,5 @@
 "use client";
-import {
-  IconButton,
-  type IconButtonProps,
-  Stack,
-  Typography,
-  Alert,
-  Snackbar,
-  Divider,
-} from "@mui/joy";
+import { IconButton, Stack, Typography, Snackbar, Divider } from "@mui/joy";
 import ThumbUpIcon from "@mui/icons-material/ThumbUp";
 import CommentIcon from "@mui/icons-material/Comment";
 import ShareIcon from "@mui/icons-material/Share";
@@ -16,7 +8,6 @@ import { useState } from "react";
 import { CommentDrawer } from "./comment-drawer";
 import { VideoCollectionModal } from "./video-collection-modal";
 import { api } from "~/trpc/react";
-import { CloseRounded } from "@mui/icons-material";
 
 export const VideoActions = ({
   videoId,
@@ -56,11 +47,10 @@ export const VideoActions = ({
       <Stack
         spacing={0.5}
         divider={<Divider />}
-        bgcolor="#0000"
         borderRadius={8}
         sx={(theme) => ({
           [theme.breakpoints.down("sm")]: {
-            bgcolor: "#0008",
+            bgcolor: "#0007",
           },
         })}
       >
@@ -71,11 +61,6 @@ export const VideoActions = ({
             onClick={() => {
               like.mutate({ videoId, like: !likedAndCollected?.liked });
             }}
-            sx={(theme) => ({
-              [theme.breakpoints.down("sm")]: {
-                ".MuiIconButton-variantOutlined": "solid",
-              },
-            })}
           >
             <ThumbUpIcon />
           </IconButton>
