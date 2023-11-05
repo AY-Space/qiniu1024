@@ -23,7 +23,7 @@ import {
 import { Upload, VideoFile } from "@mui/icons-material";
 import { Flex } from "../_components/flex";
 
-const VisuallyHiddenInput = styled("input")`
+export const VisuallyHiddenInput = styled("input")`
   clip: rect(0 0 0 0);
   clip-path: inset(50%);
   height: 1px;
@@ -65,7 +65,6 @@ export default function UploadTest() {
       });
     }
   };
-  console.log(selectedFile);
   return (
     <Container sx={{ py: 1 }}>
       <Stack gap={1}>
@@ -93,7 +92,7 @@ export default function UploadTest() {
                       tabIndex={-1}
                       variant="outlined"
                       color="neutral"
-                      startDecorator={<Upload></Upload>}
+                      startDecorator={<Upload />}
                     >
                       请选择文件
                       <VisuallyHiddenInput
