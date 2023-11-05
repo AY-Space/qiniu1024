@@ -82,6 +82,16 @@ export const insertVideo = async (videoId: string, tags: TagPublic[]) => {
   await axios.post("/item", newItem(videoId, tags));
 };
 
+export const insertVideos = async (
+  videos: { videoId: string; tags: TagPublic[] }[],
+) => {
+  console.log(videos.length);
+  await axios.post(
+    "/items",
+    videos.map(({ videoId, tags }) => newItem(videoId, tags)),
+  );
+};
+
 export const deleteVideo = async (videoId: string) => {
   await axios.delete(`/item/${videoId}`);
 };
@@ -93,6 +103,15 @@ export const updateVideo = async (videoId: string, tags: TagPublic[]) => {
 
 export const insertUser = async (userId: string, tags: TagPublic[]) => {
   await axios.post("/user", newUser(userId, tags));
+};
+
+export const insertUsers = async (
+  users: { userId: string; tags: TagPublic[] }[],
+) => {
+  await axios.post(
+    "/users",
+    users.map(({ userId, tags }) => newUser(userId, tags)),
+  );
 };
 
 export const deleteUser = async (userId: string) => {
