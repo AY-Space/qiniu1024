@@ -41,7 +41,7 @@ export const VideoWithOverlay = ({ video, state }: VideoWithOverlayProps) => {
             likes={video.likes}
             videoId={video.id}
             active={state === "active"}
-            variant="side"
+          
           />
         </>
       )}

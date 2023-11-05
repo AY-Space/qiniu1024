@@ -6,6 +6,7 @@ import {
   Typography,
   Alert,
   Snackbar,
+  Divider,
 } from "@mui/joy";
 import ThumbUpIcon from "@mui/icons-material/ThumbUp";
 import CommentIcon from "@mui/icons-material/Comment";
@@ -21,13 +22,11 @@ export const VideoActions = ({
   videoId,
   likes,
   comments,
-  variant,
   active,
 }: {
   videoId: string;
   likes: number;
   comments: number;
-  variant: "side" | "overlay";
   active: boolean;
 }) => {
   const [showComments, setShowComments] = useState(false);
@@ -44,35 +43,46 @@ export const VideoActions = ({
     },
   });
 
-  const buttonVariant: IconButtonProps["variant"] =
-    variant === "overlay" ? "plain" : "soft";
   return (
     <Stack
       alignItems="center"
-      sx={{
-        position: variant === "overlay" ? "absolute" : "relative",
-      }}
+      sx={(theme) => ({
+        [theme.breakpoints.down("sm")]: {
+          right: 18,
+          position: "absolute",
+        },
+      })}
     >
-      <Stack spacing={2}>
-        <Stack alignItems="center">
+      <Stack
+        spacing={0.5}
+        divider={<Divider />}
+        bgcolor="#0000"
+        borderRadius={8}
+        sx={(theme) => ({
+          [theme.breakpoints.down("sm")]: {
+            bgcolor: "#0008",
+          },
+        })}
+      >
+        <Stack alignItems="center" p={1}>
           <IconButton
             size="lg"
-            variant={buttonVariant}
             color={likedAndCollected?.liked ? "primary" : "neutral"}
             onClick={() => {
               like.mutate({ videoId, like: !likedAndCollected?.liked });
             }}
+            sx={(theme) => ({
+              [theme.breakpoints.down("sm")]: {
+                ".MuiIconButton-variantOutlined": "solid",
+              },
+            })}
           >
             <ThumbUpIcon />
           </IconButton>
           <Typography>{likes}</Typography>
         </Stack>
         <Stack alignItems="center">
-          <IconButton
-            size="lg"
-            variant={buttonVariant}
-            onClick={() => setShowComments(true)}
-          >
+          <IconButton size="lg" onClick={() => setShowComments(true)}>
             <CommentIcon />
           </IconButton>
           <Typography>{comments}</Typography>
@@ -87,7 +97,6 @@ export const VideoActions = ({
         <Stack alignItems="center">
           <IconButton
             size="lg"
-            variant={buttonVariant}
             color={likedAndCollected?.collected ? "primary" : "neutral"}
             onClick={() => setShowCollection(true)}
           >
@@ -105,7 +114,6 @@ export const VideoActions = ({
         <Stack alignItems="center">
           <IconButton
             size="lg"
-            variant={buttonVariant}
             onClick={async () => {
               const text = `康康我在 Volo 发现了什么好东西！\n链接：${document.URL}`;
               await navigator.clipboard.writeText(text);
