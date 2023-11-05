@@ -119,7 +119,7 @@ export function AppBar({ loggedIn }: AppBarProps) {
               <Typography
                 level="body-lg"
                 sx={(theme) => ({
-                  [`${theme.breakpoints.down("sm")}`]: {
+                  [theme.breakpoints.down("sm")]: {
                     display: "none",
                   },
                 })}

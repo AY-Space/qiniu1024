@@ -144,7 +144,7 @@ export default function UploadTest() {
             </FormControl>
             <FormControl
               sx={(theme) => ({
-                [`${theme.breakpoints.down("sm")}`]: {
+                [theme.breakpoints.down("sm")]: {
                   gridColumn: "1/-1",
                 },
               })}
@@ -154,7 +154,7 @@ export default function UploadTest() {
             </FormControl>
             <FormControl
               sx={(theme) => ({
-                [`${theme.breakpoints.down("sm")}`]: {
+                [theme.breakpoints.down("sm")]: {
                   gridColumn: "1/-1",
                 },
               })}
@@ -164,8 +164,8 @@ export default function UploadTest() {
                 multiple
                 options={["Option 1", "Option 2"]}
                 sx={(theme) => ({
-                  [`${theme.breakpoints.down("sm")}`]: {
-                    gridRow: "1/-1",
+                  [theme.breakpoints.down("sm")]: {
+                    gridColumn: "1/-1",
                   },
                 })}
               />
