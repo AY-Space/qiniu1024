@@ -5,7 +5,7 @@ import {
   publicProcedure,
 } from "~/server/api/trpc";
 import { createUploadParameters } from "~/server/lib/util/kodo";
-import { type CommentPublic } from "~/types";
+import { type VideoPublic, type CommentPublic } from "~/types";
 
 export const videoRouter = createTRPCRouter({
   createVideoUploadParameters: publicProcedure.mutation(() => {
@@ -173,6 +173,20 @@ export const videoRouter = createTRPCRouter({
         where: {
           id: commentId,
           authorId: ctx.session.userId,
+        },
+      });
+    }),
+
+  userId: protectedProcedure
+    .input(z.object({ userId: z.string() }))
+    .query(async ({ ctx, input: { userId } }): Promise<VideoPublic[]> => {
+      return await ctx.db.video.findMany({
+        where: {
+          likes: {
+            some: {
+              userId: { equals: userId },
+            },
+          },
         },
       });
     }),
