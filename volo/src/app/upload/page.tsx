@@ -66,7 +66,7 @@ export default function UploadTest() {
   };
   console.log(selectedFile);
   return (
-    <Container>
+    <Container sx={{ py: 2 }}>
       <Stack gap={1}>
         <Card>
           <Stack gap={1}>
@@ -144,7 +144,7 @@ export default function UploadTest() {
               <Autocomplete multiple options={["Option 1", "Option 2"]} />
             </FormControl>
             <CardActions sx={{ gridColumn: "1/-1" }}>
-              <Button variant="solid" color="primary">
+              <Button variant="solid" color="success">
                 立即投稿
               </Button>
             </CardActions>
