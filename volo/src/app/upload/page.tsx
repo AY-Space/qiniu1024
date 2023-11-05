@@ -16,6 +16,7 @@ import {
   Input,
   LinearProgress,
   Stack,
+  Textarea,
   Typography,
   styled,
 } from "@mui/joy";
@@ -66,7 +67,7 @@ export default function UploadTest() {
   };
   console.log(selectedFile);
   return (
-    <Container sx={{ py: 2 }}>
+    <Container sx={{ py: 1 }}>
       <Stack gap={1}>
         <Card>
           <Stack gap={1}>
@@ -79,7 +80,13 @@ export default function UploadTest() {
                   alignItems="center"
                 >
                   <Typography>{selectedFile?.name ?? "未选择文件"}</Typography>
-                  <Flex gap={1}>
+                  <Flex
+                    gap={1}
+                    direction={{
+                      xs: "column",
+                      sm: "row",
+                    }}
+                  >
                     <Button
                       component="label"
                       role={undefined}
@@ -133,15 +140,35 @@ export default function UploadTest() {
             </FormControl>
             <FormControl sx={{ gridColumn: "1/-1" }}>
               <FormLabel>简介</FormLabel>
-              <Input />
+              <Textarea minRows={2} />
             </FormControl>
-            <FormControl>
+            <FormControl
+              sx={(theme) => ({
+                [`${theme.breakpoints.down("sm")}`]: {
+                  gridColumn: "1/-1",
+                },
+              })}
+            >
               <FormLabel>分类</FormLabel>
               <Autocomplete options={["Option 1", "Option 2"]} />
             </FormControl>
-            <FormControl>
+            <FormControl
+              sx={(theme) => ({
+                [`${theme.breakpoints.down("sm")}`]: {
+                  gridColumn: "1/-1",
+                },
+              })}
+            >
               <FormLabel>标签</FormLabel>
-              <Autocomplete multiple options={["Option 1", "Option 2"]} />
+              <Autocomplete
+                multiple
+                options={["Option 1", "Option 2"]}
+                sx={(theme) => ({
+                  [`${theme.breakpoints.down("sm")}`]: {
+                    gridRow: "1/-1",
+                  },
+                })}
+              />
             </FormControl>
             <CardActions sx={{ gridColumn: "1/-1" }}>
               <Button variant="solid" color="success">
