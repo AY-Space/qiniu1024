@@ -13,7 +13,7 @@ import { tagRouter } from "./routers/tag";
 export const appRouter = createTRPCRouter({
   user: userRouter,
   video: videoRouter,
-  recommend: gorseRouter,
+  videoRecommender: gorseRouter,
   collection: collectionRouter,
   tag: tagRouter,
 });

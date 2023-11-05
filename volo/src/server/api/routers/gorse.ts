@@ -1,5 +1,5 @@
 import { TagType } from "@prisma/client";
-import { z } from "zod";
+import { number, z } from "zod";
 import {
   createTRPCRouter,
   protectedProcedure,
@@ -22,14 +22,10 @@ import {
 } from "~/server/lib/gorse/recommend";
 import { GorseFeedback, type VideoDetailedPublic } from "~/types";
 
-const Cursor = z.object({
-  limit: z.number(),
-  offset: z.number(),
-});
-
 const Query = z.object({
-  cursor: Cursor,
-  categoryId: z.string().nullable(),
+  limit: z.number().min(1).max(50),
+  cursor: z.number().optional(),
+  categoryId: z.string().optional(),
 });
 
 const FeedbackTypeZ = z.nativeEnum(GorseFeedback);
@@ -41,16 +37,29 @@ const TagRef = z.object({
 });
 
 export const gorseRouter = createTRPCRouter({
-  recommend: protectedProcedure
-    .input(Query)
-    .query(async ({ ctx, input }): Promise<VideoDetailedPublic[]> => {
-      return await getRecommend(
+  recommend: protectedProcedure.input(Query).query(
+    async ({
+      ctx,
+      input: { limit, cursor = 0, categoryId },
+    }): Promise<{
+      nextCursor?: number;
+      videos: VideoDetailedPublic[];
+    }> => {
+      const videos = await getRecommend(
         ctx.db,
-        input.cursor,
+        {
+          limit,
+          offset: cursor,
+        },
         ctx.session.userId,
-        input.categoryId ?? undefined,
+        categoryId,
       );
-    }),
+      return {
+        nextCursor: videos.length < limit ? undefined : cursor + limit,
+        videos,
+      };
+    },
+  ),
 
   popular: publicProcedure
     .input(Query)
@@ -59,7 +68,7 @@ export const gorseRouter = createTRPCRouter({
         ctx.db,
         input.cursor,
         ctx.session?.userId,
-        input.categoryId ?? undefined,
+        input.categoryId,
       );
     }),
   latest: publicProcedure
@@ -69,7 +78,7 @@ export const gorseRouter = createTRPCRouter({
         ctx.db,
         input.cursor,
         ctx.session?.userId,
-        input.categoryId ?? undefined,
+        input.categoryId,
       );
     }),
   insertFeedback: protectedProcedure

@@ -1,16 +1,30 @@
 "use client";
 
-import { Sheet, Stack } from "@mui/joy";
-import { useEffect, useRef, useState } from "react";
+import { Sheet } from "@mui/joy";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { VideoWithOverlay } from "./video-with-overlay";
-import { type VideoDetailedPublic } from "~/types";
+import { api } from "~/trpc/react";
 
 // VideoContainer Component
-export function VideoContainer({ videos }: { videos: VideoDetailedPublic[] }) {
-  const [mountedVideos, setMountedVideos] = useState(videos.slice(0, 10));
+export function VideoContainer() {
   const [activeVideoId, setActiveVideoId] = useState<string | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const observer = useRef<IntersectionObserver>(null!);
+
+  const { data, fetchNextPage } =
+    api.videoRecommender.recommend.useInfiniteQuery(
+      {
+        limit: 10,
+      },
+      {
+        getNextPageParam: (lastPage) => lastPage.nextCursor,
+      },
+    );
+
+  const mountedVideos = useMemo(
+    () => data?.pages.flatMap((page) => page.videos) ?? [],
+    [data],
+  );
 
   // const bufferSize = 4;
 
