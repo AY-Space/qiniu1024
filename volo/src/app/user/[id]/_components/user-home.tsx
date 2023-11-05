@@ -57,6 +57,7 @@ export const UserHome = ({ user, uploadedVideos }: UserHomeProps) => {
           }}
         />
       )}
+
       <Flex spacing={3}>
         <Avatar
           src={user.avatarUrl ? getBilibiliImageUrl(user.avatarUrl) : undefined}

@@ -27,8 +27,8 @@ dependencies:
     specifier: ^5.14.16
     version: 5.14.16(@mui/material@5.14.16)(@types/react@18.2.34)(react@18.2.0)
   '@mui/joy':
-    specifier: 5.0.0-beta.12
-    version: 5.0.0-beta.12(@emotion/react@11.11.1)(@emotion/styled@11.11.0)(@types/react@18.2.34)(react-dom@18.2.0)(react@18.2.0)
+    specifier: 5.0.0-beta.13
+    version: 5.0.0-beta.13(@emotion/react@11.11.1)(@emotion/styled@11.11.0)(@types/react@18.2.34)(react-dom@18.2.0)(react@18.2.0)
   '@next-auth/prisma-adapter':
     specifier: ^1.0.7
     version: 1.0.7(@prisma/client@5.5.2)(next-auth@4.24.4)
@@ -725,29 +725,6 @@ packages:
       - supports-color
     dev: false
 
-  /@mui/base@5.0.0-beta.21(@types/react@18.2.34)(react-dom@18.2.0)(react@18.2.0):
-    resolution: {integrity: sha512-eTKWx3WV/nwmRUK4z4K1MzlMyWCsi3WJ3RtV4DiXZeRh4qd4JCyp1Zzzi8Wv9xM4dEBmqQntFoei716PzwmFfA==}
-    engines: {node: '>=12.0.0'}
-    peerDependencies:
-      '@types/react': ^17.0.0 || ^18.0.0
-      react: ^17.0.0 || ^18.0.0
-      react-dom: ^17.0.0 || ^18.0.0
-    peerDependenciesMeta:
-      '@types/react':
-        optional: true
-    dependencies:
-      '@babel/runtime': 7.23.2
-      '@floating-ui/react-dom': 2.0.2(react-dom@18.2.0)(react@18.2.0)
-      '@mui/types': 7.2.8(@types/react@18.2.34)
-      '@mui/utils': 5.14.16(@types/react@18.2.34)(react@18.2.0)
-      '@popperjs/core': 2.11.8
-      '@types/react': 18.2.34
-      clsx: 2.0.0
-      prop-types: 15.8.1
-      react: 18.2.0
-      react-dom: 18.2.0(react@18.2.0)
-    dev: false
-
   /@mui/base@5.0.0-beta.22(@types/react@18.2.34)(react-dom@18.2.0)(react@18.2.0):
     resolution: {integrity: sha512-l4asGID5tmyerx9emJfXOKLyXzaBtdXNIFE3M+IrSZaFtGFvaQKHhc3+nxxSxPf1+G44psjczM0ekRQCdXx9HA==}
     engines: {node: '>=12.0.0'}
@@ -792,8 +769,8 @@ packages:
       react: 18.2.0
     dev: false
 
-  /@mui/joy@5.0.0-beta.12(@emotion/react@11.11.1)(@emotion/styled@11.11.0)(@types/react@18.2.34)(react-dom@18.2.0)(react@18.2.0):
-    resolution: {integrity: sha512-e5G9EGkxiCXWNFbSdo4V4TzqjwDqlgMbCHygzFlBwrgY1pn4jBxC5NZe4btq2CREpAi9nZlCeYgHd3ejKYBGBg==}
+  /@mui/joy@5.0.0-beta.13(@emotion/react@11.11.1)(@emotion/styled@11.11.0)(@types/react@18.2.34)(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-vXoCqGX/rRxAij56gwcId67cax3nv7oIaeIYPqCPz8OZTaCvE6ZxMANXOVPmY9GIWpTAABfqijL/jiF0qkz/eg==}
     engines: {node: '>=12.0.0'}
     peerDependencies:
       '@emotion/react': ^11.5.0
@@ -812,7 +789,7 @@ packages:
       '@babel/runtime': 7.23.2
       '@emotion/react': 11.11.1(@types/react@18.2.34)(react@18.2.0)
       '@emotion/styled': 11.11.0(@emotion/react@11.11.1)(@types/react@18.2.34)(react@18.2.0)
-      '@mui/base': 5.0.0-beta.21(@types/react@18.2.34)(react-dom@18.2.0)(react@18.2.0)
+      '@mui/base': 5.0.0-beta.22(@types/react@18.2.34)(react-dom@18.2.0)(react@18.2.0)
       '@mui/core-downloads-tracker': 5.14.16
       '@mui/system': 5.14.16(@emotion/react@11.11.1)(@emotion/styled@11.11.0)(@types/react@18.2.34)(react@18.2.0)
       '@mui/types': 7.2.8(@types/react@18.2.34)
