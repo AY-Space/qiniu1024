@@ -7,6 +7,7 @@ import StarIcon from "@mui/icons-material/Star";
 import { useState } from "react";
 import { CommentDrawer } from "./comment-drawer";
 import { VideoCollectionModal } from "./video-collection-modal";
+import { api } from "~/trpc/react";
 
 export const VideoActions = ({
   videoId,
@@ -23,6 +24,15 @@ export const VideoActions = ({
 }) => {
   const [showComments, setShowComments] = useState(false);
   const [showCollection, setShowCollection] = useState(false);
+  const { data: likedAndCollected } = api.video.likedAndCollected.useQuery({
+    videoId,
+  });
+  const utils = api.useUtils();
+  const like = api.video.like.useMutation({
+    onSuccess: async () => {
+      await utils.video.likedAndCollected.invalidate({ videoId });
+    },
+  });
 
   const buttonVariant: IconButtonProps["variant"] =
     variant === "overlay" ? "plain" : "soft";
@@ -35,7 +45,14 @@ export const VideoActions = ({
     >
       <Stack spacing={2}>
         <Stack alignItems="center">
-          <IconButton size="lg" variant={buttonVariant}>
+          <IconButton
+            size="lg"
+            variant={buttonVariant}
+            color={likedAndCollected?.liked ? "primary" : "neutral"}
+            onClick={() => {
+              like.mutate({ videoId, like: !likedAndCollected?.liked });
+            }}
+          >
             <ThumbUpIcon />
           </IconButton>
           <Typography>{likes}</Typography>
@@ -61,6 +78,7 @@ export const VideoActions = ({
           <IconButton
             size="lg"
             variant={buttonVariant}
+            color={likedAndCollected?.collected ? "primary" : "neutral"}
             onClick={() => setShowCollection(true)}
           >
             <StarIcon />
