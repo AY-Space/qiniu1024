@@ -165,6 +165,14 @@ export function AppBar({ loggedIn }: AppBarProps) {
           </Flex>
         </Grid>
       </Grid>
+      <Divider
+        sx={{
+          position: "absolute",
+          bottom: 0,
+          left: 0,
+          right: 0,
+        }}
+      />
     </Sheet>
   );
 }
