@@ -14,6 +14,7 @@ export function VideoContainer({
   const [activeVideoId, setActiveVideoId] = useState<string | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const observer = useRef<IntersectionObserver>(null!);
+  const [muted, setMuted] = useState(false);
 
   const pageSize = 5;
 
@@ -126,6 +127,8 @@ export function VideoContainer({
                 ? "active"
                 : "mounted"
             }
+            muted={muted}
+            setMuted={setMuted}
           />
         );
       })}

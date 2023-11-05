@@ -1,85 +1,95 @@
 "use client";
 
 import { Pause, PlayArrow, VolumeOff, VolumeUp } from "@mui/icons-material";
-import { Box, IconButton, Stack } from "@mui/joy";
+import { IconButton, Stack } from "@mui/joy";
 import { useState, useEffect, useRef, type ReactNode } from "react";
 import { Flex } from "~/app/_components/flex";
 
 interface VideoPlayerProps {
   src: string;
-  playing: boolean;
+  active: boolean;
   loop?: boolean;
   overlay: ReactNode;
+  muted: boolean;
+  setMuted: (muted: boolean) => void;
 }
 
-const VideoPlayer = ({ src, playing, loop, overlay }: VideoPlayerProps) => {
-  const videoRef = useRef<HTMLVideoElement>(null);
+const VideoPlayer = ({
+  src,
+  active,
+  loop,
+  overlay,
+  muted,
+  setMuted,
+}: VideoPlayerProps) => {
+  const videoRef = useRef<HTMLVideoElement>(null!);
   const [progress, setProgress] = useState<number>(0);
   const [duration, setDuration] = useState<number>(0);
-  const [muted, setMuted] = useState<boolean>(false);
 
-  const [uiPlaying, setUiPlaying] = useState<boolean>(false);
+  const [playing, setPlaying] = useState<boolean>(false);
 
   useEffect(() => {
     const videoElement = videoRef.current;
 
     const updateDuration = () => {
-      setDuration(videoElement?.duration ?? 0);
+      setDuration(videoElement.duration ?? 0);
     };
 
     const handleTimeUpdate = () => {
-      setProgress(videoElement?.currentTime ?? 0);
+      setProgress(videoElement.currentTime ?? 0);
     };
 
     if (videoElement && videoElement.readyState >= 1) {
       updateDuration();
     }
 
-    videoElement?.addEventListener("loadedmetadata", updateDuration);
-    videoElement?.addEventListener("timeupdate", handleTimeUpdate);
+    const handlePause = () => {
+      setPlaying(false);
+    };
+
+    const handlePlay = () => {
+      setPlaying(true);
+    };
+
+    videoElement.addEventListener("loadedmetadata", updateDuration);
+    videoElement.addEventListener("timeupdate", handleTimeUpdate);
+    videoElement.addEventListener("pause", handlePause);
+    videoElement.addEventListener("play", handlePlay);
 
     return () => {
-      videoElement?.removeEventListener("loadedmetadata", updateDuration);
-      videoElement?.removeEventListener("timeupdate", handleTimeUpdate);
+      videoElement.removeEventListener("loadedmetadata", updateDuration);
+      videoElement.removeEventListener("timeupdate", handleTimeUpdate);
+      videoElement.removeEventListener("pause", handlePause);
+      videoElement.removeEventListener("play", handlePlay);
     };
   }, []);
 
   useEffect(() => {
-    if (videoRef.current) {
-      if (playing) {
-        videoRef.current.currentTime = 0;
-        setProgress(0);
-        void videoRef.current.play();
-      } else {
-        videoRef.current.pause();
-      }
+    if (active) {
+      videoRef.current.currentTime = 0;
+      setProgress(0);
+      void videoRef.current.play();
+    } else {
+      videoRef.current.pause();
     }
-  }, [playing]);
+  }, [active]);
 
   useEffect(() => {
-    if (videoRef.current) {
-      videoRef.current.muted = muted;
-    }
+    videoRef.current.muted = muted;
   }, [muted]);
 
   const handleVideoClick = async () => {
-    if (videoRef.current) {
-      const videoPlaying = !videoRef.current.paused;
-      if (videoPlaying) {
-        videoRef.current.pause();
-      } else {
-        await videoRef.current.play();
-      }
-      setUiPlaying(!videoPlaying);
+    const videoPlaying = !videoRef.current.paused;
+    if (videoPlaying) {
+      videoRef.current.pause();
+    } else {
+      await videoRef.current.play();
     }
   };
 
   const handleProgressChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const newTime = parseFloat(event.target.value);
-    setProgress(newTime);
-    if (videoRef.current) {
-      videoRef.current.currentTime = newTime;
-    }
+    videoRef.current.currentTime = newTime;
   };
 
   // Calculate the percentage of the video that has been played
@@ -141,14 +151,36 @@ const VideoPlayer = ({ src, playing, loop, overlay }: VideoPlayerProps) => {
           top: 0,
           left: 0,
           right: 0,
+          p: {
+            xs: 2,
+            sm: 1,
+          },
         }}
+        spacing={2}
       >
-        <IconButton onClick={() => setMuted(!muted)}>
+        <IconButton
+          onClick={() => setMuted(!muted)}
+          sx={{
+            "&": {
+              "--Icon-color": "#fff",
+            },
+            opacity: 0.6,
+          }}
+          variant="soft"
+        >
           {muted ? <VolumeOff /> : <VolumeUp />}
         </IconButton>
-        <Box flex={1} />
-        <IconButton onClick={handleVideoClick}>
-          {uiPlaying ? <Pause /> : <PlayArrow />}
+        <IconButton
+          onClick={handleVideoClick}
+          sx={{
+            "&": {
+              "--Icon-color": "#fff",
+            },
+            opacity: 0.6,
+          }}
+          variant="soft"
+        >
+          {playing ? <Pause /> : <PlayArrow />}
         </IconButton>
       </Flex>
     </Stack>

@@ -10,38 +10,49 @@ export interface VideoWithOverlayProps {
   video: VideoDetailedPublic;
   state: "active" | "mounted" | "unmounted";
   currentUserId?: string;
+  muted: boolean;
+  setMuted: (muted: boolean) => void;
 }
 
-export const VideoWithOverlay = ({ video, state }: VideoWithOverlayProps) => {
+export const VideoWithOverlay = ({
+  video,
+  state,
+  muted,
+  setMuted,
+}: VideoWithOverlayProps) => {
   return (
     <Flex
       id={`volo-video-${video.id}`}
       justifyContent="center"
       alignItems="center"
-      sx={{
+      sx={(theme) => ({
         minHeight: "calc(100vh - var(--volo-app-bar-height))",
         scrollSnapAlign: "start",
         scrollSnapStop: "always",
         position: "relative",
         width: "100%",
-        p: 2,
-      }}
+        pb: 1,
+        [theme.breakpoints.up("sm")]: {
+          p: 2,
+        },
+      })}
       spacing={2}
     >
       {(state === "active" || state === "mounted") && (
         <>
           <VideoPlayer
-            playing={state === "active"}
+            active={state === "active"}
             src={video.url}
             loop
             overlay={<VideoOverlay video={video} />}
+            muted={muted}
+            setMuted={setMuted}
           />
           <VideoActions
             comments={video.comments}
             likes={video.likes}
             videoId={video.id}
             active={state === "active"}
-          
           />
         </>
       )}
