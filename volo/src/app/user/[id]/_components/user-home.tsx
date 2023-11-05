@@ -1,6 +1,15 @@
 "use client";
 
-import { Avatar, Box, Stack, Tab, TabList, Tabs, Typography } from "@mui/joy";
+import {
+  Avatar,
+  Box,
+  Stack,
+  Tab,
+  TabList,
+  TabPanel,
+  Tabs,
+  Typography,
+} from "@mui/joy";
 import { Flex } from "~/app/_components/flex";
 import { getBilibiliImageUrl } from "~/app/utils";
 import { type VideoPublic, type UserDetailedPublic } from "~/types";
@@ -54,9 +63,15 @@ export const UserHome = ({ user, uploadedVideos }: UserHomeProps) => {
             收藏
           </Tab>
         </TabList>
-        <VideoTabPanel videos={uploadedVideos} value={0} />
-        <LikeTabPanel userId={user.id} value={1} />
-        <CollectionTabPanel userId={user.id} value={2} />
+        <TabPanel value={0}>
+          <VideoTabPanel videos={uploadedVideos} />
+        </TabPanel>
+        <TabPanel value={1}>
+          <LikeTabPanel userId={user.id} />
+        </TabPanel>
+        <TabPanel value={2}>
+          <CollectionTabPanel userId={user.id} />
+        </TabPanel>
       </Tabs>
     </Stack>
   );

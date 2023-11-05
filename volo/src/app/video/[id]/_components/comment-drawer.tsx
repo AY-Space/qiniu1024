@@ -31,11 +31,11 @@ import { useSession } from "next-auth/react";
 
 const Comment = ({
   comment,
-  deleteable,
+  deleteAble: deleteAble,
   onDelete,
 }: {
   comment: CommentPublic;
-  deleteable: boolean;
+  deleteAble: boolean;
   onDelete: () => void;
 }) => {
   return (
@@ -52,7 +52,7 @@ const Comment = ({
             </Typography>
           </Stack>
           <Box flex={1} />
-          {deleteable && (
+          {deleteAble && (
             <IconButton color="danger" size="sm" onClick={onDelete}>
               <Delete />
             </IconButton>
@@ -92,7 +92,7 @@ const CommentList = ({ videoId }: { videoId: string }) => {
   const { data, error, isLoading } = api.video.comments.useQuery({ videoId });
   const { data: session } = useSession();
   const utils = api.useUtils();
-  const deteleComment = api.video.deleteComment.useMutation({
+  const deleteComment = api.video.deleteComment.useMutation({
     onSuccess: async () => {
       await utils.video.comments.invalidate({ videoId });
     },
@@ -108,11 +108,11 @@ const CommentList = ({ videoId }: { videoId: string }) => {
       )}
       {data?.map((comment) => (
         <Comment
-          deleteable={session?.userId === comment.author.id}
+          deleteAble={session?.userId === comment.author.id}
           comment={comment}
           key={comment.id}
           onDelete={() => {
-            deteleComment.mutate({
+            deleteComment.mutate({
               commentId: comment.id,
             });
           }}
