@@ -49,10 +49,6 @@ export type VideoDetailedPublic = Pick<
 
 export type CollectionPublic = Pick<Collection, "id" | "name">;
 
-export type CollectionWithVideos = CollectionPublic & {
-  videos: VideoPublic[];
-};
-
 export enum GorseFeedback {
   READALL = "read_all",
   LIKED = "liked",

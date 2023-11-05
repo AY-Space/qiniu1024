@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { type CollectionWithVideos, type CollectionPublic } from "~/types";
+import { type CollectionPublic, type VideoPublic } from "~/types";
 import { createTRPCRouter, protectedProcedure } from "../trpc";
 
 export const collectionRouter = createTRPCRouter({
@@ -100,15 +100,13 @@ export const collectionRouter = createTRPCRouter({
       async ({
         input: { collectionId },
         ctx: { db, session },
-      }): Promise<CollectionWithVideos> => {
+      }): Promise<VideoPublic[]> => {
         const collection = await db.collection.findUnique({
           where: {
             id: collectionId,
             ownerId: session.userId,
           },
           select: {
-            id: true,
-            name: true,
             videos: {
               select: {
                 id: true,
@@ -123,7 +121,7 @@ export const collectionRouter = createTRPCRouter({
         if (!collection) {
           throw new Error("Collection not found or you don't have access");
         }
-        return collection;
+        return collection.videos;
       },
     ),
 });
