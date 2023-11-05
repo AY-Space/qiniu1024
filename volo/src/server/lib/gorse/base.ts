@@ -1,7 +1,7 @@
 import { TagType } from "@prisma/client";
 import axios_ from "axios";
 import { env } from "~/env.mjs";
-import { type GorseFeedback, type TagPublic } from "~/types";
+import { type GorseFeedback, type TagReference } from "~/types";
 
 const axios = axios_.create({
   baseURL: env.GORSE_URL + "/api",
@@ -30,29 +30,16 @@ interface User {
   UserId: string;
 }
 
-export interface Cursor {
+export interface Page {
   limit: number;
-  offset: number;
+  cursor?: number;
 }
 
-const minPageSize = 5;
-const maxPageSize = 20;
-
-const setPageSize = (limit: number): number => {
-  if (limit < minPageSize) {
-    return minPageSize;
-  }
-  if (limit > maxPageSize) {
-    return maxPageSize;
-  }
-  return limit;
+const format = (page: Page): string => {
+  return `n=${page.limit}` + page.cursor ? `&offset=${page.cursor}` : "";
 };
 
-const format = (cursor: Cursor): string => {
-  return `n=${setPageSize(cursor.limit)}&offset=${cursor.offset}`;
-};
-
-const newItem = (itemId: string, tags: TagPublic[]): Item => ({
+const newItem = (itemId: string, tags: TagReference[]): Item => ({
   Categories: tags
     .filter((tag) => tag.type === TagType.Category)
     .map((tag) => tag.id),
@@ -62,7 +49,7 @@ const newItem = (itemId: string, tags: TagPublic[]): Item => ({
   Timestamp: new Date(),
 });
 
-const newUser = (userId: string, tags: TagPublic[]): User => ({
+const newUser = (userId: string, tags: TagReference[]): User => ({
   Labels: tags.filter((tag) => tag.type === TagType.Tag).map((tag) => tag.id),
   UserId: userId,
 });
@@ -78,12 +65,12 @@ const newFeedback = (
   UserId: userId,
 });
 
-export const insertVideo = async (videoId: string, tags: TagPublic[]) => {
+export const insertVideo = async (videoId: string, tags: TagReference[]) => {
   await axios.post("/item", newItem(videoId, tags));
 };
 
 export const insertVideos = async (
-  videos: { videoId: string; tags: TagPublic[] }[],
+  videos: { videoId: string; tags: TagReference[] }[],
 ) => {
   console.log(videos.length);
   await axios.post(
@@ -97,16 +84,16 @@ export const deleteVideo = async (videoId: string) => {
 };
 
 // updateVideo: the new TagReferences will cover the old ones
-export const updateVideo = async (videoId: string, tags: TagPublic[]) => {
+export const updateVideo = async (videoId: string, tags: TagReference[]) => {
   await axios.patch(`/item/${videoId}`, newItem(videoId, tags));
 };
 
-export const insertUser = async (userId: string, tags: TagPublic[]) => {
+export const insertUser = async (userId: string, tags: TagReference[]) => {
   await axios.post("/user", newUser(userId, tags));
 };
 
 export const insertUsers = async (
-  users: { userId: string; tags: TagPublic[] }[],
+  users: { userId: string; tags: TagReference[] }[],
 ) => {
   await axios.post(
     "/users",
@@ -119,7 +106,7 @@ export const deleteUser = async (userId: string) => {
 };
 
 // updateUser: the new TagReferences will cover the old ones
-export const updateUser = async (userId: string, tags: TagPublic[]) => {
+export const updateUser = async (userId: string, tags: TagReference[]) => {
   await axios.patch(`/user/${userId}`, newUser(userId, tags));
 };
 
@@ -141,59 +128,59 @@ export const deleteFeedback = async (
 
 // categoryId: null -> all catgories
 export const getRecommends = async (
-  cursor: Cursor,
+  page: Page,
   userId: string,
   categoryId?: string,
 ): Promise<string[]> => {
   const response = await axios.get<string[]>(
-    `/recommend/${userId}/${categoryId ?? ""}?${format(cursor)}`,
+    `/recommend/${userId}/${categoryId ?? ""}?${format(page)}`,
   );
   return response.data;
 };
 
 // categoryId: null -> all catgories
 export const getLatests = async (
-  cursor: Cursor,
+  page: Page,
   userId?: string,
   categoryId?: string,
 ): Promise<{ Id: string; Score: number }[]> => {
   const userQuery = userId ? `user-id=${userId}` : "";
   const response = await axios.get<{ Id: string; Score: number }[]>(
-    `/latest/${categoryId ?? ""}?${format(cursor)}&${userQuery}`,
+    `/latest/${categoryId ?? ""}?${format(page)}&${userQuery}`,
   );
   return response.data;
 };
 
 // categoryId: null -> all catgories
 export const getPopulars = async (
-  cursor: Cursor,
+  page: Page,
   userId?: string,
   categoryId?: string,
 ): Promise<{ Id: string; Score: number }[]> => {
   const userQuery = userId ? `user-id=${userId}` : "";
   const response = await axios.get<{ Id: string; Score: number }[]>(
-    `/popular/${categoryId ?? ""}?${format(cursor)}&${userQuery}`,
+    `/popular/${categoryId ?? ""}?${format(page)}&${userQuery}`,
   );
   return response.data;
 };
 
 export const getItemNeighbors = async (
+  page: Page,
   itemId: string,
-  cursor: Cursor,
   categoryId?: string,
 ): Promise<{ Id: string; Score: number }[]> => {
   const response = await axios.get<{ Id: string; Score: number }[]>(
-    `/item/${itemId}/neighbors/${categoryId ?? ""}?${format(cursor)}`,
+    `/item/${itemId}/neighbors/${categoryId ?? ""}?${format(page)}`,
   );
   return response.data;
 };
 
 export const getUserNeighbors = async (
   userId: string,
-  cursor: Cursor,
+  page: Page,
 ): Promise<{ Id: string; Score: number }[]> => {
   const response = await axios.get<{ Id: string; Score: number }[]>(
-    `/user/${userId}/neighbors?${format(cursor)}`,
+    `/user/${userId}/neighbors?${format(page)}`,
   );
   return response.data;
 };

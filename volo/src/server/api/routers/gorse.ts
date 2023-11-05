@@ -1,5 +1,5 @@
 import { TagType } from "@prisma/client";
-import { number, z } from "zod";
+import { z } from "zod";
 import {
   createTRPCRouter,
   protectedProcedure,
@@ -23,7 +23,7 @@ import {
 import { GorseFeedback, type VideoDetailedPublic } from "~/types";
 
 const Query = z.object({
-  limit: z.number().min(1).max(50),
+  limit: z.number().min(5).max(20),
   cursor: z.number().optional(),
   categoryId: z.string().optional(),
 });
@@ -49,7 +49,7 @@ export const gorseRouter = createTRPCRouter({
         ctx.db,
         {
           limit,
-          offset: cursor,
+          cursor,
         },
         ctx.session.userId,
         categoryId,
@@ -63,24 +63,40 @@ export const gorseRouter = createTRPCRouter({
 
   popular: publicProcedure
     .input(Query)
-    .query(async ({ ctx, input }): Promise<VideoDetailedPublic[]> => {
-      return await getPopular(
-        ctx.db,
-        input.cursor,
-        ctx.session?.userId,
-        input.categoryId,
-      );
-    }),
+    .query(
+      async ({
+        ctx,
+        input: { limit, cursor = 0, categoryId },
+      }): Promise<VideoDetailedPublic[]> => {
+        return await getPopular(
+          ctx.db,
+          {
+            limit,
+            cursor,
+          },
+          ctx.session?.userId,
+          categoryId,
+        );
+      },
+    ),
   latest: publicProcedure
     .input(Query)
-    .query(async ({ ctx, input }): Promise<VideoDetailedPublic[]> => {
-      return await getLatest(
-        ctx.db,
-        input.cursor,
-        ctx.session?.userId,
-        input.categoryId,
-      );
-    }),
+    .query(
+      async ({
+        ctx,
+        input: { limit, cursor = 0, categoryId },
+      }): Promise<VideoDetailedPublic[]> => {
+        return await getLatest(
+          ctx.db,
+          {
+            limit,
+            cursor,
+          },
+          ctx.session?.userId,
+          categoryId,
+        );
+      },
+    ),
   insertFeedback: protectedProcedure
     .input(
       z.object({

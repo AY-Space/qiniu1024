@@ -29,6 +29,7 @@ export type CommentPublic = Pick<
 };
 
 export type TagPublic = Pick<Tag, "id" | "name" | "type">;
+export type TagReference = Pick<Tag, "id" | "type">;
 
 export type VideoPublic = Pick<
   Video,
