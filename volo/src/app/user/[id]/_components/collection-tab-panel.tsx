@@ -1,25 +1,18 @@
 "use client";
-import { Grid, Tab, TabList, TabPanel, Tabs, Button } from "@mui/joy";
+import { Tab, TabList, TabPanel, Tabs, Button } from "@mui/joy";
 import { Add, VideoLibrary } from "@mui/icons-material";
 import { useState } from "react";
 import { CreateCollectionModal } from "~/app/_components/create-collection-modal";
+import { api } from "~/trpc/react";
+import { VideoGrid } from "~/app/_components/video-tab-panel";
 
-export const CollectionTabPanel = ({
-  userId,
-  value,
-}: {
-  userId: string;
-  value: number;
-}) => {
+export const CollectionTabPanel = ({ userId }: { userId: string }) => {
   const [showCreateCollection, setShowCreateCollection] = useState(false);
+  const { data: collections } = api.collection.myCollections.useQuery();
 
   return (
-    <TabPanel value={value}>
-      <Tabs
-        aria-label="Vertical tabs"
-        orientation="vertical"
-        sx={{ minWidth: 300, height: 160 }}
-      >
+    <>
+      <Tabs aria-label="Vertical tabs" orientation="vertical">
         <TabList>
           <Button
             variant="plain"
@@ -28,40 +21,29 @@ export const CollectionTabPanel = ({
           >
             创建收藏夹
           </Button>
-          <Tab sx={{ display: "flex", alignItems: "space-between" }}>
-            <VideoLibrary />
-            tab
-          </Tab>
-          <Tab>
-            <VideoLibrary />
-            Second tab
-          </Tab>
-          <Tab>
-            <VideoLibrary />
-            Third tab
-          </Tab>
+          {collections?.map((collection) => (
+            <Tab key={collection.id}>
+              <VideoLibrary />
+              {collection.name}
+            </Tab>
+          ))}
         </TabList>
-        <TabPanel value={0}>
-          <Grid
-            container
-            columns={{
-              xs: 2,
-              sm: 3,
-              md: 4,
-            }}
-          ></Grid>
-        </TabPanel>
-        <TabPanel value={1}>
-          <b>Second</b> tab panel
-        </TabPanel>
-        <TabPanel value={2}>
-          <b>Third</b> tab panel
-        </TabPanel>
+
+        {collections?.map((collection, index) => (
+          <TabPanel value={index} key={collection.id}>
+            <CollectionGrid collectionId={collection.id} />
+          </TabPanel>
+        ))}
       </Tabs>
       <CreateCollectionModal
         open={showCreateCollection}
         onClose={() => setShowCreateCollection(false)}
       />
-    </TabPanel>
+    </>
   );
+};
+
+const CollectionGrid = ({ collectionId }: { collectionId: string }) => {
+  const { data: videos } = api.collection.videos.useQuery({ collectionId });
+  return videos && <VideoGrid videos={videos} />;
 };
