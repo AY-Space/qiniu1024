@@ -108,6 +108,39 @@ export const videoRouter = createTRPCRouter({
       });
     }),
 
+  likedAndCollected: protectedProcedure
+    .input(
+      z.object({
+        videoId: z.string(),
+      }),
+    )
+    .query(async ({ ctx, input: { videoId } }) => {
+      const liked = await ctx.db.like.findUnique({
+        where: {
+          userId_videoId: {
+            userId: ctx.session.userId,
+            videoId,
+          },
+        },
+      });
+      const collected = await ctx.db.collection.findMany({
+        where: {
+          videos: {
+            some: {
+              id: videoId,
+            },
+          },
+        },
+        select: {
+          id: true,
+        },
+      });
+      return {
+        liked: !!liked,
+        collected: collected.length > 0,
+      };
+    }),
+
   postComment: protectedProcedure
     .input(
       z.object({
