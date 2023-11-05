@@ -91,21 +91,23 @@ export const videoRouter = createTRPCRouter({
       }),
     )
     .mutation(async ({ ctx, input: { videoId, like } }) => {
-      await ctx.db.video.update({
-        where: {
-          id: videoId,
-        },
-        data: {
-          likes: {
-            [like ? "connect" : "disconnect"]: {
-              userId_videoId: {
-                userId: ctx.session.userId,
-                videoId,
-              },
+      if (like) {
+        await ctx.db.like.create({
+          data: {
+            userId: ctx.session.userId,
+            videoId,
+          },
+        });
+      } else {
+        await ctx.db.like.delete({
+          where: {
+            userId_videoId: {
+              userId: ctx.session.userId,
+              videoId,
             },
           },
-        },
-      });
+        });
+      }
     }),
 
   likedAndCollected: protectedProcedure
