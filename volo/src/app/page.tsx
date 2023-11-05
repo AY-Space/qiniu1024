@@ -1,5 +1,5 @@
-import { Container } from "@mui/joy";
+import { redirect } from "next/navigation";
 
 export default function Home() {
-  return <Container></Container>;
+  redirect("/video");
 }

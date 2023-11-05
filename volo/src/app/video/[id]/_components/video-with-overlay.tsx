@@ -268,11 +268,11 @@ const VideoOverlay = ({ video }: { video: VideoDetailedPublic }) => {
 
 export interface VideoWithOverlayProps {
   video: VideoDetailedPublic;
-  active: boolean;
+  state: "active" | "mounted" | "unmounted";
   currentUserId?: string;
 }
 
-export const VideoWithOverlay = ({ video, active }: VideoWithOverlayProps) => {
+export const VideoWithOverlay = ({ video, state }: VideoWithOverlayProps) => {
   return (
     <Flex
       id={`volo-video-${video.id}`}
@@ -288,19 +288,23 @@ export const VideoWithOverlay = ({ video, active }: VideoWithOverlayProps) => {
       }}
       spacing={2}
     >
-      <VideoPlayer
-        playing={active}
-        src={video.url}
-        loop
-        overlay={<VideoOverlay video={video} />}
-      />
-      <VideoActions
-        comments={video.comments}
-        likes={video.likes}
-        videoId={video.id}
-        active={active}
-        variant="side"
-      />
+      {(state === "active" || state === "mounted") && (
+        <>
+          <VideoPlayer
+            playing={state === "active"}
+            src={video.url}
+            loop
+            overlay={<VideoOverlay video={video} />}
+          />
+          <VideoActions
+            comments={video.comments}
+            likes={video.likes}
+            videoId={video.id}
+            active={state === "active"}
+            variant="side"
+          />
+        </>
+      )}
     </Flex>
   );
 };

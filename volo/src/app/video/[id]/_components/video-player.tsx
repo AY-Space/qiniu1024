@@ -1,7 +1,9 @@
 "use client";
 
-import { Stack, useColorScheme } from "@mui/joy";
+import { Pause, PlayArrow, VolumeOff, VolumeUp } from "@mui/icons-material";
+import { Box, IconButton, Stack } from "@mui/joy";
 import { useState, useEffect, useRef, type ReactNode } from "react";
+import { Flex } from "~/app/_components/flex";
 
 interface VideoPlayerProps {
   src: string;
@@ -14,7 +16,9 @@ const VideoPlayer = ({ src, playing, loop, overlay }: VideoPlayerProps) => {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [progress, setProgress] = useState<number>(0);
   const [duration, setDuration] = useState<number>(0);
-  const [isPlaying, setIsPlaying] = useState<boolean>(false);
+  const [muted, setMuted] = useState<boolean>(false);
+
+  const [uiPlaying, setUiPlaying] = useState<boolean>(false);
 
   useEffect(() => {
     const videoElement = videoRef.current;
@@ -41,7 +45,6 @@ const VideoPlayer = ({ src, playing, loop, overlay }: VideoPlayerProps) => {
   }, []);
 
   useEffect(() => {
-    setIsPlaying(playing);
     if (videoRef.current) {
       if (playing) {
         videoRef.current.currentTime = 0;
@@ -53,14 +56,21 @@ const VideoPlayer = ({ src, playing, loop, overlay }: VideoPlayerProps) => {
     }
   }, [playing]);
 
-  const handleVideoClick = () => {
+  useEffect(() => {
     if (videoRef.current) {
-      if (isPlaying) {
+      videoRef.current.muted = muted;
+    }
+  }, [muted]);
+
+  const handleVideoClick = async () => {
+    if (videoRef.current) {
+      const videoPlaying = !videoRef.current.paused;
+      if (videoPlaying) {
         videoRef.current.pause();
       } else {
-        void videoRef.current.play();
+        await videoRef.current.play();
       }
-      setIsPlaying(!isPlaying);
+      setUiPlaying(!videoPlaying);
     }
   };
 
@@ -75,12 +85,7 @@ const VideoPlayer = ({ src, playing, loop, overlay }: VideoPlayerProps) => {
   // Calculate the percentage of the video that has been played
   const playedPercentage = duration ? (progress / duration) * 100 : 0;
 
-  const colorScheme = useColorScheme();
-  const progressBarColor =
-    colorScheme.colorScheme === "dark"
-      ? `linear-gradient(to right, rgba(255,255,255,0.8) ${playedPercentage}%, rgba(255,255,255,0.2) ${playedPercentage}%)`
-      : `linear-gradient(to right, rgba(0,0,0,0.5) ${playedPercentage}%, rgba(0,0,0,0.2) ${playedPercentage}%)`;
-
+  const progressBarColor = `linear-gradient(to right, rgba(255,255,255,0.8) ${playedPercentage}%, rgba(255,255,255,0.2) ${playedPercentage}%)`;
   const overlayGradient =
     "linear-gradient(to bottom, transparent, rgba(0,0,0,0.8))";
   return (
@@ -130,6 +135,22 @@ const VideoPlayer = ({ src, playing, loop, overlay }: VideoPlayerProps) => {
           }}
         />
       </Stack>
+      <Flex
+        sx={{
+          position: "absolute",
+          top: 0,
+          left: 0,
+          right: 0,
+        }}
+      >
+        <IconButton onClick={() => setMuted(!muted)}>
+          {muted ? <VolumeOff /> : <VolumeUp />}
+        </IconButton>
+        <Box flex={1} />
+        <IconButton onClick={handleVideoClick}>
+          {uiPlaying ? <Pause /> : <PlayArrow />}
+        </IconButton>
+      </Flex>
     </Stack>
   );
 };
