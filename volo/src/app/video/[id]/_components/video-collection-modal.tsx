@@ -75,7 +75,11 @@ export const VideoCollectionModal = ({
         </Flex>
         <Divider />
         <DialogContent sx={{ mb: 2 }}>
-          <List>
+          <List
+            sx={{
+              overflowX: "hidden",
+            }}
+          >
             <ListItem>
               <ListItemButton onClick={() => setShowCreateCollection(true)}>
                 <ListItemDecorator>
