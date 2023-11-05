@@ -17,6 +17,7 @@ export const VideoCard = ({
         sx={{
           aspectRatio: 4 / 3,
         }}
+        data-joy-color-scheme="dark"
       >
         <CardCover>
           <Box
