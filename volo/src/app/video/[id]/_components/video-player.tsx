@@ -97,7 +97,7 @@ const VideoPlayer = ({
 
   const progressBarColor = `linear-gradient(to right, rgba(255,255,255,0.8) ${playedPercentage}%, rgba(255,255,255,0.2) ${playedPercentage}%)`;
   const overlayGradient =
-    "linear-gradient(to bottom, transparent, rgba(11,13,14,0.8))";
+    "linear-gradient(to bottom, transparent, rgba(0,0,0,0.8))";
   return (
     <Stack
       sx={{

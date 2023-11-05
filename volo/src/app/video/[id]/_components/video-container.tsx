@@ -1,6 +1,6 @@
 "use client";
 
-import { Sheet } from "@mui/joy";
+import { Stack } from "@mui/joy";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { VideoWithOverlay } from "./video-with-overlay";
 import { api } from "~/trpc/react";
@@ -98,7 +98,7 @@ export function VideoContainer({
   const activeVideoPage = Math.floor(activeVideoIndex / pageSize);
 
   return (
-    <Sheet
+    <Stack
       ref={containerRef}
       sx={{
         scrollSnapType: "y mandatory",
@@ -108,8 +108,7 @@ export function VideoContainer({
         "::-webkit-scrollbar": {
           display: "none",
         },
-        display: "flex",
-        flexDirection: "column",
+        backgroundColor: "black",
       }}
       data-joy-color-scheme="dark"
     >
@@ -132,6 +131,6 @@ export function VideoContainer({
           />
         );
       })}
-    </Sheet>
+    </Stack>
   );
 }
