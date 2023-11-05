@@ -133,6 +133,7 @@ export function AppBar({ loggedIn }: AppBarProps) {
           <Input
             sx={{
               borderRadius: "xl",
+              width: "100%",
             }}
             size="lg"
             placeholder="搜索"
