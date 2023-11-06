@@ -106,10 +106,12 @@ export function AppBar({ loggedIn }: AppBarProps) {
           right: 0,
         }}
       />
-      <SearchDialog
-        open={showSearchDialog}
-        onClose={() => setShowSearchDialog(false)}
-      />
+      {showSearchDialog && (
+        <SearchDialog
+          open={showSearchDialog}
+          onClose={() => setShowSearchDialog(false)}
+        />
+      )}
     </Sheet>
   );
 }
