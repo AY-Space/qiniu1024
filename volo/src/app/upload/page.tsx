@@ -15,6 +15,7 @@ import {
   FormLabel,
   Input,
   LinearProgress,
+  Snackbar,
   Stack,
   Textarea,
   Typography,
@@ -35,8 +36,11 @@ export const VisuallyHiddenInput = styled("input")`
   width: 1px;
 `;
 
-export default function UploadTest() {
+export default function UploadPage() {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const [uploaded, setUploaded] = useState(false);
+  const [error, setError] = useState(false);
+
   const [progress, setProgress] = useState<number | null>(null);
 
   const onFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -53,14 +57,13 @@ export default function UploadTest() {
       upload(selectedFile, key, token, {}, {}).subscribe({
         next: (res) => {
           setProgress(res.total.percent);
-          console.log(res);
         },
-        error: (err) => {
-          console.log(err);
+        error: () => {
+          setError(true);
         },
         complete: () => {
           setProgress(null);
-          console.log("complete");
+          setUploaded(true);
         },
       });
     }
@@ -178,6 +181,24 @@ export default function UploadTest() {
           </CardContent>
         </Card>
       </Stack>
+      <Snackbar
+        variant="solid"
+        color="success"
+        autoHideDuration={1600}
+        open={uploaded}
+        onClose={() => setUploaded(false)}
+      >
+        已上传
+      </Snackbar>
+      <Snackbar
+        variant="solid"
+        color="warning"
+        autoHideDuration={1600}
+        open={error}
+        onClose={() => setError(false)}
+      >
+        上传失败
+      </Snackbar>
     </Container>
   );
 }
