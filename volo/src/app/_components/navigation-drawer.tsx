@@ -4,7 +4,6 @@ import {
   Divider,
   Drawer,
   type DrawerProps,
-  List,
   Typography,
   DialogTitle,
   Card,
@@ -15,7 +14,6 @@ import {
 } from "@mui/joy";
 import { useState } from "react";
 import { api } from "~/trpc/react";
-import { Flex } from "./flex";
 
 export type NavigationDrawer = Pick<DrawerProps, "open" | "onClose">;
 
