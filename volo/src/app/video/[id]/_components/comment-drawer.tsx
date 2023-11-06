@@ -245,6 +245,7 @@ export interface CommentDrawerProps {
   open: boolean;
   onClose: () => void;
 }
+
 export const CommentDrawer = ({
   videoId,
   open,
