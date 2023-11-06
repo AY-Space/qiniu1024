@@ -13,15 +13,30 @@ import {
   Stack,
 } from "@mui/joy";
 import Link from "next/link";
-import { useState } from "react";
 import { api } from "~/trpc/react";
+import { useStore } from "../store";
+import { useSession } from "next-auth/react";
+import { type Recommendation } from "~/server/api/routers/gorse";
 
 export type NavigationDrawer = Pick<DrawerProps, "open" | "onClose">;
 
 export function NavigationDrawer({ open, onClose }: NavigationDrawer) {
+  const session = useSession();
   const { data: categories } = api.tag.categories.useQuery();
-  const [selectedType, setSelectedType] = useState("推荐");
-  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+  const {
+    category: selectedCategory,
+    setCategory: setSelectedCategory,
+    recommendationType,
+    setRecommendationType,
+  } = useStore((state) => state);
+
+  const recommendationTypes = {
+    ...(session.status === "authenticated" && {
+      recommendation: "推荐",
+    }),
+    popular: "热门",
+    latest: "最新",
+  } as Record<Recommendation, string>;
 
   return (
     <Drawer open={open} onClose={onClose}>
@@ -40,15 +55,15 @@ export function NavigationDrawer({ open, onClose }: NavigationDrawer) {
             columnSpacing={{ xs: 1, sm: 2, md: 3 }}
             p={2}
           >
-            {["推荐", "最新", "热门"].map((e) => (
-              <Grid key={e} xs={6}>
+            {Object.entries(recommendationTypes).map(([k, v]) => (
+              <Grid key={k} xs={6}>
                 <Card>
                   <Radio
                     overlay
-                    checked={e === selectedType}
-                    label={e}
+                    checked={k === recommendationType}
+                    label={v}
                     sx={{ flexGrow: 1, flexDirection: "row-reverse" }}
-                    onClick={() => setSelectedType(e)}
+                    onClick={() => setRecommendationType(k as Recommendation)}
                   />
                 </Card>
               </Grid>
@@ -68,7 +83,7 @@ export function NavigationDrawer({ open, onClose }: NavigationDrawer) {
                 <Card>
                   <Radio
                     overlay
-                    checked={category === selectedCategory}
+                    checked={category == selectedCategory}
                     label={category}
                     sx={{ flexGrow: 1, flexDirection: "row-reverse" }}
                     onClick={() =>
