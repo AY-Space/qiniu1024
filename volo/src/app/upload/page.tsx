@@ -82,7 +82,6 @@ export default function UploadPage() {
         complete: () => {
           setProgress(100);
           setUploaded(true);
-
           setVideoInfo((prev) => ({
             ...prev,
             videoFileKey: key,
@@ -271,7 +270,7 @@ export default function UploadPage() {
       </Snackbar>
       <Snackbar
         variant="solid"
-        color="warning"
+        color="danger"
         autoHideDuration={1600}
         open={error}
         onClose={() => setError(false)}
