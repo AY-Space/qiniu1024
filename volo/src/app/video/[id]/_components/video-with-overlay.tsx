@@ -48,12 +48,7 @@ export const VideoWithOverlay = ({
             muted={muted}
             setMuted={setMuted}
           />
-          <VideoActions
-            comments={video.comments}
-            likes={video.likes}
-            videoId={video.id}
-            state={state}
-          />
+          <VideoActions videoId={video.id} state={state} />
         </>
       )}
     </Flex>

@@ -49,8 +49,9 @@ export const VideoCollectionModal = ({
     [savedCollectionIds],
   );
   const updateVideoCollection = api.collection.updateVideo.useMutation({
-    onSuccess: async () => {
-      await utils.collection.idsWithVideo.invalidate({ videoId });
+    onSuccess: () => {
+      void utils.collection.idsWithVideo.invalidate({ videoId });
+      void utils.video.extraMetadata.invalidate({ videoId });
     },
   });
 

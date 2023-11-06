@@ -23,6 +23,7 @@ import { NavigationDrawer } from "./navigation-drawer";
 import Link from "next/link";
 import { History, Home, Logout, Upload } from "@mui/icons-material";
 import { api } from "~/trpc/react";
+import { signOut } from "next-auth/react";
 
 const UserMenu = () => {
   const { data: user } = api.user.currentUser.useQuery();
@@ -67,14 +68,12 @@ const UserMenu = () => {
             上传视频
           </MenuItem>
         </Link>
-        <Link href="/api/auth/signout">
-          <MenuItem color="danger">
-            <ListItemDecorator>
-              <Logout />
-            </ListItemDecorator>
-            退出登录
-          </MenuItem>
-        </Link>
+        <MenuItem color="danger" onClick={() => signOut()}>
+          <ListItemDecorator>
+            <Logout />
+          </ListItemDecorator>
+          退出登录
+        </MenuItem>
       </Menu>
     </Dropdown>
   );
@@ -158,7 +157,7 @@ export function AppBar({ loggedIn }: AppBarProps) {
             {loggedIn ? (
               <UserMenu />
             ) : (
-              <Link href="/api/auth/signin">
+              <Link href="/signin">
                 <Button>登录</Button>
               </Link>
             )}
