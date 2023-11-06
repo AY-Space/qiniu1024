@@ -62,3 +62,8 @@ export interface Page {
   limit: number;
   cursor?: number;
 }
+
+export enum ESIndex {
+  VIDEO = "video",
+  USER = "user",
+}
