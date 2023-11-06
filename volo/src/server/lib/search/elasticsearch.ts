@@ -38,7 +38,22 @@ export const insertVideo = async (item: Video) => {
   }
 };
 
-export const insertVideos = async (items: Video[]) => {};
+export const insertVideos = async (items: Video[]) => {
+  const body = items.flatMap((item) => [
+    { index: { _index: ESIndex.VIDEO, _id: item.id } },
+    {
+      title: item.title,
+      description: item.description,
+      tags: item.tags,
+    },
+  ]);
+  const response = await es.bulk({ refresh: "wait_for", body });
+  if (!response.errors) {
+    return;
+  }
+
+  throw new Error("Failed to index videos");
+};
 
 export const insertUser = async (item: User) => {
   const { result } = await es.index({
@@ -52,6 +67,21 @@ export const insertUser = async (item: User) => {
   if (result != "created") {
     throw new Error("Failed to index video");
   }
+};
+
+export const insertUsers = async (items: User[]) => {
+  const body = items.flatMap((item) => [
+    { index: { _index: ESIndex.USER, _id: item.id } },
+    {
+      name: item.name,
+    },
+  ]);
+  const response = await es.bulk({ refresh: "wait_for", body });
+  if (!response.errors) {
+    return;
+  }
+
+  throw new Error("Failed to index users");
 };
 
 export const deleteItem = async (itemId: string, index: ESIndex) => {
