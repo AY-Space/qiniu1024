@@ -79,6 +79,7 @@ const UserMenu = () => {
           color="danger"
           onClick={async () => {
             await signOut({ redirect: false });
+            location.reload();
           }}
         >
           <ListItemDecorator>

@@ -29,10 +29,6 @@ export default function SignInPage() {
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState(false);
 
-  const router = useRouter();
-
-  const utils = api.useUtils();
-
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     await (async () => {
@@ -44,8 +40,7 @@ export default function SignInPage() {
       if (result?.ok) {
         setSuccess(true);
         await sleep(1000);
-        await utils.user.currentUser.invalidate();
-        router.replace("/video");
+        location.replace("/video");
       } else {
         setError(!result?.ok);
       }
