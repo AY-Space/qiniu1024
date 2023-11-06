@@ -60,8 +60,7 @@ export default function UploadPage() {
     setSelectedFile(file ?? null);
   };
 
-  const createVideoUploadParameters =
-    api.video.createVideoUploadParameters.useMutation();
+  const createVideoUploadParameters = api.video.uploadVideoFile.useMutation();
 
   const categories = api.tag.categories.useQuery();
   const tags = api.tag.tags.useQuery();

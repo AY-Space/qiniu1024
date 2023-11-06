@@ -2,9 +2,9 @@
 
 import { Flex } from "~/app/_components/flex";
 import { type VideoDetailedPublic } from "~/types";
-import VideoPlayer from "./video-player";
 import { VideoOverlay } from "./video-overlay";
 import { VideoActions } from "./video-actions";
+import { VideoPlayer } from "./video-player";
 
 export interface VideoWithOverlayProps {
   video: VideoDetailedPublic;

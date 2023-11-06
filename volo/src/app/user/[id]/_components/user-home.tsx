@@ -96,11 +96,15 @@ export const UserHome = ({ user, uploadedVideos }: UserHomeProps) => {
         </TabPanel>
       </Tabs>
 
-      <EditDialog
-        user={user}
-        open={showEditDialog}
-        onClose={() => setShowEditDialog(false)}
-      />
+      {isSelf && (
+        <EditDialog
+          user={user}
+          open={showEditDialog}
+          onClose={() => {
+            setShowEditDialog(false);
+          }}
+        />
+      )}
     </Stack>
   );
 };

@@ -22,14 +22,11 @@ import {
 } from "~/server/lib/gorse/recommend";
 import { GorseFeedback, type VideoDetailedPublic } from "~/types";
 
-const Query = z.object({
-  limit: z.number().min(5).max(20),
-  cursor: z.number().optional(),
-  categoryId: z.string().optional(),
-});
-
 const FeedbackTypeZ = z.nativeEnum(GorseFeedback);
 const TagTypeZ = z.nativeEnum(TagType);
+const RecommendationZ = z.enum(["recommendation", "popular", "latest"]);
+
+export type Recommendation = z.infer<typeof RecommendationZ>;
 
 const TagRef = z.object({
   id: z.string(),
@@ -37,66 +34,67 @@ const TagRef = z.object({
 });
 
 export const gorseRouter = createTRPCRouter({
-  recommend: protectedProcedure.input(Query).query(
-    async ({
-      ctx,
-      input: { limit, cursor = 0, categoryId },
-    }): Promise<{
-      nextCursor?: number;
-      videos: VideoDetailedPublic[];
-    }> => {
-      const videos = await getRecommend(
-        ctx.db,
-        {
-          limit,
-          cursor,
-        },
-        ctx.session.userId,
-        categoryId,
-      );
-      return {
-        nextCursor: videos.length < limit ? undefined : cursor + limit,
-        videos,
-      };
-    },
-  ),
+  recommendation: publicProcedure
+    .input(
+      z.object({
+        limit: z.number().min(5).max(20),
+        cursor: z.number().optional(),
+        category: z.string().optional(),
+        recommendationType: RecommendationZ,
+      }),
+    )
+    .query(
+      async ({
+        ctx,
+        input: { limit, cursor = 0, category, recommendationType },
+      }): Promise<{
+        nextCursor?: number;
+        videos: VideoDetailedPublic[];
+      }> => {
+        const fn = (() => {
+          if (recommendationType === "recommendation") {
+            if (ctx.session) {
+              return getRecommend;
+            } else {
+              throw new Error("Invalid recommendation type");
+            }
+          } else if (recommendationType === "popular") {
+            return getPopular;
+          } else {
+            return getLatest;
+          }
+        })();
 
-  popular: publicProcedure
-    .input(Query)
-    .query(
-      async ({
-        ctx,
-        input: { limit, cursor = 0, categoryId },
-      }): Promise<VideoDetailedPublic[]> => {
-        return await getPopular(
+        let categoryId: string | undefined;
+        if (category) {
+          const categoryDb = await ctx.db.tag.findUnique({
+            where: { name: category },
+          });
+          if (!categoryDb) {
+            throw new Error("Invalid category");
+          }
+          categoryId = categoryDb.id;
+        }
+
+        const videos = await fn(
           ctx.db,
           {
             limit,
             cursor,
           },
-          ctx.session?.userId,
+          // Typescript is not smart enough to infer that when
+          // recommendationType === "recommendation", ctx.session is not null
+          // eslint-disable-next-line @typescript-eslint/no-non-null-asserted-optional-chain
+          ctx.session?.userId!,
           categoryId,
         );
+        return {
+          nextCursor: videos.length < limit ? undefined : cursor + limit,
+          videos,
+        };
       },
     ),
-  latest: publicProcedure
-    .input(Query)
-    .query(
-      async ({
-        ctx,
-        input: { limit, cursor = 0, categoryId },
-      }): Promise<VideoDetailedPublic[]> => {
-        return await getLatest(
-          ctx.db,
-          {
-            limit,
-            cursor,
-          },
-          ctx.session?.userId,
-          categoryId,
-        );
-      },
-    ),
+
   insertFeedback: protectedProcedure
     .input(
       z.object({

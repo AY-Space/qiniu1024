@@ -5,6 +5,8 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { VideoWithOverlay } from "./video-with-overlay";
 import { api } from "~/trpc/react";
 import { type VideoDetailedPublic } from "~/types";
+import { useShallow } from "zustand/react/shallow";
+import { useStore } from "~/app/store";
 
 export function VideoContainer({
   initialVideo: initialVideo,
@@ -18,10 +20,16 @@ export function VideoContainer({
 
   const pageSize = 5;
 
+  const [recommendationType, category] = useStore(
+    useShallow((state) => [state.recommendationType, state.category]),
+  );
+
   const { data, fetchNextPage } =
-    api.videoRecommender.recommend.useInfiniteQuery(
+    api.videoRecommender.recommendation.useInfiniteQuery(
       {
+        recommendationType: recommendationType,
         limit: pageSize,
+        category: category ?? undefined,
       },
       {
         getNextPageParam: (lastPage) => lastPage.nextCursor,

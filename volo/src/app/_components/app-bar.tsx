@@ -1,90 +1,22 @@
 "use client";
 
-import {
-  Avatar,
-  Button,
-  Divider,
-  Dropdown,
-  Grid,
-  IconButton,
-  Input,
-  ListItemDecorator,
-  Menu,
-  MenuButton,
-  MenuItem,
-  Sheet,
-  Typography,
-} from "@mui/joy";
+import { Button, Divider, Grid, IconButton, Sheet, Typography } from "@mui/joy";
 import SearchIcon from "@mui/icons-material/Search";
 import { Flex } from "./flex";
 import MenuIcon from "@mui/icons-material/Menu";
 import { useState } from "react";
 import { NavigationDrawer } from "./navigation-drawer";
 import Link from "next/link";
-import { History, Home, Logout, Upload } from "@mui/icons-material";
-import { api } from "~/trpc/react";
-import { signOut } from "next-auth/react";
-
-const UserMenu = () => {
-  const { data: user } = api.user.currentUser.useQuery();
-  return (
-    <Dropdown>
-      <MenuButton
-        slots={{
-          root: Avatar,
-        }}
-        slotProps={{
-          root: {
-            src: user?.avatarUrl ?? undefined,
-            variant: "outlined",
-          },
-        }}
-      />
-      <Menu>
-        {user?.name && <MenuItem color="primary">{user.name}</MenuItem>}
-        <MenuItem>{user?.email}</MenuItem>
-        <Divider />
-        <Link href="/user">
-          <MenuItem>
-            <ListItemDecorator>
-              <Home />
-            </ListItemDecorator>
-            个人主页
-          </MenuItem>
-        </Link>
-        <Link href={`/history`}>
-          <MenuItem>
-            <ListItemDecorator>
-              <History />
-            </ListItemDecorator>
-            历史记录
-          </MenuItem>
-        </Link>
-        <Link href={`/upload`}>
-          <MenuItem>
-            <ListItemDecorator>
-              <Upload />
-            </ListItemDecorator>
-            上传视频
-          </MenuItem>
-        </Link>
-        <MenuItem color="danger" onClick={() => signOut()}>
-          <ListItemDecorator>
-            <Logout />
-          </ListItemDecorator>
-          退出登录
-        </MenuItem>
-      </Menu>
-    </Dropdown>
-  );
-};
+import { UserMenu } from "./user-menu";
+import { SearchDialog } from "./search-dialog";
 
 export interface AppBarProps {
   loggedIn: boolean;
 }
 
 export function AppBar({ loggedIn }: AppBarProps) {
-  const [navigationDrawer, setNavigationDrawer] = useState(false);
+  const [showNavigationDrawer, setShowNavigationDrawer] = useState(false);
+  const [showSearchDialog, setShowSearchDialog] = useState(false);
 
   return (
     <Sheet
@@ -97,8 +29,8 @@ export function AppBar({ loggedIn }: AppBarProps) {
       }}
     >
       <NavigationDrawer
-        open={navigationDrawer}
-        onClose={() => setNavigationDrawer(false)}
+        open={showNavigationDrawer}
+        onClose={() => setShowNavigationDrawer(false)}
       />
 
       <Grid
@@ -112,14 +44,11 @@ export function AppBar({ loggedIn }: AppBarProps) {
           },
           height: "100%",
         }}
-        columns={{
-          xs: 5,
-          sm: 4,
-        }}
+        columns={3}
       >
         <Grid xs={1}>
           <Flex spacing={1} alignItems="center" height="100%">
-            <IconButton onClick={() => setNavigationDrawer(true)}>
+            <IconButton onClick={() => setShowNavigationDrawer(true)}>
               <MenuIcon />
             </IconButton>
             <Link href="/">
@@ -136,16 +65,21 @@ export function AppBar({ loggedIn }: AppBarProps) {
             </Link>
           </Flex>
         </Grid>
-        <Grid xs={3} sm={2}>
-          <Input
+        <Grid xs={1}>
+          <IconButton
+            variant="outlined"
             sx={{
               borderRadius: "xl",
               width: "100%",
             }}
             size="lg"
-            placeholder="搜索"
-            endDecorator={<SearchIcon />}
-          />
+            onClick={() => {
+              setShowSearchDialog(true);
+            }}
+          >
+            <SearchIcon />
+            <Typography>搜索</Typography>
+          </IconButton>
         </Grid>
         <Grid xs={1}>
           <Flex
@@ -171,6 +105,10 @@ export function AppBar({ loggedIn }: AppBarProps) {
           left: 0,
           right: 0,
         }}
+      />
+      <SearchDialog
+        open={showSearchDialog}
+        onClose={() => setShowSearchDialog(false)}
       />
     </Sheet>
   );

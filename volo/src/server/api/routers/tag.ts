@@ -1,8 +1,12 @@
 import { TagType } from "@prisma/client";
-import { createTRPCRouter, protectedProcedure } from "~/server/api/trpc";
+import {
+  createTRPCRouter,
+  protectedProcedure,
+  publicProcedure,
+} from "~/server/api/trpc";
 
 export const tagRouter = createTRPCRouter({
-  categories: protectedProcedure.query(async ({ ctx }): Promise<string[]> => {
+  categories: publicProcedure.query(async ({ ctx }): Promise<string[]> => {
     const tags = await ctx.db.tag.findMany({
       where: {
         type: TagType.Category,

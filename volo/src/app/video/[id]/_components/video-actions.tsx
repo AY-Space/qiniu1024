@@ -21,18 +21,17 @@ export const VideoActions = ({
   const [shared, setShared] = useState(false);
 
   const { data: extraMetadata } = api.video.extraMetadata.useQuery(
-    {
-      videoId,
-    },
-    {
-      enabled: state === "active",
-    },
+    { videoId },
+    { enabled: state === "active" },
   );
   const utils = api.useUtils();
+  const [actionError, setActionError] = useState(false);
+
   const like = api.video.like.useMutation({
     onSuccess: async () => {
       await utils.video.extraMetadata.invalidate({ videoId });
     },
+    onError: () => setActionError(true),
   });
 
   return (
@@ -128,6 +127,15 @@ export const VideoActions = ({
         onClose={() => setShared(false)}
       >
         分享信息已复制至剪切板
+      </Snackbar>
+      <Snackbar
+        variant="solid"
+        color="danger"
+        autoHideDuration={1600}
+        open={actionError}
+        onClose={() => setActionError(false)}
+      >
+        操作失败
       </Snackbar>
     </Stack>
   );

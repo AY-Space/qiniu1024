@@ -14,7 +14,7 @@ interface VideoPlayerProps {
   setMuted: (muted: boolean) => void;
 }
 
-const VideoPlayer = ({
+export const VideoPlayer = ({
   src,
   active,
   loop,
@@ -186,5 +186,3 @@ const VideoPlayer = ({
     </Stack>
   );
 };
-
-export default VideoPlayer;
