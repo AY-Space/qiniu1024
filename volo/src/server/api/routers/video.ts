@@ -9,7 +9,7 @@ import { createUploadParameters } from "~/server/lib/util/kodo";
 import { type VideoPublic, type CommentPublic } from "~/types";
 
 export const videoRouter = createTRPCRouter({
-  createVideoUploadParameters: publicProcedure.mutation(() => {
+  uploadVideoFile: publicProcedure.mutation(() => {
     return createUploadParameters("video");
   }),
 
