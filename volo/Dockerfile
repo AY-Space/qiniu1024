@@ -10,12 +10,12 @@ RUN cd volo && npm install -g pnpm && pnpm install
 
 RUN pnpm db:push
 
-RUN pnpm script ./scripts/*
+RUN pnpm script ./scripts/init.ts
 
 RUN pnpm build
 
 
-FROM node:20.9.0-alpine
+FROM node:20.9.0
 
 WORKDIR /app
 
