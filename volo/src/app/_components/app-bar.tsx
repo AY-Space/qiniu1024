@@ -3,6 +3,8 @@
 import {
   Avatar,
   Button,
+  DialogContent,
+  DialogTitle,
   Divider,
   Dropdown,
   Grid,
@@ -12,6 +14,8 @@ import {
   Menu,
   MenuButton,
   MenuItem,
+  Modal,
+  ModalDialog,
   Sheet,
   Typography,
 } from "@mui/joy";
@@ -24,9 +28,12 @@ import Link from "next/link";
 import { History, Home, Logout, Upload } from "@mui/icons-material";
 import { api } from "~/trpc/react";
 import { signOut } from "next-auth/react";
+import { useRouter } from "next/navigation";
+import { VideoGrid } from "./video-tab-panel";
 
 const UserMenu = () => {
   const { data: user } = api.user.currentUser.useQuery();
+
   return (
     <Dropdown>
       <MenuButton
@@ -68,7 +75,12 @@ const UserMenu = () => {
             上传视频
           </MenuItem>
         </Link>
-        <MenuItem color="danger" onClick={() => signOut()}>
+        <MenuItem
+          color="danger"
+          onClick={async () => {
+            await signOut({ redirect: false });
+          }}
+        >
           <ListItemDecorator>
             <Logout />
           </ListItemDecorator>
@@ -84,7 +96,10 @@ export interface AppBarProps {
 }
 
 export function AppBar({ loggedIn }: AppBarProps) {
-  const [navigationDrawer, setNavigationDrawer] = useState(false);
+  const [showNavigationDrawer, setShowNavigationDrawer] = useState(false);
+  const [showSearchDialog, setShowSearchDialog] = useState(false);
+
+  const [text, setText] = useState("");
 
   return (
     <Sheet
@@ -97,8 +112,8 @@ export function AppBar({ loggedIn }: AppBarProps) {
       }}
     >
       <NavigationDrawer
-        open={navigationDrawer}
-        onClose={() => setNavigationDrawer(false)}
+        open={showNavigationDrawer}
+        onClose={() => setShowNavigationDrawer(false)}
       />
 
       <Grid
@@ -112,14 +127,11 @@ export function AppBar({ loggedIn }: AppBarProps) {
           },
           height: "100%",
         }}
-        columns={{
-          xs: 5,
-          sm: 4,
-        }}
+        columns={3}
       >
         <Grid xs={1}>
           <Flex spacing={1} alignItems="center" height="100%">
-            <IconButton onClick={() => setNavigationDrawer(true)}>
+            <IconButton onClick={() => setShowNavigationDrawer(true)}>
               <MenuIcon />
             </IconButton>
             <Link href="/">
@@ -136,16 +148,22 @@ export function AppBar({ loggedIn }: AppBarProps) {
             </Link>
           </Flex>
         </Grid>
-        <Grid xs={3} sm={2}>
-          <Input
+        <Grid xs={1}>
+          <IconButton
+            variant="outlined"
             sx={{
               borderRadius: "xl",
               width: "100%",
             }}
             size="lg"
-            placeholder="搜索"
-            endDecorator={<SearchIcon />}
-          />
+            value={text}
+            onClick={() => {
+              setShowSearchDialog(true);
+            }}
+          >
+            <SearchIcon />
+            <Typography>搜索</Typography>
+          </IconButton>
         </Grid>
         <Grid xs={1}>
           <Flex
@@ -172,6 +190,45 @@ export function AppBar({ loggedIn }: AppBarProps) {
           right: 0,
         }}
       />
+      <SearchDialog
+        open={showSearchDialog}
+        onClose={() => setShowSearchDialog(false)}
+      />
     </Sheet>
+  );
+}
+
+function SearchDialog({
+  open,
+  onClose,
+}: {
+  open: boolean;
+  onClose: () => void;
+}) {
+  const { data: videos } = api.video.likeByUserId.useQuery({
+    userId: "clojxwar70004zah0ala3k78l",
+  });
+
+  return (
+    <Modal open={open} onClose={onClose}>
+      <ModalDialog size="lg">
+        <DialogTitle>
+          <Input
+            fullWidth
+            size="lg"
+            placeholder="请输入关键词"
+            startDecorator={<SearchIcon />}
+          ></Input>
+        </DialogTitle>
+        <Divider />
+        <DialogContent>
+          {videos != undefined && videos.length > 0 ? (
+            <VideoGrid videos={videos} />
+          ) : (
+            <Typography textAlign="center">无数据</Typography>
+          )}
+        </DialogContent>
+      </ModalDialog>
+    </Modal>
   );
 }
