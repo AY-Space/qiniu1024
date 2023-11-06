@@ -7,9 +7,9 @@ import { api } from "~/trpc/react";
 import { type VideoDetailedPublic } from "~/types";
 
 export function VideoContainer({
-  initalVideo,
+  initialVideo: initialVideo,
 }: {
-  initalVideo?: VideoDetailedPublic;
+  initialVideo?: VideoDetailedPublic;
 }) {
   const [activeVideoId, setActiveVideoId] = useState<string | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -35,8 +35,8 @@ export function VideoContainer({
     const uniqueVideos = new Map<string, VideoDetailedPublic>();
 
     // If there is an initial video, add it first
-    if (initalVideo) {
-      uniqueVideos.set(initalVideo.id, initalVideo);
+    if (initialVideo) {
+      uniqueVideos.set(initialVideo.id, initialVideo);
     }
 
     // Add videos from each page, ensuring they are unique by id and preserving the insertion order
@@ -50,7 +50,7 @@ export function VideoContainer({
 
     // Convert the Map values back into an array, which will preserve the insertion order
     return Array.from(uniqueVideos.values());
-  }, [initalVideo, data]);
+  }, [initialVideo, data]);
 
   useEffect(() => {
     observer.current = new IntersectionObserver(

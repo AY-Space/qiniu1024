@@ -22,7 +22,7 @@ export default async function Video({
         overflow: "hidden",
       }}
     >
-      <VideoContainer initalVideo={video[0]} />
+      <VideoContainer initialVideo={video[0]} />
     </Stack>
   );
 }
