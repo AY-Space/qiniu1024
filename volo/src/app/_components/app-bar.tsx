@@ -1,19 +1,13 @@
 "use client";
 
 import {
-  Avatar,
   Button,
   DialogContent,
   DialogTitle,
   Divider,
-  Dropdown,
   Grid,
   IconButton,
   Input,
-  ListItemDecorator,
-  Menu,
-  MenuButton,
-  MenuItem,
   Modal,
   ModalDialog,
   Sheet,
@@ -25,72 +19,9 @@ import MenuIcon from "@mui/icons-material/Menu";
 import { useState } from "react";
 import { NavigationDrawer } from "./navigation-drawer";
 import Link from "next/link";
-import { History, Home, Logout, Upload } from "@mui/icons-material";
 import { api } from "~/trpc/react";
-import { signOut } from "next-auth/react";
-import { useRouter } from "next/navigation";
 import { VideoGrid } from "./video-tab-panel";
-
-const UserMenu = () => {
-  const { data: user } = api.user.currentUser.useQuery();
-
-  return (
-    <Dropdown>
-      <MenuButton
-        slots={{
-          root: Avatar,
-        }}
-        slotProps={{
-          root: {
-            src: user?.avatarUrl ?? undefined,
-            variant: "outlined",
-          },
-        }}
-      />
-      <Menu>
-        {user?.name && <MenuItem color="primary">{user.name}</MenuItem>}
-        <MenuItem>{user?.email}</MenuItem>
-        <Divider />
-        <Link href="/user">
-          <MenuItem>
-            <ListItemDecorator>
-              <Home />
-            </ListItemDecorator>
-            个人主页
-          </MenuItem>
-        </Link>
-        <Link href={`/history`}>
-          <MenuItem>
-            <ListItemDecorator>
-              <History />
-            </ListItemDecorator>
-            历史记录
-          </MenuItem>
-        </Link>
-        <Link href={`/upload`}>
-          <MenuItem>
-            <ListItemDecorator>
-              <Upload />
-            </ListItemDecorator>
-            上传视频
-          </MenuItem>
-        </Link>
-        <MenuItem
-          color="danger"
-          onClick={async () => {
-            await signOut({ redirect: false });
-            location.reload();
-          }}
-        >
-          <ListItemDecorator>
-            <Logout />
-          </ListItemDecorator>
-          退出登录
-        </MenuItem>
-      </Menu>
-    </Dropdown>
-  );
-};
+import { UserMenu } from "./user-menu";
 
 export interface AppBarProps {
   loggedIn: boolean;

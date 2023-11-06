@@ -12,6 +12,7 @@ import {
   DialogContent,
   Stack,
 } from "@mui/joy";
+import Link from "next/link";
 import { useState } from "react";
 import { api } from "~/trpc/react";
 
@@ -24,7 +25,11 @@ export function NavigationDrawer({ open, onClose }: NavigationDrawer) {
 
   return (
     <Drawer open={open} onClose={onClose}>
-      <DialogTitle>Volo</DialogTitle>
+      <DialogTitle>
+        <Link href="/">
+          <Typography level="body-lg">Volo</Typography>
+        </Link>
+      </DialogTitle>
       <Divider />
       <DialogContent sx={{ p: 1.3 }}>
         <Stack>
