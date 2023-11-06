@@ -37,8 +37,15 @@ export const CommentComponent = ({
         <Flex alignItems="center">
           <Stack>
             <Link href={`/user/${comment.author.id}`}>
-              <JoyLink>
-                <Typography level="title-md">{comment.author.name}</Typography>
+              <JoyLink
+                level="title-md"
+                color="neutral"
+                component="span"
+                sx={{
+                  color: "text.primary",
+                }}
+              >
+                {comment.author.name}
               </JoyLink>
             </Link>
 
