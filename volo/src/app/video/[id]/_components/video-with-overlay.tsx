@@ -52,7 +52,7 @@ export const VideoWithOverlay = ({
             comments={video.comments}
             likes={video.likes}
             videoId={video.id}
-            active={state === "active"}
+            state={state}
           />
         </>
       )}
