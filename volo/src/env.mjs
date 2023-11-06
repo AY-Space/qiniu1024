@@ -35,6 +35,11 @@ export const env = createEnv({
 
     // REIDS
     REDIS_URL: z.string().url(),
+
+    // elasticsearch
+    ES_URL: z.string().url(),
+    ES_USERNAME: z.string(),
+    ES_PASSWORD: z.string(),
   },
 
   /**
@@ -60,6 +65,9 @@ export const env = createEnv({
     QINIU_BUCKET: process.env.QINIU_BUCKET,
     GORSE_URL: process.env.GORSE_URL,
     REDIS_URL: process.env.REDIS_URL,
+    ES_URL: process.env.ES_URL,
+    ES_USERNAME: process.env.ES_USER,
+    ES_PASSWORD: process.env.ES_PASSWORD,
   },
   /**
    * Run `build` or `dev` with `SKIP_ENV_VALIDATION` to skip env validation. This is especially

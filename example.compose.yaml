@@ -44,3 +44,15 @@ services:
       - ./gorse/schema.sql.sql:/docker-entrypoint-initdb.d/schema.sql # create schema for gorse
     ports:
       - "5432:5432"
+  
+  es:
+    build: 
+      context: ./elasticsearch
+    environment:
+      - "discovery.type=single-node"
+      - "xpack.security.enabled=true"
+      - "ELASTIC_PASSWORD=espwd"
+      - "ES_JAVA_OPTS=-Xmx512m -Xms512m"
+    ports:
+      - "9200:9200"
+      - "9300:9300"

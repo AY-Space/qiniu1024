@@ -15,6 +15,7 @@
     "proxy": "tsx scripts/proxy.ts"
   },
   "dependencies": {
+    "@elastic/elasticsearch": "^8.10.0",
     "@emotion/cache": "^11.11.0",
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
@@ -38,6 +39,7 @@
     "dayjs": "^1.11.10",
     "next": "^13.5.6",
     "next-auth": "^4.24.4",
+    "nodejieba": "^2.6.0",
     "proxy-agent": "^6.3.1",
     "qiniu": "^7.10.0",
     "qiniu-js": "^3.4.1",

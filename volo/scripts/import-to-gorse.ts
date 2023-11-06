@@ -49,9 +49,9 @@ const main = async () => {
     return;
   }
 
-  for (let i = 0; i < us.length; i += 10) {
+  for (let i = 0; i < us.length; i += 100) {
     await insertUsers(
-      us.slice(i, i + 10).map((u) => ({
+      us.slice(i, i + 100).map((u) => ({
         userId: u.id,
         tags: u.tags,
       })),
@@ -59,9 +59,9 @@ const main = async () => {
     await sleep(10);
   }
 
-  for (let i = 0; i < vs.length; i += 10) {
+  for (let i = 0; i < vs.length; i += 100) {
     await insertVideos(
-      vs.map((v) => ({
+      vs.slice(i, i + 100).map((v) => ({
         videoId: v.id,
         tags: v.tags,
       })),
