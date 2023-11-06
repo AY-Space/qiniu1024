@@ -23,6 +23,7 @@ import { useState } from "react";
 import { VisuallyHiddenInput } from "~/app/upload/page";
 import { api } from "~/trpc/react";
 import { upload } from "qiniu-js";
+import { useRouter } from "next/navigation";
 
 const cropImageToCenterSquare = (
   src: string,
@@ -111,11 +112,14 @@ export function EditDialog({
   onClose: () => void;
 }) {
   const [croppedImg, setCroppedImg] = useState<string>();
+  const router = useRouter();
+  const utils = api.useUtils();
 
   const uploadAvatar = api.user.uploadAvatar.useMutation();
   const updateUser = api.user.update.useMutation({
     onSuccess: () => {
-      window.location.reload();
+      void utils.user.currentUser.invalidate();
+      router.refresh();
     },
   });
 
