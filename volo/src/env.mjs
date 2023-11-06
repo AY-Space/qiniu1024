@@ -66,7 +66,7 @@ export const env = createEnv({
     GORSE_URL: process.env.GORSE_URL,
     REDIS_URL: process.env.REDIS_URL,
     ES_URL: process.env.ES_URL,
-    ES_USERNAME: process.env.ES_USER,
+    ES_USERNAME: process.env.ES_USERNAME,
     ES_PASSWORD: process.env.ES_PASSWORD,
   },
   /**
