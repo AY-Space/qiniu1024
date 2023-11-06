@@ -73,3 +73,27 @@ export const coverImageToCenter = async (
     image.src = src;
   });
 };
+
+export const readFileInputEventAsDataURL = (
+  event: React.ChangeEvent<HTMLInputElement>,
+): Promise<string> => {
+  return new Promise((resolve, reject) => {
+    const file = event.target.files?.[0];
+    if (!file) {
+      reject("No file");
+      return;
+    }
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      if (typeof event.target?.result !== "string") {
+        reject("Unable to read file");
+        return;
+      }
+      resolve(event.target.result);
+    };
+    reader.onerror = (error) => {
+      reject(error);
+    };
+    reader.readAsDataURL(file);
+  });
+};

@@ -16,7 +16,11 @@ import {
   Stack,
   Textarea,
 } from "@mui/joy";
-import { coverImageToCenter, getBilibiliImageUrl } from "~/app/utils";
+import {
+  coverImageToCenter,
+  getBilibiliImageUrl,
+  readFileInputEventAsDataURL,
+} from "~/app/utils";
 import { type UserDetailedPublic } from "~/types";
 import { Upload } from "@mui/icons-material";
 import { useState } from "react";
@@ -78,19 +82,10 @@ export function EditDialog({
   const [uploading, setUploading] = useState(false);
   const [error, setError] = useState<Error>();
 
-  const onFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    if (event.target.files && event.target.files.length > 0) {
-      const fileReader = new FileReader();
-      fileReader.onload = async (e) => {
-        const imageSrc = e.target?.result;
-        if (typeof imageSrc !== "string") {
-          return;
-        }
-        const croppedImg = await coverImageToCenter(imageSrc, 256, 256);
-        setCroppedImg(croppedImg);
-      };
-      fileReader.readAsDataURL(event.target.files[0]!);
-    }
+  const onFileChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    const imageSrc = await readFileInputEventAsDataURL(event);
+    const croppedImg = await coverImageToCenter(imageSrc, 256, 256);
+    setCroppedImg(croppedImg);
   };
 
   const onSubmit = async () => {
