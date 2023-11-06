@@ -16,7 +16,7 @@ import { useState } from "react";
 import { sleep } from "../utils";
 import Link from "next/link";
 
-export default function SignInPage() {
+export default function SignUpPage() {
   const [credentials, setCredentials] = useState({
     email: "",
     password: "",
@@ -36,7 +36,7 @@ export default function SignInPage() {
       if (result?.ok) {
         setSuccess(true);
         await sleep(1000);
-        location.replace("/video");
+        location.replace("/user");
       } else {
         setError(!result?.ok);
       }
@@ -70,7 +70,7 @@ export default function SignInPage() {
           onSubmit={handleSubmit}
         >
           <Stack alignItems="center" spacing={1}>
-            <Typography level="h4">登录 Volo</Typography>
+            <Typography level="h4">注册 Volo</Typography>
           </Stack>
           <Stack
             spacing={3}
@@ -113,8 +113,8 @@ export default function SignInPage() {
             </FormControl>
           </Stack>
 
-          <Link href="/signup">新来乍到？点击注册！</Link>
-          
+          <Link href="/signin">已有账号？点击登录！</Link>
+
           <Button
             type="submit"
             sx={{
@@ -123,7 +123,7 @@ export default function SignInPage() {
             variant="soft"
             loading={submitting}
           >
-            登录
+            注册
           </Button>
         </Stack>
       </Card>
@@ -134,7 +134,7 @@ export default function SignInPage() {
         open={success}
         onClose={() => setSuccess(false)}
       >
-        登录成功
+        注册成功
       </Snackbar>
       <Snackbar
         variant="solid"
@@ -143,7 +143,7 @@ export default function SignInPage() {
         open={error}
         onClose={() => setError(false)}
       >
-        登录失败，请检查输入内容或网络环境
+        注册失败，请检查输入内容或网络环境
       </Snackbar>
     </Container>
   );
