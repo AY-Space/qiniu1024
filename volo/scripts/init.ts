@@ -5,14 +5,11 @@ import {
   insertUsers as gorseInsertUsers,
   insertVideos as gorseInsertVideos,
 } from "~/server/lib/gorse/base";
-import { ESIndex } from "~/types";
 import {
-  deleteItem as esDeleteItem,
   insertUser as esInsertUser,
   insertUsers as esInsertUsers,
   insertVideo as esInsertVideo,
   insertVideos as esInsertVideos,
-  serachItem as esSerachItem,
 } from "../src/server/lib/search/elasticsearch";
 
 async function sleep(ms: number): Promise<void> {
@@ -130,22 +127,6 @@ const esInit = async () => {
   }
   await esInsertUser(user); // should insert one first to create index
   await esInsertUsers(users.slice(0, 100));
-};
-
-const serachVideo = async (sentence: string) => {
-  const res = await esSerachItem(sentence, ESIndex.VIDEO);
-  console.log(res);
-};
-
-const searchUser = async (sentence: string) => {
-  const res = await esSerachItem(sentence, ESIndex.USER);
-  console.log(res);
-};
-
-const deleteItems = async (ids: string[], index: ESIndex) => {
-  for (const id of ids) {
-    await esDeleteItem(id, index);
-  }
 };
 
 const main = async () => {
