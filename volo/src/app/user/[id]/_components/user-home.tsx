@@ -48,7 +48,6 @@ export const UserHome = ({ user, uploadedVideos }: UserHomeProps) => {
 
       <Flex spacing={3}>
         <Avatar
-          variant="outlined"
           src={user.avatarUrl ? getBilibiliImageUrl(user.avatarUrl) : undefined}
           sx={{
             "&": {
