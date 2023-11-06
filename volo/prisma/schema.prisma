@@ -41,6 +41,7 @@ model User {
   likes       Like[]
   tags        Tag[]
   collections Collection[]
+  history     Video[] @relation("History")
 
   followedByUsers Follow[] @relation("FollowedBy")
   usersFollowed   Follow[] @relation("UserFollows")
@@ -75,6 +76,7 @@ model Video {
   comments    Comment[] // 评论
   likes       Like[] // 点赞
   collections Collection[] // 收藏
+  viewed      User[] @relation("History") // 浏览历史
 
   tags Tag[] // 视频标签
 }

@@ -40,10 +40,7 @@ export type VideoDetailedPublic = Pick<
   Video,
   "id" | "coverUrl" | "createdAt" | "description" | "title" | "url" | "views"
 > & {
-  likes: number;
   author: UserPublic;
-  comments: number;
-} & {
   tags: TagPublic[];
 };
 
@@ -61,4 +58,9 @@ export enum GorseFeedback {
 export interface Page {
   limit: number;
   cursor?: number;
+}
+
+export enum ESIndex {
+  VIDEO = "video",
+  USER = "user",
 }
