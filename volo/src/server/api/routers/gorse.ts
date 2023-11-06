@@ -39,14 +39,14 @@ export const gorseRouter = createTRPCRouter({
       z.object({
         limit: z.number().min(5).max(20),
         cursor: z.number().optional(),
-        categoryId: z.string().optional(),
+        category: z.string().optional(),
         recommendationType: RecommendationZ,
       }),
     )
     .query(
       async ({
         ctx,
-        input: { limit, cursor = 0, categoryId, recommendationType },
+        input: { limit, cursor = 0, category, recommendationType },
       }): Promise<{
         nextCursor?: number;
         videos: VideoDetailedPublic[];
@@ -64,6 +64,14 @@ export const gorseRouter = createTRPCRouter({
             return getLatest;
           }
         })();
+
+        const categoryDb = await ctx.db.tag.findUnique({
+          where: { name: category },
+        });
+        if (!categoryDb) {
+          throw new Error("Invalid category");
+        }
+        const categoryId = categoryDb.id;
 
         const videos = await fn(
           ctx.db,

@@ -20,8 +20,8 @@ export function VideoContainer({
 
   const pageSize = 5;
 
-  const [recommendationType] = useStore(
-    useShallow((state) => [state.recommendationType]),
+  const [recommendationType, category] = useStore(
+    useShallow((state) => [state.recommendationType, state.category]),
   );
 
   const { data, fetchNextPage } =
@@ -29,6 +29,7 @@ export function VideoContainer({
       {
         recommendationType: recommendationType,
         limit: pageSize,
+        category: category ?? undefined,
       },
       {
         getNextPageParam: (lastPage) => lastPage.nextCursor,
