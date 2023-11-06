@@ -34,14 +34,18 @@ const format = (page: Page): string => {
   return `n=${page.limit}` + page.cursor ? `&offset=${page.cursor}` : "";
 };
 
-const newItem = (itemId: string, tags: TagReference[]): Item => ({
+const newItem = (
+  itemId: string,
+  tags: TagReference[],
+  createdAt?: Date,
+): Item => ({
   Categories: tags
     .filter((tag) => tag.type === TagType.Category)
     .map((tag) => tag.id),
   IsHidden: false,
   ItemId: itemId,
   Labels: tags.filter((tag) => tag.type === TagType.Tag).map((tag) => tag.id),
-  Timestamp: new Date(),
+  Timestamp: createdAt ?? new Date(),
 });
 
 const newUser = (userId: string, tags: TagReference[]): User => ({
@@ -60,8 +64,12 @@ const newFeedback = (
   UserId: userId,
 });
 
-export const insertVideo = async (videoId: string, tags: TagReference[]) => {
-  await axios.post("/item", newItem(videoId, tags));
+export const insertVideo = async (
+  videoId: string,
+  tags: TagReference[],
+  createdAt?: Date,
+) => {
+  await axios.post("/item", newItem(videoId, tags, createdAt));
 };
 
 export const insertVideos = async (
@@ -78,8 +86,12 @@ export const deleteVideo = async (videoId: string) => {
 };
 
 // updateVideo: the new TagReferences will cover the old ones
-export const updateVideo = async (videoId: string, tags: TagReference[]) => {
-  await axios.patch(`/item/${videoId}`, newItem(videoId, tags));
+export const updateVideo = async (
+  videoId: string,
+  tags: TagReference[],
+  createdAt?: Date,
+) => {
+  await axios.patch(`/item/${videoId}`, newItem(videoId, tags, createdAt));
 };
 
 export const insertUser = async (userId: string, tags: TagReference[]) => {

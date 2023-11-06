@@ -124,10 +124,11 @@ export const gorseRouter = createTRPCRouter({
       z.object({
         itemId: z.string(),
         tags: z.array(TagRef),
+        createdAt: z.date().optional(),
       }),
     )
     .mutation(async ({ input }) => {
-      await insertVideo(input.itemId, input.tags);
+      await insertVideo(input.itemId, input.tags, input.createdAt);
     }),
 
   deleteVideo: protectedProcedure
