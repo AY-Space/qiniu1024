@@ -31,11 +31,21 @@ export const VideoCollectionModal = ({
 }) => {
   const [showCreateCollection, setShowCreateCollection] = useState(false);
   const utils = api.useUtils();
-  const { data: collections } = api.collection.myCollections.useQuery();
+  const { data: collections } = api.collection.myCollections.useQuery(
+    undefined,
+    {
+      enabled: open,
+    },
+  );
 
-  const { data: savedCollectionIds } = api.collection.idsWithVideo.useQuery({
-    videoId,
-  });
+  const { data: savedCollectionIds } = api.collection.idsWithVideo.useQuery(
+    {
+      videoId,
+    },
+    {
+      enabled: open,
+    },
+  );
   const savedCollectionIdsSet = useMemo(
     () => new Set(savedCollectionIds ?? []),
     [savedCollectionIds],

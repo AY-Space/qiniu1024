@@ -23,6 +23,7 @@ import {
 } from "@mui/joy";
 import { Upload, VideoFile } from "@mui/icons-material";
 import { Flex } from "../_components/flex";
+import { useRouter } from "next/navigation";
 
 export const VisuallyHiddenInput = styled("input")`
   clip: rect(0 0 0 0);
@@ -42,18 +43,35 @@ export default function UploadPage() {
   const [error, setError] = useState(false);
 
   const [progress, setProgress] = useState<number | null>(null);
+  const create = api.video.create.useMutation();
+  const [videoInfo, setVideoInfo] = useState<
+    Parameters<typeof create.mutate>[0]
+  >({
+    title: "",
+    description: "",
+    coverFileKey: "",
+    category: "",
+    tags: [],
+    videoFileKey: "",
+  });
 
   const onFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files ? event.target.files[0] : null;
     setSelectedFile(file ?? null);
   };
 
-  const getVideoUploadParameters =
+  const createVideoUploadParameters =
     api.video.createVideoUploadParameters.useMutation();
+
+  const categories = api.tag.categories.useQuery();
+  const tags = api.tag.tags.useQuery();
+
+  const router = useRouter();
 
   const onUploadClick = async () => {
     if (selectedFile) {
-      const { key, token } = await getVideoUploadParameters.mutateAsync();
+      const { key, token } = await createVideoUploadParameters.mutateAsync();
+      setProgress(0);
       upload(selectedFile, key, token, {}, {}).subscribe({
         next: (res) => {
           setProgress(res.total.percent);
@@ -62,69 +80,84 @@ export default function UploadPage() {
           setError(true);
         },
         complete: () => {
-          setProgress(null);
+          setProgress(100);
           setUploaded(true);
+
+          setVideoInfo((prev) => ({
+            ...prev,
+            videoFileKey: key,
+          }));
         },
       });
     }
   };
+
+  const onSubmit = async () => {
+    const newVideoId = await create.mutateAsync(videoInfo);
+    router.push(`/video/${newVideoId}`);
+  };
+
   return (
     <Container sx={{ py: 1 }}>
       <Stack gap={1}>
         <Card>
-          <Stack gap={1}>
-            <Stack direction="row" alignItems="center">
-              <VideoFile sx={{ fontSize: 36 }} />
-              <Stack display="flex" width="100%" gap={1}>
-                <Stack
-                  direction="row"
-                  justifyContent="space-between"
-                  alignItems="center"
+          <Stack display="flex" width="100%" spacing={1}>
+            <Stack direction="row" alignItems="center" spacing={1}>
+              <VideoFile />
+              <Typography
+                sx={{
+                  whiteSpace: "nowrap",
+                  overflow: "hidden",
+                  textOverflow: "ellipsis",
+                  flex: 1,
+                }}
+              >
+                {selectedFile?.name ?? "未选择文件"}
+              </Typography>
+              <Flex
+                gap={1}
+                direction={{
+                  xs: "column",
+                  sm: "row",
+                }}
+              >
+                <Button
+                  component="label"
+                  role={undefined}
+                  tabIndex={-1}
+                  variant="outlined"
+                  color="neutral"
+                  startDecorator={<Upload />}
+                  sx={{
+                    whiteSpace: "nowrap",
+                  }}
                 >
-                  <Typography>{selectedFile?.name ?? "未选择文件"}</Typography>
-                  <Flex
-                    gap={1}
-                    direction={{
-                      xs: "column",
-                      sm: "row",
-                    }}
-                  >
-                    <Button
-                      component="label"
-                      role={undefined}
-                      tabIndex={-1}
-                      variant="outlined"
-                      color="neutral"
-                      startDecorator={<Upload />}
-                    >
-                      请选择文件
-                      <VisuallyHiddenInput
-                        type="file"
-                        accept="video/*"
-                        onChange={onFileChange}
-                      />
-                    </Button>
-                    <Button
-                      onClick={onUploadClick}
-                      disabled={
-                        selectedFile === null ||
-                        progress !== null ||
-                        getVideoUploadParameters.isLoading
-                      }
-                    >
-                      确认上传
-                    </Button>
-                    <Button onClick={() => setSelectedFile(null)}>
-                      取消选择
-                    </Button>
-                  </Flex>
-                </Stack>
-                <LinearProgress
-                  determinate={getVideoUploadParameters.isSuccess}
-                  value={progress ?? 0}
-                />
-              </Stack>
+                  请选择文件
+                  <VisuallyHiddenInput
+                    type="file"
+                    accept="video/*"
+                    onChange={onFileChange}
+                    disabled={
+                      progress !== null || createVideoUploadParameters.isLoading
+                    }
+                  />
+                </Button>
+                <Button
+                  onClick={onUploadClick}
+                  disabled={
+                    selectedFile === null ||
+                    progress !== null ||
+                    createVideoUploadParameters.isLoading
+                  }
+                >
+                  确认上传
+                </Button>
+              </Flex>
             </Stack>
+            <LinearProgress
+              determinate={createVideoUploadParameters.isSuccess}
+              value={progress ?? 0}
+            />
           </Stack>
         </Card>
         <Card>
@@ -139,11 +172,28 @@ export default function UploadPage() {
           >
             <FormControl sx={{ gridColumn: "1/-1" }}>
               <FormLabel>标题</FormLabel>
-              <Input />
+              <Input
+                value={videoInfo.title}
+                onChange={(e) =>
+                  setVideoInfo((prev) => ({
+                    ...prev,
+                    title: e.target.value,
+                  }))
+                }
+              />
             </FormControl>
             <FormControl sx={{ gridColumn: "1/-1" }}>
               <FormLabel>简介</FormLabel>
-              <Textarea minRows={2} />
+              <Textarea
+                minRows={2}
+                value={videoInfo.description}
+                onChange={(e) =>
+                  setVideoInfo((prev) => ({
+                    ...prev,
+                    description: e.target.value,
+                  }))
+                }
+              />
             </FormControl>
             <FormControl
               sx={(theme) => ({
@@ -153,7 +203,18 @@ export default function UploadPage() {
               })}
             >
               <FormLabel>分类</FormLabel>
-              <Autocomplete options={["Option 1", "Option 2"]} />
+              <Autocomplete
+                options={categories.data ?? []}
+                error={categories.isError}
+                loading={categories.isLoading}
+                onChange={(_, value) => {
+                  setVideoInfo((prev) => ({
+                    ...prev,
+                    category: value ?? "",
+                  }));
+                }}
+                freeSolo
+              />
             </FormControl>
             <FormControl
               sx={(theme) => ({
@@ -165,16 +226,34 @@ export default function UploadPage() {
               <FormLabel>标签</FormLabel>
               <Autocomplete
                 multiple
-                options={["Option 1", "Option 2"]}
                 sx={(theme) => ({
                   [theme.breakpoints.down("sm")]: {
                     gridColumn: "1/-1",
                   },
                 })}
+                options={tags.data ?? []}
+                error={tags.isError}
+                loading={tags.isLoading}
+                onChange={(_, value) => {
+                  setVideoInfo((prev) => ({
+                    ...prev,
+                    tags: value,
+                  }));
+                }}
+                freeSolo
               />
             </FormControl>
             <CardActions sx={{ gridColumn: "1/-1" }}>
-              <Button variant="solid" color="success">
+              <Button
+                variant="solid"
+                disabled={
+                  videoInfo.videoFileKey === "" ||
+                  videoInfo.title === "" ||
+                  videoInfo.category === "" ||
+                  videoInfo.tags.length === 0
+                }
+                onClick={onSubmit}
+              >
                 立即投稿
               </Button>
             </CardActions>

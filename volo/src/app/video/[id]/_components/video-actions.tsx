@@ -13,20 +13,25 @@ export const VideoActions = ({
   videoId,
   likes,
   comments,
-  active,
+  state,
 }: {
   videoId: string;
   likes: number;
   comments: number;
-  active: boolean;
+  state: "active" | "mounted";
 }) => {
   const [showComments, setShowComments] = useState(false);
   const [showCollection, setShowCollection] = useState(false);
   const [shared, setShared] = useState(false);
 
-  const { data: likedAndCollected } = api.video.likedAndCollected.useQuery({
-    videoId,
-  });
+  const { data: likedAndCollected } = api.video.likedAndCollected.useQuery(
+    {
+      videoId,
+    },
+    {
+      enabled: state === "active",
+    },
+  );
   const utils = api.useUtils();
   const like = api.video.like.useMutation({
     onSuccess: async () => {
@@ -71,7 +76,7 @@ export const VideoActions = ({
             <CommentIcon />
           </IconButton>
           <Typography>{comments}</Typography>
-          {active && (
+          {state === "active" && (
             <CommentDrawer
               onClose={() => setShowComments(false)}
               open={showComments}
@@ -88,7 +93,7 @@ export const VideoActions = ({
             <StarIcon />
           </IconButton>
           <Typography>收藏</Typography>
-          {active && (
+          {state === "active" && (
             <VideoCollectionModal
               open={showCollection}
               onClose={() => setShowCollection(false)}

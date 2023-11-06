@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { env } from "~/env.mjs";
 import {
   createTRPCRouter,
   protectedProcedure,
@@ -9,7 +10,7 @@ import { type VideoPublic, type CommentPublic } from "~/types";
 
 export const videoRouter = createTRPCRouter({
   createVideoUploadParameters: publicProcedure.mutation(() => {
-    return createUploadParameters();
+    return createUploadParameters("video");
   }),
 
   comments: publicProcedure
@@ -190,4 +191,59 @@ export const videoRouter = createTRPCRouter({
         },
       });
     }),
+
+  create: protectedProcedure
+    .input(
+      z.object({
+        title: z.string().min(1).max(100),
+        description: z.string().max(1000),
+        coverFileKey: z.string(),
+        videoFileKey: z.string(),
+        tags: z.array(z.string().min(1)),
+        category: z.string().min(1),
+      }),
+    )
+    .mutation(
+      async ({
+        ctx,
+        input: {
+          title,
+          description,
+          coverFileKey,
+          videoFileKey,
+          category,
+          tags,
+        },
+      }) => {
+        const coverUrl = `${env.STATIC_FILES_BASE_URL}/${coverFileKey}`;
+        const videoUrl = `${env.STATIC_FILES_BASE_URL}/${videoFileKey}`;
+        const video = await ctx.db.video.create({
+          data: {
+            title,
+            description,
+            coverUrl,
+            url: videoUrl,
+            authorId: ctx.session.userId,
+            tags: {
+              connectOrCreate: tags.map((tag) => ({
+                where: {
+                  name: tag,
+                },
+                create: {
+                  name: tag,
+                  type: "Tag",
+                },
+              })),
+              connect: {
+                name: category,
+              },
+            },
+          },
+          select: {
+            id: true,
+          },
+        });
+        return video.id;
+      },
+    ),
 });
