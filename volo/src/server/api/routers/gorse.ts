@@ -65,13 +65,16 @@ export const gorseRouter = createTRPCRouter({
           }
         })();
 
-        const categoryDb = await ctx.db.tag.findUnique({
-          where: { name: category },
-        });
-        if (!categoryDb) {
-          throw new Error("Invalid category");
+        let categoryId: string | undefined;
+        if (category) {
+          const categoryDb = await ctx.db.tag.findUnique({
+            where: { name: category },
+          });
+          if (!categoryDb) {
+            throw new Error("Invalid category");
+          }
+          categoryId = categoryDb.id;
         }
-        const categoryId = categoryDb.id;
 
         const videos = await fn(
           ctx.db,
