@@ -20,9 +20,7 @@ export type NavigationDrawer = Pick<DrawerProps, "open" | "onClose">;
 export function NavigationDrawer({ open, onClose }: NavigationDrawer) {
   const { data: categories } = api.tag.categories.useQuery();
   const [selectedType, setSelectedType] = useState("推荐");
-  const [selectedCategoryId, setSelectedCategoryId] = useState<string | null>(
-    null,
-  );
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
 
   return (
     <Drawer open={open} onClose={onClose}>
@@ -61,16 +59,16 @@ export function NavigationDrawer({ open, onClose }: NavigationDrawer) {
             p={2}
           >
             {categories?.map((category) => (
-              <Grid key={category.id} xs={6}>
+              <Grid key={category} xs={6}>
                 <Card>
                   <Radio
                     overlay
-                    checked={category.id === selectedCategoryId}
-                    label={category.name}
+                    checked={category === selectedCategory}
+                    label={category}
                     sx={{ flexGrow: 1, flexDirection: "row-reverse" }}
                     onClick={() =>
-                      setSelectedCategoryId(
-                        category.id === selectedCategoryId ? null : category.id,
+                      setSelectedCategory(
+                        category === selectedCategory ? null : category,
                       )
                     }
                   />
