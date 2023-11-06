@@ -12,7 +12,13 @@ import {
   Typography,
 } from "@mui/joy";
 import { signIn } from "next-auth/react";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { api } from "~/trpc/react";
+
+const sleep = (ms: number) => {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+};
 
 export default function SignInPage() {
   const [credentials, setCredentials] = useState({
@@ -20,7 +26,12 @@ export default function SignInPage() {
     password: "",
   });
   const [submitting, setSubmitting] = useState(false);
+  const [success, setSuccess] = useState(false);
   const [error, setError] = useState(false);
+
+  const router = useRouter();
+
+  const utils = api.useUtils();
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -30,8 +41,14 @@ export default function SignInPage() {
         ...credentials,
         redirect: false,
       });
-      setError(!result?.ok);
-
+      if (result?.ok) {
+        setSuccess(true);
+        await sleep(1000);
+        await utils.user.currentUser.invalidate();
+        router.replace("/video");
+      } else {
+        setError(!result?.ok);
+      }
       setSubmitting(false);
     })();
   };
@@ -117,6 +134,15 @@ export default function SignInPage() {
           </Button>
         </Stack>
       </Card>
+      <Snackbar
+        variant="solid"
+        color="success"
+        autoHideDuration={1600}
+        open={success}
+        onClose={() => setSuccess(false)}
+      >
+        登录成功
+      </Snackbar>
       <Snackbar
         variant="solid"
         color="danger"
