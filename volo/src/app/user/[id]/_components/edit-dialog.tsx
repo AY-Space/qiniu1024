@@ -16,7 +16,7 @@ import {
   Stack,
   Textarea,
 } from "@mui/joy";
-import { getBilibiliImageUrl } from "~/app/utils";
+import { coverImageToCenter, getBilibiliImageUrl } from "~/app/utils";
 import { type UserDetailedPublic } from "~/types";
 import { Upload } from "@mui/icons-material";
 import { useState } from "react";
@@ -24,58 +24,6 @@ import { VisuallyHiddenInput } from "~/app/upload/page";
 import { api } from "~/trpc/react";
 import { upload } from "qiniu-js";
 import { useRouter } from "next/navigation";
-
-const cropImageToCenterSquare = (
-  src: string,
-  size: number,
-): Promise<string> => {
-  return new Promise((resolve, reject) => {
-    // Create an Image object
-    const image = new Image();
-    image.onload = () => {
-      // Create a canvas element
-      const canvas = document.createElement("canvas");
-      canvas.width = size;
-      canvas.height = size;
-
-      // Get the context of the canvas
-      const ctx = canvas.getContext("2d");
-      if (!ctx) {
-        reject("Unable to get canvas context");
-        return;
-      }
-
-      // Calculate the coordinates to draw the central square
-      const minDimension = Math.min(image.width, image.height);
-      const offsetX = (image.width - minDimension) / 2;
-      const offsetY = (image.height - minDimension) / 2;
-
-      // Draw the central square of the image onto the canvas
-      ctx.drawImage(
-        image,
-        offsetX,
-        offsetY,
-        minDimension,
-        minDimension,
-        0,
-        0,
-        size,
-        size,
-      );
-
-      // Convert the canvas to a data URL and resolve the promise
-      const dataUrl = canvas.toDataURL();
-      resolve(dataUrl);
-    };
-    image.onerror = (error) => {
-      reject("Image loading error: " + String(error));
-    };
-
-    // Set crossOrigin to anonymous to prevent CORS-related issues
-    image.crossOrigin = "anonymous";
-    image.src = src;
-  });
-};
 
 const dataURLtoFile = (dataurl: string, filename: string): File => {
   // Split the data URL at the comma to get the base64 encoded data
@@ -138,7 +86,7 @@ export function EditDialog({
         if (typeof imageSrc !== "string") {
           return;
         }
-        const croppedImg = await cropImageToCenterSquare(imageSrc, 256);
+        const croppedImg = await coverImageToCenter(imageSrc, 256, 256);
         setCroppedImg(croppedImg);
       };
       fileReader.readAsDataURL(event.target.files[0]!);
