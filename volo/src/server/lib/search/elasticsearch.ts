@@ -4,10 +4,6 @@ import { ESIndex, type Page } from "~/types";
 
 const es = new Client({
   node: env.ES_URL,
-  auth: {
-    username: env.ES_USERNAME,
-    password: env.ES_PASSWORD,
-  },
 });
 
 export interface Video {

@@ -36,8 +36,7 @@ export const env = createEnv({
 
     // elasticsearch
     ES_URL: z.string().url(),
-    ES_USERNAME: z.string(),
-    ES_PASSWORD: z.string(),
+
     STATIC_FILES_BASE_URL: z.string().url(),
   },
 
@@ -63,8 +62,6 @@ export const env = createEnv({
     GORSE_URL: process.env.GORSE_URL,
     REDIS_URL: process.env.REDIS_URL,
     ES_URL: process.env.ES_URL,
-    ES_USERNAME: process.env.ES_USERNAME,
-    ES_PASSWORD: process.env.ES_PASSWORD,
     STATIC_FILES_BASE_URL: process.env.STATIC_FILES_BASE_URL,
   },
   /**
