@@ -4,7 +4,7 @@ import { Add, VideoLibrary } from "@mui/icons-material";
 import { useState } from "react";
 import { CreateCollectionModal } from "~/app/_components/create-collection-modal";
 import { api } from "~/trpc/react";
-import { VideoGrid } from "~/app/_components/video-tab-panel";
+import { CollectionGrid } from "../../../_components/collection-grid";
 
 export const CollectionTabPanel = () => {
   const [showCreateCollection, setShowCreateCollection] = useState(false);
@@ -41,9 +41,4 @@ export const CollectionTabPanel = () => {
       />
     </>
   );
-};
-
-const CollectionGrid = ({ collectionId }: { collectionId: string }) => {
-  const { data: videos } = api.collection.videos.useQuery({ collectionId });
-  return videos && <VideoGrid videos={videos} />;
 };

@@ -21,12 +21,8 @@ export const VideoActions = ({
   const [shared, setShared] = useState(false);
 
   const { data: extraMetadata } = api.video.extraMetadata.useQuery(
-    {
-      videoId,
-    },
-    {
-      enabled: state === "active",
-    },
+    { videoId },
+    { enabled: state === "active" },
   );
   const utils = api.useUtils();
   const [actionError, setActionError] = useState(false);

@@ -38,12 +38,8 @@ export const VideoCollectionModal = ({
     });
 
   const { data: savedCollectionIds } = api.collection.idsWithVideo.useQuery(
-    {
-      videoId,
-    },
-    {
-      enabled: open,
-    },
+    { videoId },
+    { enabled: open },
   );
   const [error, setError] = useState(false);
 

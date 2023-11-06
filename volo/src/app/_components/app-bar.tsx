@@ -1,27 +1,14 @@
 "use client";
 
-import {
-  Button,
-  DialogContent,
-  DialogTitle,
-  Divider,
-  Grid,
-  IconButton,
-  Input,
-  Modal,
-  ModalDialog,
-  Sheet,
-  Typography,
-} from "@mui/joy";
+import { Button, Divider, Grid, IconButton, Sheet, Typography } from "@mui/joy";
 import SearchIcon from "@mui/icons-material/Search";
 import { Flex } from "./flex";
 import MenuIcon from "@mui/icons-material/Menu";
 import { useState } from "react";
 import { NavigationDrawer } from "./navigation-drawer";
 import Link from "next/link";
-import { api } from "~/trpc/react";
-import { VideoGrid } from "./video-tab-panel";
 import { UserMenu } from "./user-menu";
+import { SearchDialog } from "./search-dialog";
 
 export interface AppBarProps {
   loggedIn: boolean;
@@ -127,40 +114,5 @@ export function AppBar({ loggedIn }: AppBarProps) {
         onClose={() => setShowSearchDialog(false)}
       />
     </Sheet>
-  );
-}
-
-function SearchDialog({
-  open,
-  onClose,
-}: {
-  open: boolean;
-  onClose: () => void;
-}) {
-  const { data: videos } = api.video.likeByUserId.useQuery({
-    userId: "clojxwar70004zah0ala3k78l",
-  });
-
-  return (
-    <Modal open={open} onClose={onClose}>
-      <ModalDialog size="lg">
-        <DialogTitle>
-          <Input
-            fullWidth
-            size="lg"
-            placeholder="请输入关键词"
-            startDecorator={<SearchIcon />}
-          ></Input>
-        </DialogTitle>
-        <Divider />
-        <DialogContent>
-          {videos != undefined && videos.length > 0 ? (
-            <VideoGrid videos={videos} />
-          ) : (
-            <Typography textAlign="center">无数据</Typography>
-          )}
-        </DialogContent>
-      </ModalDialog>
-    </Modal>
   );
 }

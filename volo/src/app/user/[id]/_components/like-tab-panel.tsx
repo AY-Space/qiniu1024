@@ -1,5 +1,5 @@
 import { Alert, CircularProgress, Stack, Typography } from "@mui/joy";
-import { VideoGrid } from "~/app/_components/video-tab-panel";
+import { VideoGrid } from "~/app/_components/video-grid";
 import { api } from "~/trpc/react";
 
 export const LikeTabPanel = ({ userId }: { userId: string }) => {

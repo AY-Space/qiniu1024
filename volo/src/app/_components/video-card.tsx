@@ -1,7 +1,7 @@
 "use client";
 import { Box, Card, CardContent, CardCover, Typography } from "@mui/joy";
 import { Flex } from "~/app/_components/flex";
-import { getBilibiliImageUrl } from "~/app/utils";
+import { formatNumber, getBilibiliImageUrl } from "~/app/utils";
 import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
 import Link from "next/link";
 import { type UserHomeProps } from "../user/[id]/_components/user-home";
@@ -64,14 +64,4 @@ export const VideoCard = ({
       </Card>
     </Link>
   );
-};
-
-const formatNumber = (num: number): string => {
-  if (num >= 1_000_000) {
-    return (num / 1_000_000).toFixed(1) + "M";
-  } else if (num >= 1_000) {
-    return (num / 1_000).toFixed(num >= 10000 ? 0 : 1) + "K";
-  } else {
-    return num.toString();
-  }
 };
