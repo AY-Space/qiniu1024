@@ -100,7 +100,7 @@ export const VideoActions = ({
           <IconButton
             size="lg"
             onClick={async () => {
-              const text = `康康我在 Volo 发现了什么好东西！\n链接：${document.URL}`;
+              const text = `康康我在 Volo 发现了什么好东西！\n链接：${document.location.origin}/video/${videoId}`;
               await navigator.clipboard.writeText(text);
               setShared(true);
             }}
