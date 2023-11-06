@@ -11,24 +11,50 @@ import {
   Grid,
   Radio,
   DialogContent,
+  Stack,
 } from "@mui/joy";
 import { useState } from "react";
 import { api } from "~/trpc/react";
+import { Flex } from "./flex";
 
 export type NavigationDrawer = Pick<DrawerProps, "open" | "onClose">;
 
 export function NavigationDrawer({ open, onClose }: NavigationDrawer) {
   const { data: categories } = api.tag.categories.useQuery();
+  const [selectedType, setSelectedType] = useState("推荐");
   const [selectedCategoryId, setSelectedCategoryId] = useState<string | null>(
     null,
   );
 
   return (
     <Drawer open={open} onClose={onClose}>
-      <DialogTitle>Title</DialogTitle>
+      <DialogTitle>Volo</DialogTitle>
       <Divider />
       <DialogContent sx={{ p: 1.3 }}>
-        <List>
+        <Stack>
+          <Typography level="title-lg">推荐类型</Typography>
+          <Grid
+            container
+            rowSpacing={1}
+            columnSpacing={{ xs: 1, sm: 2, md: 3 }}
+            p={2}
+          >
+            {["推荐", "最新", "热门"].map((e) => (
+              <Grid key={e} xs={6}>
+                <Card>
+                  <Radio
+                    overlay
+                    checked={e === selectedType}
+                    label={e}
+                    sx={{ flexGrow: 1, flexDirection: "row-reverse" }}
+                    onClick={() => setSelectedType(e)}
+                  />
+                </Card>
+              </Grid>
+            ))}
+          </Grid>
+        </Stack>
+        <Stack>
           <Typography level="title-lg">分类</Typography>
           <Grid
             container
@@ -54,7 +80,7 @@ export function NavigationDrawer({ open, onClose }: NavigationDrawer) {
               </Grid>
             ))}
           </Grid>
-        </List>
+        </Stack>
       </DialogContent>
     </Drawer>
   );
