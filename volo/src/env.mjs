@@ -7,9 +7,7 @@ export const env = createEnv({
    * isn't built with invalid env vars.
    */
   server: {
-    DATABASE_URL: z
-      .string()
-      .url(),
+    DATABASE_URL: z.string().url(),
     NODE_ENV: z
       .enum(["development", "test", "production"])
       .default("development"),
@@ -66,7 +64,7 @@ export const env = createEnv({
     GORSE_URL: process.env.GORSE_URL,
     REDIS_URL: process.env.REDIS_URL,
     ES_URL: process.env.ES_URL,
-    ES_USERNAME: process.env.ES_USER,
+    ES_USERNAME: process.env.ES_USERNAME,
     ES_PASSWORD: process.env.ES_PASSWORD,
   },
   /**
