@@ -5,7 +5,7 @@ import {
   publicProcedure,
 } from "~/server/api/trpc";
 import { createUploadParameters } from "~/server/lib/util/kodo";
-import { type CommentPublic } from "~/types";
+import { type VideoPublic, type CommentPublic } from "~/types";
 
 export const videoRouter = createTRPCRouter({
   createVideoUploadParameters: publicProcedure.mutation(() => {
@@ -91,21 +91,56 @@ export const videoRouter = createTRPCRouter({
       }),
     )
     .mutation(async ({ ctx, input: { videoId, like } }) => {
-      await ctx.db.video.update({
-        where: {
-          id: videoId,
-        },
-        data: {
-          likes: {
-            [like ? "connect" : "disconnect"]: {
-              userId_videoId: {
-                userId: ctx.session.userId,
-                videoId,
-              },
+      if (like) {
+        await ctx.db.like.create({
+          data: {
+            userId: ctx.session.userId,
+            videoId,
+          },
+        });
+      } else {
+        await ctx.db.like.delete({
+          where: {
+            userId_videoId: {
+              userId: ctx.session.userId,
+              videoId,
             },
+          },
+        });
+      }
+    }),
+
+  likedAndCollected: protectedProcedure
+    .input(
+      z.object({
+        videoId: z.string(),
+      }),
+    )
+    .query(async ({ ctx, input: { videoId } }) => {
+      const liked = await ctx.db.like.findUnique({
+        where: {
+          userId_videoId: {
+            userId: ctx.session.userId,
+            videoId,
           },
         },
       });
+      const collected = await ctx.db.collection.findMany({
+        where: {
+          videos: {
+            some: {
+              id: videoId,
+            },
+          },
+        },
+        select: {
+          id: true,
+        },
+      });
+      return {
+        liked: !!liked,
+        collected: collected.length > 0,
+      };
     }),
 
   postComment: protectedProcedure
@@ -138,6 +173,20 @@ export const videoRouter = createTRPCRouter({
         where: {
           id: commentId,
           authorId: ctx.session.userId,
+        },
+      });
+    }),
+
+  userId: protectedProcedure
+    .input(z.object({ userId: z.string() }))
+    .query(async ({ ctx, input: { userId } }): Promise<VideoPublic[]> => {
+      return await ctx.db.video.findMany({
+        where: {
+          likes: {
+            some: {
+              userId: { equals: userId },
+            },
+          },
         },
       });
     }),

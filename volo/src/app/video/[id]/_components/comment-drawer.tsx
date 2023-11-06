@@ -31,12 +31,16 @@ import { useSession } from "next-auth/react";
 
 const Comment = ({
   comment,
-  deleteable,
+  deleteAble: deleteAble,
   onDelete,
+  onLike,
+  onDislike,
 }: {
   comment: CommentPublic;
-  deleteable: boolean;
+  deleteAble: boolean;
   onDelete: () => void;
+  onLike?: () => void;
+  onDislike?: () => void;
 }) => {
   return (
     <Flex spacing={1}>
@@ -52,7 +56,7 @@ const Comment = ({
             </Typography>
           </Stack>
           <Box flex={1} />
-          {deleteable && (
+          {deleteAble && (
             <IconButton color="danger" size="sm" onClick={onDelete}>
               <Delete />
             </IconButton>
@@ -70,16 +74,32 @@ const Comment = ({
           </Box>
         )}
         <Flex spacing={1}>
-          <IconButton size="sm">
+          <IconButton
+            size="sm"
+            color={comment.currentUser?.liked ? "primary" : "neutral"}
+            onClick={onLike}
+          >
             <Flex spacing={0.5} alignItems="center" px={0.5}>
               <ThumbUp />
-              <Typography>{comment.likes}</Typography>
+              <Typography
+                color={comment.currentUser?.liked ? "primary" : "neutral"}
+              >
+                {comment.likes}
+              </Typography>
             </Flex>
           </IconButton>
-          <IconButton size="sm">
+          <IconButton
+            size="sm"
+            color={comment.currentUser?.disliked ? "warning" : "neutral"}
+            onClick={onDislike}
+          >
             <Flex spacing={0.5} alignItems="center" px={0.5}>
               <ThumbDown />
-              <Typography>{comment.dislikes}</Typography>
+              <Typography
+                color={comment.currentUser?.disliked ? "warning" : "neutral"}
+              >
+                {comment.dislikes}
+              </Typography>
             </Flex>
           </IconButton>
         </Flex>
@@ -92,11 +112,19 @@ const CommentList = ({ videoId }: { videoId: string }) => {
   const { data, error, isLoading } = api.video.comments.useQuery({ videoId });
   const { data: session } = useSession();
   const utils = api.useUtils();
-  const deteleComment = api.video.deleteComment.useMutation({
+  const deleteComment = api.video.deleteComment.useMutation({
     onSuccess: async () => {
       await utils.video.comments.invalidate({ videoId });
     },
   });
+
+  const mutationOptions = {
+    onSuccess: () => {
+      void utils.video.comments.invalidate({ videoId });
+    },
+  };
+  const like = api.comment.like.useMutation(mutationOptions);
+  const dislike = api.comment.dislike.useMutation(mutationOptions);
 
   return (
     <Stack spacing={2}>
@@ -108,11 +136,25 @@ const CommentList = ({ videoId }: { videoId: string }) => {
       )}
       {data?.map((comment) => (
         <Comment
-          deleteable={session?.userId === comment.author.id}
+          onLike={() => {
+            like.mutate({
+              commentId: comment.id,
+              operation: comment.currentUser?.liked ? "disconnect" : "connect",
+            });
+          }}
+          onDislike={() => {
+            dislike.mutate({
+              commentId: comment.id,
+              operation: comment.currentUser?.disliked
+                ? "disconnect"
+                : "connect",
+            });
+          }}
+          deleteAble={session?.userId === comment.author.id}
           comment={comment}
           key={comment.id}
           onDelete={() => {
-            deteleComment.mutate({
+            deleteComment.mutate({
               commentId: comment.id,
             });
           }}

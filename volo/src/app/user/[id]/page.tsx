@@ -1,7 +1,7 @@
 import { Container } from "@mui/joy";
-import { UserHome } from "./_components/user-home";
 import { db } from "~/server/db";
 import { notFound } from "next/navigation";
+import { UserHome } from "./_components/user-home";
 
 export default async function User({
   params,

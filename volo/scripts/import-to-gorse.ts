@@ -1,6 +1,10 @@
 import "dotenv/config";
 import { db } from "~/server/db";
-import { insertUsers, insertVideos } from "~/server/lib/gorse/base";
+import {
+  getRecommends,
+  insertUsers,
+  insertVideos,
+} from "~/server/lib/gorse/base";
 
 const loadUsers = async () => {
   const users = await db.user.findMany({
@@ -70,4 +74,23 @@ const main = async () => {
   }
 };
 
-void main();
+// void main();
+/*
+  prisma: PrismaClient,
+  cursor: Cursor,
+  userId: string,
+  categoryId?: string,*/
+
+const test = async () => {
+  const videos = await getRecommends(
+    // db,
+    {
+      limit: 10,
+      offset: 0,
+    },
+    "clojw08ht000gjnr3bx7ze9wk",
+  );
+  console.log(videos);
+};
+
+void test();

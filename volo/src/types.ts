@@ -43,9 +43,6 @@ export type VideoDetailedPublic = Pick<
   likes: number;
   author: UserPublic;
   comments: number;
-  currentUser: {
-    liked: boolean;
-  } | null;
 } & {
   tags: TagPublic[];
 };

@@ -1,23 +1,8 @@
-"use client";
-import { Grid, TabPanel } from "@mui/joy";
+import { VideoGrid } from "~/app/_components/video-tab-panel";
+import { api } from "~/trpc/react";
 
-export const LikeTabPanel = ({
-  userId,
-  value,
-}: {
-  userId: string;
-  value: number;
-}) => {
-  return (
-    <TabPanel value={value}>
-      <Grid
-        container
-        columns={{
-          xs: 2,
-          sm: 3,
-          md: 4,
-        }}
-      ></Grid>
-    </TabPanel>
-  );
+export const LikeTabPanel = ({ userId }: { userId: string }) => {
+  const { data: videos } = api.video.userId.useQuery({ userId });
+  console.log(videos);
+  return <VideoGrid videos={videos ?? []} />;
 };

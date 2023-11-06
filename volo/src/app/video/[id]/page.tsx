@@ -3,7 +3,6 @@ import { db } from "~/server/db";
 import { VideoContainer } from "./_components/video-container";
 import { notFound } from "next/navigation";
 import { getVideos } from "~/server/lib/db/video";
-import { getServerAuthSession } from "~/server/auth";
 
 export default async function Video({
   params: { id },
@@ -12,8 +11,7 @@ export default async function Video({
     id: string;
   };
 }) {
-  const session = await getServerAuthSession();
-  const video = await getVideos(db, [id], session?.userId);
+  const video = await getVideos(db, [id]);
   if (video.length === 0) {
     notFound();
   }
@@ -24,7 +22,7 @@ export default async function Video({
         overflow: "hidden",
       }}
     >
-      <VideoContainer initalVideo={video[0]} />
+      <VideoContainer initialVideo={video[0]} />
     </Stack>
   );
 }

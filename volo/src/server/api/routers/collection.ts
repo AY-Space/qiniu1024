@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { type CollectionPublic } from "~/types";
+import { type CollectionPublic, type VideoPublic } from "~/types";
 import { createTRPCRouter, protectedProcedure } from "../trpc";
 
 export const collectionRouter = createTRPCRouter({
@@ -87,6 +87,41 @@ export const collectionRouter = createTRPCRouter({
         });
 
         return collections.map((collection) => collection.id);
+      },
+    ),
+
+  videos: protectedProcedure
+    .input(
+      z.object({
+        collectionId: z.string(),
+      }),
+    )
+    .query(
+      async ({
+        input: { collectionId },
+        ctx: { db, session },
+      }): Promise<VideoPublic[]> => {
+        const collection = await db.collection.findUnique({
+          where: {
+            id: collectionId,
+            ownerId: session.userId,
+          },
+          select: {
+            videos: {
+              select: {
+                id: true,
+                title: true,
+                coverUrl: true,
+                createdAt: true,
+                views: true,
+              },
+            },
+          },
+        });
+        if (!collection) {
+          throw new Error("Collection not found or you don't have access");
+        }
+        return collection.videos;
       },
     ),
 });

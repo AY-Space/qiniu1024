@@ -13,7 +13,6 @@ export const getLatest = async (
   return await getVideos(
     prisma,
     (await getLatests(page, userId, categoryId)).map((v) => v.Id),
-    userId,
   );
 };
 
@@ -27,7 +26,6 @@ export const getPopular = async (
   return await getVideos(
     prisma,
     (await getPopulars(page, userId, categoryId)).map((v) => v.Id),
-    userId,
   );
 };
 
@@ -38,9 +36,5 @@ export const getRecommend = async (
   userId: string,
   categoryId?: string,
 ): Promise<VideoDetailedPublic[]> => {
-  return await getVideos(
-    prisma,
-    await getRecommends(page, userId, categoryId),
-    userId,
-  );
+  return await getVideos(prisma, await getRecommends(page, userId, categoryId));
 };

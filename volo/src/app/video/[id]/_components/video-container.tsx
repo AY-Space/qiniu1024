@@ -1,25 +1,27 @@
 "use client";
 
-import { Sheet } from "@mui/joy";
+import { Stack } from "@mui/joy";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { VideoWithOverlay } from "./video-with-overlay";
 import { api } from "~/trpc/react";
 import { type VideoDetailedPublic } from "~/types";
 
-// VideoContainer Component
 export function VideoContainer({
-  initalVideo,
+  initialVideo: initialVideo,
 }: {
-  initalVideo?: VideoDetailedPublic;
+  initialVideo?: VideoDetailedPublic;
 }) {
   const [activeVideoId, setActiveVideoId] = useState<string | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const observer = useRef<IntersectionObserver>(null!);
+  const [muted, setMuted] = useState(false);
+
+  const pageSize = 5;
 
   const { data, fetchNextPage } =
     api.videoRecommender.recommend.useInfiniteQuery(
       {
-        limit: 10,
+        limit: pageSize,
       },
       {
         getNextPageParam: (lastPage) => lastPage.nextCursor,
@@ -29,42 +31,58 @@ export function VideoContainer({
       },
     );
 
-  const mountedVideos = useMemo(
-    () => [
-      ...(initalVideo ? [initalVideo] : []),
-      ...(data?.pages.flatMap((page) => page.videos) ?? []),
-    ],
-    [initalVideo, data],
-  );
+  const videos = useMemo(() => {
+    const uniqueVideos = new Map<string, VideoDetailedPublic>();
 
-  // const bufferSize = 4;
+    // If there is an initial video, add it first
+    if (initialVideo) {
+      uniqueVideos.set(initialVideo.id, initialVideo);
+    }
+
+    // Add videos from each page, ensuring they are unique by id and preserving the insertion order
+    data?.pages.forEach((page) => {
+      page.videos.forEach((video) => {
+        if (!uniqueVideos.has(video.id)) {
+          uniqueVideos.set(video.id, video);
+        }
+      });
+    });
+
+    // Convert the Map values back into an array, which will preserve the insertion order
+    return Array.from(uniqueVideos.values());
+  }, [initialVideo, data]);
 
   useEffect(() => {
     observer.current = new IntersectionObserver(
       (entries) => {
-        entries.forEach((entry) => {
+        const activeEntries = entries.filter((entry) => entry.isIntersecting);
+
+        // Get the last 5 videos to compare with the active video
+        const lastFiveVideos = videos.slice(-pageSize);
+
+        // Fetch the next page if we're observing a video that is within the last five
+        if (
+          activeEntries.some((entry) =>
+            lastFiveVideos.some(
+              (video) => video.id === entry.target.id.split("-")[2],
+            ),
+          )
+        ) {
+          void fetchNextPage();
+        }
+
+        activeEntries.forEach((entry) => {
           const videoId = entry.target.id.split("-")[2];
           if (!videoId) throw new Error("videoId is null");
-          // const buffer = activeIndex + bufferSize + 1;
-
-          if (!entry.isIntersecting) return;
-
           setActiveVideoId(videoId);
-
-          // if (buffer <= mountedVideos.length) return;
-
-          // const start = Math.max(0, activeIndex - n);
-          // const end = Math.min(videos.length, buffer);
-          // setMountedVideos(videos.slice(0, end));
         });
       },
       {
-        threshold: 0.6, // At least 50% should be visible
+        threshold: 0.6, // At least 60% should be visible
       },
     );
 
-    // Observe the video elements
-    mountedVideos.forEach(({ id }) => {
+    videos.forEach(({ id }) => {
       const videoElement = document.getElementById(`volo-video-${id}`);
       if (videoElement) observer.current.observe(videoElement);
     });
@@ -72,10 +90,15 @@ export function VideoContainer({
     return () => {
       observer.current.disconnect();
     };
-  }, [mountedVideos]);
+  }, [videos, fetchNextPage]);
+
+  // Calculate the index of the current active video
+  const activeVideoIndex = videos.findIndex(({ id }) => id === activeVideoId);
+  // Calculate the page of the current active video
+  const activeVideoPage = Math.floor(activeVideoIndex / pageSize);
 
   return (
-    <Sheet
+    <Stack
       ref={containerRef}
       sx={{
         scrollSnapType: "y mandatory",
@@ -85,18 +108,29 @@ export function VideoContainer({
         "::-webkit-scrollbar": {
           display: "none",
         },
-        display: "flex",
-        flexDirection: "column",
+        backgroundColor: "black",
       }}
       data-joy-color-scheme="dark"
     >
-      {mountedVideos.map((video) => (
-        <VideoWithOverlay
-          key={video.id}
-          video={video}
-          active={video.id === activeVideoId}
-        />
-      ))}
-    </Sheet>
+      {videos.map((video, index) => {
+        // Calculate the page of this video
+        const videoPage = Math.floor(index / pageSize);
+        return (
+          <VideoWithOverlay
+            key={video.id}
+            video={video}
+            state={
+              videoPage < activeVideoPage
+                ? "unmounted"
+                : activeVideoId === video.id
+                ? "active"
+                : "mounted"
+            }
+            muted={muted}
+            setMuted={setMuted}
+          />
+        );
+      })}
+    </Stack>
   );
 }
