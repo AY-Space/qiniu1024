@@ -17,9 +17,9 @@ import {
 import { getBilibiliImageUrl } from "~/app/utils";
 import { type UserDetailedPublic } from "~/types";
 import { Upload } from "@mui/icons-material";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { VisuallyHiddenInput } from "~/app/upload/page";
-import { CropDialog } from "./crop-dialog";
+import Cropper from "cropperjs";
 
 export function EditDialog({
   user,
@@ -30,10 +30,44 @@ export function EditDialog({
   open: boolean;
   onClose: () => void;
 }) {
-  const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const [imageSrc, setImageSrc] = useState<string>();
+  const [croppedImg, setCroppedImg] = useState<string>();
+  const imageElement = useRef<HTMLImageElement>(null);
+  const cropperRef = useRef<Cropper>();
   const onFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files ? event.target.files[0] : null;
-    setSelectedFile(file ?? null);
+    if (event.target.files && event.target.files.length > 0) {
+      console.log("选择了");
+      console.log(imageSrc, croppedImg, user.avatarUrl);
+
+      const fileReader = new FileReader();
+      fileReader.onload = (e) => {
+        setImageSrc(e.target?.result as string);
+        if (imageElement.current) {
+          cropperRef.current = new Cropper(imageElement.current, {
+            aspectRatio: 1,
+            zoomable: false,
+            scalable: false,
+            crop: () => {
+              const canvas = cropperRef.current?.getCroppedCanvas({
+                maxWidth: 512,
+                maxHeight: 512,
+              });
+              setCroppedImg(canvas?.toDataURL("image/png"));
+            },
+          });
+        }
+      };
+      fileReader.readAsDataURL(event.target.files[0]!);
+    }
+  };
+
+  const uploadImage = () => {
+    // This function should handle the actual upload process
+    // For this example, it just logs the cropped image data URL to the console
+    if (croppedImg) {
+      console.log("Uploading", croppedImg);
+      // TODO: Upload logic here
+    }
   };
 
   return (
@@ -46,8 +80,8 @@ export function EditDialog({
             <Stack alignItems="center" gap={1}>
               <Avatar
                 src={
-                  user.avatarUrl
-                    ? getBilibiliImageUrl(user.avatarUrl)
+                  croppedImg ?? imageSrc ?? user.avatarUrl
+                    ? getBilibiliImageUrl(user.avatarUrl!)
                     : undefined
                 }
                 sx={{
@@ -88,10 +122,6 @@ export function EditDialog({
             取消
           </Button>
         </DialogActions>
-        <CropDialog
-          open={selectedFile !== null}
-          onClose={() => setSelectedFile(null)}
-        />
       </ModalDialog>
     </Modal>
   );

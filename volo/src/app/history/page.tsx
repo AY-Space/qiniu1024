@@ -1,4 +1,4 @@
-import { Card, Container, List, ListItem, Typography } from "@mui/joy";
+import { Container, List, ListItem, Typography } from "@mui/joy";
 import { db } from "~/server/db";
 import { VideoCard } from "../_components/video-card";
 

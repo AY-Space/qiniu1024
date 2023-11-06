@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { env } from "~/env.mjs";
 import {
   createTRPCRouter,
   protectedProcedure,
@@ -9,7 +10,7 @@ import { type VideoPublic, type CommentPublic } from "~/types";
 
 export const videoRouter = createTRPCRouter({
   createVideoUploadParameters: publicProcedure.mutation(() => {
-    return createUploadParameters();
+    return createUploadParameters("video");
   }),
 
   comments: publicProcedure
@@ -110,38 +111,70 @@ export const videoRouter = createTRPCRouter({
       }
     }),
 
-  likedAndCollected: protectedProcedure
+  extraMetadata: publicProcedure
     .input(
       z.object({
         videoId: z.string(),
       }),
     )
-    .query(async ({ ctx, input: { videoId } }) => {
-      const liked = await ctx.db.like.findUnique({
-        where: {
-          userId_videoId: {
-            userId: ctx.session.userId,
-            videoId,
+    .query(
+      async ({
+        ctx,
+        input: { videoId },
+      }): Promise<{
+        currentUser: {
+          liked: boolean;
+          collected: boolean;
+        } | null;
+        likes: number;
+        comments: number;
+      }> => {
+        let currentUser = null;
+        if (ctx.session?.userId) {
+          const liked = await ctx.db.like.count({
+            where: {
+              userId: ctx.session.userId,
+              videoId,
+            },
+          });
+          const collected = await ctx.db.collection.count({
+            where: {
+              videos: {
+                some: {
+                  id: videoId,
+                },
+              },
+            },
+          });
+          currentUser = {
+            liked: liked > 0,
+            collected: collected > 0,
+          };
+        }
+        const counts = await ctx.db.video.findUnique({
+          where: {
+            id: videoId,
           },
-        },
-      });
-      const collected = await ctx.db.collection.findMany({
-        where: {
-          videos: {
-            some: {
-              id: videoId,
+          select: {
+            _count: {
+              select: {
+                comments: true,
+                likes: true,
+              },
             },
           },
-        },
-        select: {
-          id: true,
-        },
-      });
-      return {
-        liked: !!liked,
-        collected: collected.length > 0,
-      };
-    }),
+        });
+        if (counts === null) {
+          throw new Error("Video not found");
+        }
+
+        return {
+          currentUser,
+          comments: counts._count.comments,
+          likes: counts._count.likes,
+        };
+      },
+    ),
 
   postComment: protectedProcedure
     .input(
@@ -190,4 +223,59 @@ export const videoRouter = createTRPCRouter({
         },
       });
     }),
+
+  create: protectedProcedure
+    .input(
+      z.object({
+        title: z.string().min(1).max(100),
+        description: z.string().max(1000),
+        coverFileKey: z.string(),
+        videoFileKey: z.string(),
+        tags: z.array(z.string().min(1)),
+        category: z.string().min(1),
+      }),
+    )
+    .mutation(
+      async ({
+        ctx,
+        input: {
+          title,
+          description,
+          coverFileKey,
+          videoFileKey,
+          category,
+          tags,
+        },
+      }) => {
+        const coverUrl = `${env.STATIC_FILES_BASE_URL}/${coverFileKey}`;
+        const videoUrl = `${env.STATIC_FILES_BASE_URL}/${videoFileKey}`;
+        const video = await ctx.db.video.create({
+          data: {
+            title,
+            description,
+            coverUrl,
+            url: videoUrl,
+            authorId: ctx.session.userId,
+            tags: {
+              connectOrCreate: tags.map((tag) => ({
+                where: {
+                  name: tag,
+                },
+                create: {
+                  name: tag,
+                  type: "Tag",
+                },
+              })),
+              connect: {
+                name: category,
+              },
+            },
+          },
+          select: {
+            id: true,
+          },
+        });
+        return video.id;
+      },
+    ),
 });

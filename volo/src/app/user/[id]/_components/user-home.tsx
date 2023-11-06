@@ -92,7 +92,7 @@ export const UserHome = ({ user, uploadedVideos }: UserHomeProps) => {
           <LikeTabPanel userId={user.id} />
         </TabPanel>
         <TabPanel value={2}>
-          <CollectionTabPanel userId={user.id} />
+          <CollectionTabPanel />
         </TabPanel>
       </Tabs>
 

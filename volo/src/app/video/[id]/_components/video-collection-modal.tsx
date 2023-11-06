@@ -31,11 +31,19 @@ export const VideoCollectionModal = ({
 }) => {
   const [showCreateCollection, setShowCreateCollection] = useState(false);
   const utils = api.useUtils();
-  const { data: collections } = api.collection.myCollections.useQuery();
+  const { data: collections, isLoading: collectionsLoading } =
+    api.collection.myCollections.useQuery(undefined, {
+      enabled: open,
+    });
 
-  const { data: savedCollectionIds } = api.collection.idsWithVideo.useQuery({
-    videoId,
-  });
+  const { data: savedCollectionIds } = api.collection.idsWithVideo.useQuery(
+    {
+      videoId,
+    },
+    {
+      enabled: open,
+    },
+  );
   const savedCollectionIdsSet = useMemo(
     () => new Set(savedCollectionIds ?? []),
     [savedCollectionIds],
@@ -49,7 +57,7 @@ export const VideoCollectionModal = ({
   return (
     <Modal open={open} onClose={onClose}>
       <ModalDialog variant="outlined" role="alertdialog">
-        {updateVideoCollection.isLoading && (
+        {(updateVideoCollection.isLoading || collectionsLoading) && (
           <LinearProgress
             sx={{
               position: "absolute",

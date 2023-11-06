@@ -40,10 +40,7 @@ export type VideoDetailedPublic = Pick<
   Video,
   "id" | "coverUrl" | "createdAt" | "description" | "title" | "url" | "views"
 > & {
-  likes: number;
   author: UserPublic;
-  comments: number;
-} & {
   tags: TagPublic[];
 };
 

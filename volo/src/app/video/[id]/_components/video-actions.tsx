@@ -11,26 +11,27 @@ import { api } from "~/trpc/react";
 
 export const VideoActions = ({
   videoId,
-  likes,
-  comments,
-  active,
+  state,
 }: {
   videoId: string;
-  likes: number;
-  comments: number;
-  active: boolean;
+  state: "active" | "mounted";
 }) => {
   const [showComments, setShowComments] = useState(false);
   const [showCollection, setShowCollection] = useState(false);
   const [shared, setShared] = useState(false);
 
-  const { data: likedAndCollected } = api.video.likedAndCollected.useQuery({
-    videoId,
-  });
+  const { data: extraMetadata } = api.video.extraMetadata.useQuery(
+    {
+      videoId,
+    },
+    {
+      enabled: state === "active",
+    },
+  );
   const utils = api.useUtils();
   const like = api.video.like.useMutation({
     onSuccess: async () => {
-      await utils.video.likedAndCollected.invalidate({ videoId });
+      await utils.video.extraMetadata.invalidate({ videoId });
     },
   });
 
@@ -57,38 +58,32 @@ export const VideoActions = ({
         <Stack alignItems="center" p={1}>
           <IconButton
             size="lg"
-            color={likedAndCollected?.liked ? "primary" : "neutral"}
+            color={extraMetadata?.currentUser?.liked ? "primary" : "neutral"}
             onClick={() => {
-              like.mutate({ videoId, like: !likedAndCollected?.liked });
+              extraMetadata?.currentUser &&
+                like.mutate({
+                  videoId,
+                  like: !extraMetadata.currentUser.liked,
+                });
             }}
           >
             <ThumbUpIcon />
           </IconButton>
-          <Typography>{likes}</Typography>
+          <Typography>{extraMetadata?.likes ?? 0}</Typography>
         </Stack>
-        <Stack alignItems="center">
-          <IconButton size="lg" onClick={() => setShowComments(true)}>
-            <CommentIcon />
-          </IconButton>
-          <Typography>{comments}</Typography>
-          {active && (
-            <CommentDrawer
-              onClose={() => setShowComments(false)}
-              open={showComments}
-              videoId={videoId}
-            />
-          )}
-        </Stack>
+
         <Stack alignItems="center">
           <IconButton
             size="lg"
-            color={likedAndCollected?.collected ? "primary" : "neutral"}
+            color={
+              extraMetadata?.currentUser?.collected ? "primary" : "neutral"
+            }
             onClick={() => setShowCollection(true)}
           >
             <StarIcon />
           </IconButton>
           <Typography>收藏</Typography>
-          {active && (
+          {state === "active" && (
             <VideoCollectionModal
               open={showCollection}
               onClose={() => setShowCollection(false)}
@@ -96,6 +91,21 @@ export const VideoActions = ({
             />
           )}
         </Stack>
+
+        <Stack alignItems="center">
+          <IconButton size="lg" onClick={() => setShowComments(true)}>
+            <CommentIcon />
+          </IconButton>
+          <Typography>{extraMetadata?.comments ?? 0}</Typography>
+          {state === "active" && (
+            <CommentDrawer
+              onClose={() => setShowComments(false)}
+              open={showComments}
+              videoId={videoId}
+            />
+          )}
+        </Stack>
+
         <Stack alignItems="center">
           <IconButton
             size="lg"

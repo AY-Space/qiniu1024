@@ -15,6 +15,7 @@ import {
   Button,
   Textarea,
   Sheet,
+  Snackbar,
 } from "@mui/joy";
 import Image from "next/image";
 import { getBilibiliImageUrl } from "../../../utils";
@@ -119,8 +120,8 @@ const CommentList = ({ videoId }: { videoId: string }) => {
   });
 
   const mutationOptions = {
-    onSuccess: () => {
-      void utils.video.comments.invalidate({ videoId });
+    onSuccess: async () => {
+      await utils.video.comments.invalidate({ videoId });
     },
   };
   const like = api.comment.like.useMutation(mutationOptions);
@@ -167,12 +168,18 @@ const CommentList = ({ videoId }: { videoId: string }) => {
 const NewCommentForm = ({ videoId }: { videoId: string }) => {
   const [text, setText] = useState("");
   const utils = api.useUtils();
+  const [sentComment, setSentComment] = useState(false);
+  const [error, setError] = useState(false);
+
   const postComment = api.video.postComment.useMutation({
+    onError: () => setError(true),
     onSuccess: async () => {
       await utils.video.comments.invalidate({ videoId });
+      setSentComment(true);
       setText("");
     },
   });
+
   return (
     <Stack>
       <Divider />
@@ -210,10 +217,25 @@ const NewCommentForm = ({ videoId }: { videoId: string }) => {
             </>
           }
         />
-        {postComment.isError && (
-          <Alert color="danger">{postComment.error?.message}</Alert>
-        )}
       </Stack>
+      <Snackbar
+        variant="solid"
+        color="success"
+        autoHideDuration={1600}
+        open={sentComment}
+        onClose={() => setSentComment(false)}
+      >
+        评论成功
+      </Snackbar>
+      <Snackbar
+        variant="solid"
+        color="danger"
+        autoHideDuration={1600}
+        open={error}
+        onClose={() => setError(false)}
+      >
+        评论失败
+      </Snackbar>
     </Stack>
   );
 };
