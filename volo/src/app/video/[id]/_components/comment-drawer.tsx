@@ -120,16 +120,20 @@ const CommentList = ({ videoId }: { videoId: string }) => {
   const { data, error, isLoading } = api.video.comments.useQuery({ videoId });
   const { data: session } = useSession();
   const utils = api.useUtils();
+
+  const [actionError, setActionError] = useState(false);
   const deleteComment = api.video.deleteComment.useMutation({
     onSuccess: async () => {
       await utils.video.comments.invalidate({ videoId });
     },
+    onError: () => setActionError(true),
   });
 
   const mutationOptions = {
     onSuccess: async () => {
       await utils.video.comments.invalidate({ videoId });
     },
+    onError: () => setActionError(true),
   };
   const like = api.comment.like.useMutation(mutationOptions);
   const dislike = api.comment.dislike.useMutation(mutationOptions);
@@ -168,6 +172,15 @@ const CommentList = ({ videoId }: { videoId: string }) => {
           }}
         />
       ))}
+      <Snackbar
+        variant="solid"
+        color="danger"
+        autoHideDuration={1600}
+        open={actionError}
+        onClose={() => setActionError(false)}
+      >
+        操作失败
+      </Snackbar>
     </Stack>
   );
 };
@@ -179,12 +192,12 @@ const NewCommentForm = ({ videoId }: { videoId: string }) => {
   const [error, setError] = useState(false);
 
   const postComment = api.video.postComment.useMutation({
-    onError: () => setError(true),
     onSuccess: async () => {
       await utils.video.comments.invalidate({ videoId });
       setSentComment(true);
       setText("");
     },
+    onError: () => setError(true),
   });
 
   return (

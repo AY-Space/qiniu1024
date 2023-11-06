@@ -29,10 +29,13 @@ export const VideoActions = ({
     },
   );
   const utils = api.useUtils();
+  const [actionError, setActionError] = useState(false);
+
   const like = api.video.like.useMutation({
     onSuccess: async () => {
       await utils.video.extraMetadata.invalidate({ videoId });
     },
+    onError: () => setActionError(true),
   });
 
   return (
@@ -128,6 +131,15 @@ export const VideoActions = ({
         onClose={() => setShared(false)}
       >
         分享信息已复制至剪切板
+      </Snackbar>
+      <Snackbar
+        variant="solid"
+        color="danger"
+        autoHideDuration={1600}
+        open={actionError}
+        onClose={() => setActionError(false)}
+      >
+        操作失败
       </Snackbar>
     </Stack>
   );
