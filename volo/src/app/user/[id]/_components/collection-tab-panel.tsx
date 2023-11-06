@@ -6,7 +6,7 @@ import { CreateCollectionModal } from "~/app/_components/create-collection-modal
 import { api } from "~/trpc/react";
 import { VideoGrid } from "~/app/_components/video-tab-panel";
 
-export const CollectionTabPanel = ({ userId }: { userId: string }) => {
+export const CollectionTabPanel = () => {
   const [showCreateCollection, setShowCreateCollection] = useState(false);
   const { data: collections } = api.collection.myCollections.useQuery();
 
