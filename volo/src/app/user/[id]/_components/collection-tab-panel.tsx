@@ -19,7 +19,7 @@ export const CollectionTabPanel = () => {
             startDecorator={<Add />}
             onClick={() => setShowCreateCollection(true)}
           >
-            创建收藏夹
+            创建
           </Button>
           {collections?.map((collection) => (
             <Tab key={collection.id}>

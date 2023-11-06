@@ -16,6 +16,7 @@ import {
   Textarea,
   Sheet,
   Snackbar,
+  Link as JoyLink,
 } from "@mui/joy";
 import Image from "next/image";
 import { getBilibiliImageUrl } from "../../../utils";
@@ -29,6 +30,7 @@ import { useState } from "react";
 import { Flex } from "~/app/_components/flex";
 import SendIcon from "@mui/icons-material/Send";
 import { useSession } from "next-auth/react";
+import Link from "next/link";
 
 const Comment = ({
   comment,
@@ -51,7 +53,12 @@ const Comment = ({
       <Stack spacing={1} flex={1}>
         <Flex alignItems="center">
           <Stack>
-            <Typography level="title-md">{comment.author.name}</Typography>
+            <Link href={`/user/${comment.author.id}`}>
+              <JoyLink>
+                <Typography level="title-md">{comment.author.name}</Typography>
+              </JoyLink>
+            </Link>
+
             <Typography level="body-xs">
               {dayjs(comment.createdAt).fromNow()}
             </Typography>
@@ -129,7 +136,7 @@ const CommentList = ({ videoId }: { videoId: string }) => {
 
   return (
     <Stack spacing={2}>
-      {error && <Alert color="danger">{error.message}</Alert>}
+      {error && <Alert color="danger">加载失败</Alert>}
       {isLoading && (
         <Stack alignItems="center">
           <CircularProgress />
