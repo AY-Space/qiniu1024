@@ -18,8 +18,6 @@ export function AppBar({ loggedIn }: AppBarProps) {
   const [showNavigationDrawer, setShowNavigationDrawer] = useState(false);
   const [showSearchDialog, setShowSearchDialog] = useState(false);
 
-  const [text, setText] = useState("");
-
   return (
     <Sheet
       sx={{
@@ -75,7 +73,6 @@ export function AppBar({ loggedIn }: AppBarProps) {
               width: "100%",
             }}
             size="lg"
-            value={text}
             onClick={() => {
               setShowSearchDialog(true);
             }}
