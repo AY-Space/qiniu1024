@@ -60,3 +60,8 @@ export enum GorseFeedback {
   READ = "read",
   LESS = "less",
 }
+
+export interface Page {
+  limit: number;
+  cursor?: number;
+}

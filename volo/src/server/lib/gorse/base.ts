@@ -1,7 +1,7 @@
 import { TagType } from "@prisma/client";
 import axios_ from "axios";
 import { env } from "~/env.mjs";
-import { type GorseFeedback, type TagReference } from "~/types";
+import { type GorseFeedback, type Page, type TagReference } from "~/types";
 
 const axios = axios_.create({
   baseURL: env.GORSE_URL + "/api",
@@ -28,11 +28,6 @@ interface Item {
 interface User {
   Labels: string[];
   UserId: string;
-}
-
-export interface Page {
-  limit: number;
-  cursor?: number;
 }
 
 const format = (page: Page): string => {
@@ -72,7 +67,6 @@ export const insertVideo = async (videoId: string, tags: TagReference[]) => {
 export const insertVideos = async (
   videos: { videoId: string; tags: TagReference[] }[],
 ) => {
-  console.log(videos.length);
   await axios.post(
     "/items",
     videos.map(({ videoId, tags }) => newItem(videoId, tags)),
