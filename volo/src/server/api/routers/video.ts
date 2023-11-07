@@ -414,4 +414,21 @@ export const videoRouter = createTRPCRouter({
       return histories;
     },
   ),
+
+  deleteHistory: protectedProcedure
+    .input(
+      z.object({
+        videoId: z.string(),
+      }),
+    )
+    .mutation(async ({ ctx, input: { videoId } }) => {
+      await ctx.db.history.delete({
+        where: {
+          userId_videoId: {
+            userId: ctx.session.userId,
+            videoId,
+          },
+        },
+      });
+    }),
 });

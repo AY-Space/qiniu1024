@@ -6,30 +6,55 @@ import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import { Delete } from "@mui/icons-material";
 import { Flex } from "../_components/flex";
-import { type VideoPublic } from "~/types";
+import { api } from "~/trpc/react";
 dayjs.extend(relativeTime);
 
 export default function HistoryPage() {
-  const videos: VideoPublic[] = [];
+  const utils = api.useUtils();
+  const { data: histories } = api.video.histories.useQuery();
+  const deleteHistory = api.video.deleteHistory.useMutation({
+    onSuccess: () => {
+      void utils.video.histories.invalidate();
+    },
+  });
 
   return (
     <Container>
-      <List sx={{ gap: 2 }}>
-        {videos.map((video) => (
-          <Card key={video.id}>
-            <Flex justifyContent="space-between">
-              <Flex height={200} alignItems="center" gap={1}>
-                <Typography>{dayjs(video.createdAt).fromNow()}</Typography>
-                <VideoCard video={video} height="100%" />
-              </Flex>
-              <Stack justifyContent="center">
-                <IconButton onClick={() => {}}>
+      <List>
+        <Stack spacing={2} mt={1} p={1}>
+          {histories?.length === 0 && (
+            <Typography level="body-sm" textAlign="center">
+              没有视频观看记录，快去逛逛吧
+            </Typography>
+          )}
+          {histories?.map((history) => (
+            <Card key={history.video.id}>
+              <Flex spacing={2} justifyContent="center" alignItems="center">
+                <Typography
+                  level="body-sm"
+                  color="primary"
+                  width={120}
+                  maxWidth="15vw"
+                >
+                  {dayjs(history.viewedAt).fromNow()}
+                </Typography>
+                <Stack flex={1}>
+                  <Stack maxWidth="50vw" width={240}>
+                    <VideoCard video={history.video} />
+                  </Stack>
+                </Stack>
+                <IconButton
+                  onClick={() => {
+                    deleteHistory.mutate({ videoId: history.video.id });
+                  }}
+                  color="danger"
+                >
                   <Delete />
                 </IconButton>
-              </Stack>
-            </Flex>
-          </Card>
-        ))}
+              </Flex>
+            </Card>
+          ))}
+        </Stack>
       </List>
     </Container>
   );
