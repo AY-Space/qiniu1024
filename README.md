@@ -13,27 +13,33 @@
 
 # 📸 示例
 
-访问在线 [demo](http://volo.ay7295.space)
-演示 视频：
+访问在线 demo: <http://volo.ay7295.space>
+演示视频：
 
 # 📦 使用方式
 
-## docker cpmpose
+复制一份 compose.yaml：
 
 ```shell
-$ docker compose up -d
+$ cp example.compose.yaml compose.yaml
 ```
 
-### 📌 注意事项
-
-一定要先填写 compose.yaml 中 **required** 的字段
+修改 compose.yaml 中的环境变量
 
 ```yaml
-QINIU_ACCESS_KEY: # required
-QINIU_SECRET_KEY: # required
-QINIU_BUCKET: # required 要提前配置好 bucket 为可以公开访问
-QINIU_BASE_URL: # required 七牛云 分配的临时域名 或者是 绑定的域名
+QINIU_ACCESS_KEY: # kodo access key
+QINIU_SECRET_KEY: # kodo secret key
+QINIU_BUCKET: # kodo bucket
+QINIU_BASE_URL: # 可公开访问的 kodo bucket url（末尾不带 /）
 ```
+
+保证网络通畅，运行：
+
+```sh
+$ docker-compose up
+```
+
+等待容器启动完成，访问 <http://localhost:3000> 即可
 
 # ⏳ 进度
 
@@ -41,10 +47,10 @@ QINIU_BASE_URL: # required 七牛云 分配的临时域名 或者是 绑定的�
 
 # 🔦 声明
 
-1. 自己部署的话
-   mock dataset 在**2023 年 12 月 1 日**之后将**不再可用**
+1. 如自行部署，测试数据中链接的静态文件在**2023年12月1日**之后将**不再可用**
 2. 在线演示 demo
-   在**2023 年 12 月 1 日**之后将**不可访问**
+   在**2023年12月1日**之后将**不可访问**
+3. 本项目的示例数据部分来源于 Bilibili，如有侵权，请联系我们删除
 
 # 🧑‍💻 贡献者
 
