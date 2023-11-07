@@ -126,4 +126,44 @@ export const userRouter = createTRPCRouter({
         await gorse.insertUser(user.id, []);
       },
     ),
+
+  follow: protectedProcedure
+    .input(
+      z.object({
+        userId: z.string(),
+        operation: z.enum(["connect", "disconnect"]),
+      }),
+    )
+    .mutation(async ({ input: { userId, operation }, ctx }) => {
+      await ctx.db.user.update({
+        where: {
+          id: ctx.session.userId,
+        },
+        data: {
+          usersFollowed: {
+            [operation]: {
+              id: userId,
+            },
+          },
+        },
+      });
+    }),
+
+  hasFollowed: protectedProcedure
+    .input(
+      z.object({
+        userId: z.string(),
+      }),
+    )
+    .query(async ({ input: { userId }, ctx }) => {
+      const relation = await ctx.db.follow.findUnique({
+        where: {
+          followingId_followerId: {
+            followerId: ctx.session.userId,
+            followingId: userId,
+          },
+        },
+      });
+      return !!relation;
+    }),
 });
