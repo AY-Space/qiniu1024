@@ -132,7 +132,7 @@ const esInit = async () => {
   }
 
   await esInsertVideos(videos);
-  await esInsertUsers(users.slice(0, 100));
+  await esInsertUsers(users);
 };
 
 const main = async () => {
