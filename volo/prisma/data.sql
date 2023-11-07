@@ -1686,19 +1686,21 @@ clonz7mrg000hza6c4eljfzlv	2023-11-07 06:54:46.78	法夫尔	clojxwar70004zah0ala3
 --
 
 COPY public."Video" (id, title, description, url, "coverUrl", "createdAt", "authorId", views) FROM stdin;
-BV16u4y1e7xh	热血编程 （第四集）| 二分枚举答案哟	我是本人！不要去私聊我大号了 hhh\n大号教你学Python和游戏开发 @英雄哪里出来  \n小号教你学算法 @算法大师兄  \n二创已开放	http://s32g9y9rt.bkt.clouddn.com/bilibili-video/BV16u4y1e7xh.flv	http://s32g9y9rt.bkt.clouddn.com/bilibili-cover/ff95b8b7e5ed263050aa03bfbded5e9584dddfa1	2023-08-27 04:00:00	1784235102	172736
+BV16u4y1e7xh	热血编程 （第四集）| 二分枚举答案哟	我是本人！不要去私聊我大号了 hhh\n大号教你学Python和游戏开发 @英雄哪里出来  \n小号教你学算法 @算法大师兄  \n二创已开放	http://s32g9y9rt.bkt.clouddn.com/bilibili-video/BV16u4y1e7xh.flv	http://s32g9y9rt.bkt.clouddn.com/bilibili-cover/ff95b8b7e5ed263050aa03bfbded5e9584dddfa1	2023-08-27 04:00:00	1784235102	172738
 clons99v50002jnp0fysedcfd	xx	aa	http://s32g9y9rt.bkt.clouddn.com/video/awak8cqolk5ufucrnwc0qs74	http://s32g9y9rt.bkt.clouddn.com/cover/o29m4qg5eycs90d7zqa1yryr	2023-11-07 03:40:06.064	clon50p6x0000jnp04t8s92tu	0
-BV1hg411s7Xh	三年之约！一起做游戏	游戏开发，扬帆起航！	http://s32g9y9rt.bkt.clouddn.com/bilibili-video/BV1hg411s7Xh.flv	http://s32g9y9rt.bkt.clouddn.com/bilibili-cover/67d666eb079d2588e74b426d704e1376a731107f	2022-11-12 03:31:18	319521269	319173
+BV1hg411s7Xh	三年之约！一起做游戏	游戏开发，扬帆起航！	http://s32g9y9rt.bkt.clouddn.com/bilibili-video/BV1hg411s7Xh.flv	http://s32g9y9rt.bkt.clouddn.com/bilibili-cover/67d666eb079d2588e74b426d704e1376a731107f	2022-11-12 03:31:18	319521269	319175
 clonsnd6n0005jnp0z5sthmbt	q	s	http://s32g9y9rt.bkt.clouddn.com/video/fl9v3i8qpchp5y32on9tfml0	http://s32g9y9rt.bkt.clouddn.com/cover/dywosafd8qnntzah9tswjgl2	2023-11-07 03:51:03.551	clon50p6x0000jnp04t8s92tu	0
+BV1sY4y1n7i8	当你写了个BUG……但是刚好能运行……	给老婆做了个游戏玩，她竟然￥%……￥￥%%……￥	http://s32g9y9rt.bkt.clouddn.com/bilibili-video/BV1sY4y1n7i8.flv	http://s32g9y9rt.bkt.clouddn.com/bilibili-cover/998f3e703eaaccda0f95a07961cc02c2ffdbfbd9	2022-07-01 04:53:56	319521269	286883
 clonsy5fl0008jnp0f6fpst9f	a	x	http://s32g9y9rt.bkt.clouddn.com/video/ykgsy0g2qq9tl298nyyf7xr8	http://s32g9y9rt.bkt.clouddn.com/cover/wvqxfnwzg73ughw4b3tt8fa4	2023-11-07 03:59:26.722	clon50p6x0000jnp04t8s92tu	0
+BV1wH4y1S7aC	MIMI - What Call This Day ? (feat. にんじん from ロクデナシ) 钢琴编曲	作曲：MIMI\n歌唱：にんじん\n编曲：Alouette\nYouTube版本：https://youtu.be/i_DoIzeljGo	http://s32g9y9rt.bkt.clouddn.com/bilibili-video/BV1wH4y1S7aC.flv	http://s32g9y9rt.bkt.clouddn.com/bilibili-cover/a281d5292eb95d06756d56bf97c76625af241cc5	2023-09-17 01:35:05	3546388447103538	747
 BV1AY4y1g7Bu	太真实了……做梦都在刷题	滑动窗口\n朴素算法时间复杂度一般是 O(n^2)\n线段树可以达到 O(nlogn)\n用单调队列可以达到 O(n)	http://s32g9y9rt.bkt.clouddn.com/bilibili-video/BV1AY4y1g7Bu.flv	http://s32g9y9rt.bkt.clouddn.com/bilibili-cover/1456d0f04624effefa7d6d5608214b5ac80d49ea	2022-09-03 04:00:00	319521269	72940
 BV1Yd4y1o7bu	当你坚持不下去的时候，来看看他		http://s32g9y9rt.bkt.clouddn.com/bilibili-video/BV1Yd4y1o7bu.flv	http://s32g9y9rt.bkt.clouddn.com/bilibili-cover/b5bdb228f9d1fa0431dc59a1dbf3837a3c79b29d	2022-08-14 13:18:46	319521269	106136
+BV1ju4y1671R	无畏契约新手教学——防守方烟位封烟指南	点个关注再走哦~	http://s32g9y9rt.bkt.clouddn.com/bilibili-video/BV1ju4y1671R.flv	http://s32g9y9rt.bkt.clouddn.com/bilibili-cover/d664880ae3d8c5a526836e04ad7d2e62463aa3bb	2023-09-24 04:30:00	3494369030048374	67892
+BV1dw411m7wE	无畏契约新手教学——好习惯帮助你赢得对枪！	点个关注再走哦~	http://s32g9y9rt.bkt.clouddn.com/bilibili-video/BV1dw411m7wE.flv	http://s32g9y9rt.bkt.clouddn.com/bilibili-cover/d8889fecfe59922973d5fc37846bb5c058277f8b	2023-09-07 03:42:10	3494369030048374	421963
+BV1Ra41177RB	10分钟学会哈希表	哈希表（Hash table）的初衷是为了将关键字值 (key - value) 映射到数组中的某个位置，这样就能够通过数组下标访问该数据，省去了遍历整个数据结构的过程，从而提高了数据的查找速度，插入、查找的平均期望时间复杂度是 O(1) 的。这个视频会通过从易到难的顺序讲解 九个常见 的哈希表的问题。如果不想学习，当下饭视频也是可以的?。\n       最后，求观众姥爷们，给本扑街一点三连吧，没有三连，就劳烦您们受累给视频点点赞，抱拳敬礼! 跪求编辑审核大大们，给点推荐吧！	http://s32g9y9rt.bkt.clouddn.com/bilibili-video/BV1Ra41177RB.flv	http://s32g9y9rt.bkt.clouddn.com/bilibili-cover/3fa385c6651d93f25475a469fec62fd1d3adf3a4	2022-05-21 04:00:00	319521269	198786
+BV1iS4y1F7g7	【莓用良品】 妈 妈 耳 环	导演:郭毅\n文案: 郭毅 阿科\n拍摄:孔二宝\n产品设计:郭毅 彭涛\n三维动画:韩伯宇 赵铂浩  李云山 赵家豪 韩佳乐 孟文辉\n剪辑: 郭毅	http://s32g9y9rt.bkt.clouddn.com/bilibili-video/BV1iS4y1F7g7.flv	http://s32g9y9rt.bkt.clouddn.com/bilibili-cover/cb29b2a7fa2f9d6c1873bf2cef43af6eb38a45d9	2022-02-19 11:24:21	174902557	916594
 BV1Le4y1X7wd	为什么大厂都不允许员工透露薪资？！	直播间的小伙伴，最关心的问题，莫过于up主的薪资。这个视频我就来打消你们的疑虑！	http://s32g9y9rt.bkt.clouddn.com/bilibili-video/BV1Le4y1X7wd.flv	http://s32g9y9rt.bkt.clouddn.com/bilibili-cover/23284c920bfdf2330d41087d0ea44fccbee664f0	2022-07-30 10:00:00	319521269	370612
 BV1nt4y1b7pw	可不能再被同事发现了……	《英雄算法联盟》公开课\n这个系列视频总共将分为四个部分：\n顺序表、链表、树、图\n顺序表和它的算法主要分为：数组、字符串、排序、贪心、双指针、滑动窗口、哈希表、前缀和、二分查找、矩阵。	http://s32g9y9rt.bkt.clouddn.com/bilibili-video/BV1nt4y1b7pw.flv	http://s32g9y9rt.bkt.clouddn.com/bilibili-cover/5fcd8c2966790d08cdb153dc260baa648c8c2ac5	2022-07-09 04:00:00	319521269	550065
-BV1sY4y1n7i8	当你写了个BUG……但是刚好能运行……	给老婆做了个游戏玩，她竟然￥%……￥￥%%……￥	http://s32g9y9rt.bkt.clouddn.com/bilibili-video/BV1sY4y1n7i8.flv	http://s32g9y9rt.bkt.clouddn.com/bilibili-cover/998f3e703eaaccda0f95a07961cc02c2ffdbfbd9	2022-07-01 04:53:56	319521269	286836
-BV1Ra41177RB	10分钟学会哈希表	哈希表（Hash table）的初衷是为了将关键字值 (key - value) 映射到数组中的某个位置，这样就能够通过数组下标访问该数据，省去了遍历整个数据结构的过程，从而提高了数据的查找速度，插入、查找的平均期望时间复杂度是 O(1) 的。这个视频会通过从易到难的顺序讲解 九个常见 的哈希表的问题。如果不想学习，当下饭视频也是可以的?。\n       最后，求观众姥爷们，给本扑街一点三连吧，没有三连，就劳烦您们受累给视频点点赞，抱拳敬礼! 跪求编辑审核大大们，给点推荐吧！	http://s32g9y9rt.bkt.clouddn.com/bilibili-video/BV1Ra41177RB.flv	http://s32g9y9rt.bkt.clouddn.com/bilibili-cover/3fa385c6651d93f25475a469fec62fd1d3adf3a4	2022-05-21 04:00:00	319521269	198785
-BV1ju4y1671R	无畏契约新手教学——防守方烟位封烟指南	点个关注再走哦~	http://s32g9y9rt.bkt.clouddn.com/bilibili-video/BV1ju4y1671R.flv	http://s32g9y9rt.bkt.clouddn.com/bilibili-cover/d664880ae3d8c5a526836e04ad7d2e62463aa3bb	2023-09-24 04:30:00	3494369030048374	67891
-BV1dw411m7wE	无畏契约新手教学——好习惯帮助你赢得对枪！	点个关注再走哦~	http://s32g9y9rt.bkt.clouddn.com/bilibili-video/BV1dw411m7wE.flv	http://s32g9y9rt.bkt.clouddn.com/bilibili-cover/d8889fecfe59922973d5fc37846bb5c058277f8b	2023-09-07 03:42:10	3494369030048374	421962
 BV1TM4y147mY	无畏契约新手思路教学——守不住包点？因为你守的不对！	点个关注再走哦~	http://s32g9y9rt.bkt.clouddn.com/bilibili-video/BV1TM4y147mY.flv	http://s32g9y9rt.bkt.clouddn.com/bilibili-cover/f8fac107288348b296e584003ef5aa4a2997cc4d	2023-07-17 11:09:34	3494369030048374	362370
 BV1TV411u7of	无畏契约萌新教学——不会存钱不会起枪？经济系统入门	点个关注再走哦~	http://s32g9y9rt.bkt.clouddn.com/bilibili-video/BV1TV411u7of.flv	http://s32g9y9rt.bkt.clouddn.com/bilibili-cover/fb6bf970ea314958256a20c124583221a5b75b00	2023-07-09 09:43:48	3494369030048374	163572
 BV1DN411S7NX	无畏契约萌新思路教学——哨卫到底是干什么的？	点个关注再走哦~	http://s32g9y9rt.bkt.clouddn.com/bilibili-video/BV1DN411S7NX.flv	http://s32g9y9rt.bkt.clouddn.com/bilibili-cover/5bc00027e089315fa59e78a426fe1e5293cb8866	2023-07-06 09:21:50	3494369030048374	145449
@@ -1707,49 +1709,43 @@ BV1Su411t72N	无畏契约新人向思路教学——什么是“进攻默认”	
 BV1a84y1d7hM	MIMI - 『心を刺す言葉だけ』/ feat. 初音ミク＆可不 钢琴编曲	我爱死小调部分了\n——————————————\n原曲TP（YouTube）：https://youtu.be/FXNUn2KzcE8?si=eOfSMh60aowEsukF\n转载TP：https://www.bilibili.com/video/BV1JQ4y1s7rx/\n传送面板已上线，我们的行动会更加迅捷\n——————————————\n如果想要乐谱，请私信我。	http://s32g9y9rt.bkt.clouddn.com/bilibili-video/BV1a84y1d7hM.flv	http://s32g9y9rt.bkt.clouddn.com/bilibili-cover/9f2d0f7c1e532fb334ed24eecf531f7008dff1c4	2023-10-18 16:13:39	3546388447103538	1492
 BV1SG411m79X	Orangestar - Aloud 乐队乐谱	这是 Orangestar - Aloud 的乐队乐谱，除节奏吉他变调夹夹四品以外其他乐器均为标准调弦。\n如果你想要乐谱请给我发送私信。\n\n作曲：Orangestar\n编曲：Alouette\nYouTube版本：https://youtu.be/AY8VL_Uz0lg	http://s32g9y9rt.bkt.clouddn.com/bilibili-video/BV1SG411m79X.flv	http://s32g9y9rt.bkt.clouddn.com/bilibili-cover/eff2873972ea90e53921b4973bb6a27c3113d737	2023-10-10 15:17:01	3546388447103538	562
 BV1Zz4y1H7G9	Bad Apple （Miku）	太难了	http://s32g9y9rt.bkt.clouddn.com/bilibili-video/BV1Zz4y1H7G9.flv	http://s32g9y9rt.bkt.clouddn.com/bilibili-cover/4cdccaec99247c87daba32b65a898a210a398fb5	2023-06-26 07:29:13	22046289	176010
-BV1p8411q78f	Orangestar - Aloud 钢琴编曲	作曲：Orangestar\n编曲：Alouette\nYouTube版本：https://youtu.be/oCaSvc-QEBk	http://s32g9y9rt.bkt.clouddn.com/bilibili-video/BV1p8411q78f.flv	http://s32g9y9rt.bkt.clouddn.com/bilibili-cover/8225e35e47f9a4eed64b51f4bc6b8e721ce19e48	2023-09-17 02:11:29	3546388447103538	838
-BV1qp4y1A7rL	MIMI - 妄想哀歌 (feat. 初音ミク＆可不) 钢琴编曲	作曲：MIMI\n编曲：Alouette\nYouTube版本：https://youtu.be/oyhEjoznVxY	http://s32g9y9rt.bkt.clouddn.com/bilibili-video/BV1qp4y1A7rL.flv	http://s32g9y9rt.bkt.clouddn.com/bilibili-cover/767a1bb46d6c99d0f0cd7103744bed73308a8a6b	2023-09-17 01:35:09	3546388447103538	2588
-BV1wH4y1S7aC	MIMI - What Call This Day ? (feat. にんじん from ロクデナシ) 钢琴编曲	作曲：MIMI\n歌唱：にんじん\n编曲：Alouette\nYouTube版本：https://youtu.be/i_DoIzeljGo	http://s32g9y9rt.bkt.clouddn.com/bilibili-video/BV1wH4y1S7aC.flv	http://s32g9y9rt.bkt.clouddn.com/bilibili-cover/a281d5292eb95d06756d56bf97c76625af241cc5	2023-09-17 01:35:05	3546388447103538	744
 BV138411v7cT	MIMI - ロココ (Rococo)   feat. 初音ミク 钢琴编曲	作曲：MIMI\n编曲：Alouette\nYouTube版本：https://youtu.be/2vg2ovBeUhU	http://s32g9y9rt.bkt.clouddn.com/bilibili-video/BV138411v7cT.flv	http://s32g9y9rt.bkt.clouddn.com/bilibili-cover/a0c4228d0059eb33574fcf0e2e24bc5d1fc964c1	2023-09-17 01:35:04	3546388447103538	1249
 BV1Th4y1e7KS	MIMI - 『GLACIES』  feat. 初音ミク 钢琴编曲	作曲：MIMI\n编曲：Alouette\nYouTube版本：https://youtu.be/rGluUDBb1uY	http://s32g9y9rt.bkt.clouddn.com/bilibili-video/BV1Th4y1e7KS.flv	http://s32g9y9rt.bkt.clouddn.com/bilibili-cover/c98374313870d841b30453488b26a5c023d05a0a	2023-09-17 01:31:45	3546388447103538	375
 BV1GP411b7T3	MIMI - Bullets / konoco × こばしり。 钢琴编曲	作曲：MIMI\n编曲：Alouette\nYouTube版本：https://youtu.be/xqeEwsKRXY0	http://s32g9y9rt.bkt.clouddn.com/bilibili-video/BV1GP411b7T3.flv	http://s32g9y9rt.bkt.clouddn.com/bilibili-cover/54d787e14707c0f39a7099d6d7ca215aca8d99c8	2023-09-17 01:30:20	3546388447103538	368
 BV19w411i7xA	MIMI - よるつむぎ 钢琴编曲	作曲：MIMI\n编曲：Alouette\nYouTube版本：https://youtu.be/HNnLefpS764	http://s32g9y9rt.bkt.clouddn.com/bilibili-video/BV19w411i7xA.flv	http://s32g9y9rt.bkt.clouddn.com/bilibili-cover/9b982b8c586d9cc92c20be4e38010371c506b3c7	2023-09-17 01:25:55	3546388447103538	578
-BV1eu4y1r71b	MIMI - ルルージュ 钢琴编曲	作曲：MIMI\n编曲：Alouette\nYouTube版本：https://youtu.be/iEawqjq67II	http://s32g9y9rt.bkt.clouddn.com/bilibili-video/BV1eu4y1r71b.flv	http://s32g9y9rt.bkt.clouddn.com/bilibili-cover/8e578622fdfeb2039cac62b17bf3e4ff34fe43c5	2023-09-17 01:25:10	3546388447103538	809
 BV1au4y1B7k1	[速比特Astro]B站传统，一个赞10km，一个币30km，一个关注50km，讲究的就是一个累死自己	截止到我骑行距离追上B站统计数据那一天，成功转化为追及问题，宁可累死自己，也不便宜你们	http://s32g9y9rt.bkt.clouddn.com/bilibili-video/BV1au4y1B7k1.flv	http://s32g9y9rt.bkt.clouddn.com/bilibili-cover/83045d0d30b837419bca0a20079a4f3672a73944	2023-08-05 14:31:22	361180097	4265
-BV1xN4y1f7fz	【AISinger&新模型】牧濑红莉栖 可愛くなりたい/想变得可爱	作品类型：AI翻唱、模型展示\n原唱：HoneyWorks /雨宮天 (あまみや そら)\n音源CV：今井麻美\n模型单主/委托人：@风小楼WindJack  \n建模：@是古古や  \n歌曲推理/训练: @你个老番茄  \n视频制作：@是古古や  、@风小楼WindJack	http://s32g9y9rt.bkt.clouddn.com/bilibili-video/BV1xN4y1f7fz.flv	http://s32g9y9rt.bkt.clouddn.com/bilibili-cover/b259f16d9c8bc16067ec681a7ae1c90240fe8b32	2023-09-29 03:55:00	39991495	7817
 BV1Fc411V7S5	【MAD】黑川赤音&蜜雨	第一个雨中场景为采用Wallpaper Engine制作的壁纸，已分享至steam创意工坊。\n\n歌曲出自翼年代记的：\n蜜雨\n演唱：\n牧野由依	http://s32g9y9rt.bkt.clouddn.com/bilibili-video/BV1Fc411V7S5.flv	http://s32g9y9rt.bkt.clouddn.com/bilibili-cover/18bede04fed1f2b2f632e8ba25c997022f360527	2023-05-31 14:58:47	39991495	1524
 BV18X4y1y7YZ	像素风 -『アイドル』 - YOASOBI 推しの子 OP	在unity 中 使用像素风后处理Shader渲染像素效果	http://s32g9y9rt.bkt.clouddn.com/bilibili-video/BV18X4y1y7YZ.flv	http://s32g9y9rt.bkt.clouddn.com/bilibili-cover/f2f4bc7f129b2a677ac3a900fd12dcf26cfbf867	2023-05-23 17:54:14	39991495	760
-BV1yg4y1V7cZ	自制首个黑川赤音/黑川茜 4K动态壁纸，庆祝茜宝登场！		http://s32g9y9rt.bkt.clouddn.com/bilibili-video/BV1yg4y1V7cZ.flv	http://s32g9y9rt.bkt.clouddn.com/bilibili-cover/ffcf4b2988236de722321240772ec76030b1d7a3	2023-05-17 15:44:07	39991495	9326
 BV1PT411t7ci	当Amadeus和我说再见		http://s32g9y9rt.bkt.clouddn.com/bilibili-video/BV1PT411t7ci.flv	http://s32g9y9rt.bkt.clouddn.com/bilibili-cover/8e491eafc7e2f9e5a13a8e7a4c2418514dd366c7	2023-05-11 16:40:33	39991495	3527
 BV1Sg411q7GW	我在海外孤身抗疫了三年，终究还是阳了	我在海外孤身抗疫了三年，终究还是阳了	http://s32g9y9rt.bkt.clouddn.com/bilibili-video/BV1Sg411q7GW.flv	http://s32g9y9rt.bkt.clouddn.com/bilibili-cover/339ae101d6161ac824434b423059c1996b9bf6fd	2022-11-18 02:17:51	589533168	23388
 BV1EN411P7Mg	Amadeus新增点歌功能！助手X钟无艳	Amadeus V0.6.2 新增点歌功能\n\n感谢 @Xeuyna 制作的AI曲目 支援Amadeus系统\n完整版地址：BV1ym4y1B7ih\n声音归属于牧濑红莉栖（CV：今井麻美）\n原唱：谢安琪-钟无艳	http://s32g9y9rt.bkt.clouddn.com/bilibili-video/BV1EN411P7Mg.flv	http://s32g9y9rt.bkt.clouddn.com/bilibili-cover/b121c849d0b618953236e5da23456c1c075d432b	2023-04-08 11:50:59	39991495	2546
 BV1ds4y127Kh	我的AI助手唱歌完全没问题	Amadeus 0.6.1 版本，增加助手唱歌技能。\n\n原曲：アマデウス\n原唱：伊藤加奈子\n声音归属：牧濑红莉栖（CV：今井麻美）\n基于Sovits，BV1vM4y1S7zB\n\n收敛得不太好，发音有些问题\n\n留言想要增加的歌单吧！	http://s32g9y9rt.bkt.clouddn.com/bilibili-video/BV1ds4y127Kh.flv	http://s32g9y9rt.bkt.clouddn.com/bilibili-cover/b1b1ec31db6376858628f8c63ffff1a566fd030e	2023-04-05 06:58:50	39991495	3648
 BV1Zs4y177fM	在线版Amadeus(AI红莉栖)来了！手机网页直接访问！【基于Chatgpt-VITS】命运石之门0	在线版-H5 Amadeus来了，基于Pixi.js + ChatGpt + VITS， \n实现了情绪识别及表情映射。\n关注我自动回复地址\n限额问题，随时可能停服\n有问题欢迎私信反馈\n2群 584106417	http://s32g9y9rt.bkt.clouddn.com/bilibili-video/BV1Zs4y177fM.flv	http://s32g9y9rt.bkt.clouddn.com/bilibili-cover/7b7bcf24eb4d2aa5a7166436a15e25ad194147dc	2023-04-01 08:38:15	39991495	158248
-BV1mz4y1q7Xy	LabMem005 桐生萌郁哟 Happy birthday!	-	http://s32g9y9rt.bkt.clouddn.com/bilibili-video/BV1mz4y1q7Xy.flv	http://s32g9y9rt.bkt.clouddn.com/bilibili-cover/576bf942df5b5d15b6eaa65dda58249fd9d59dcb	2023-06-06 04:17:45	39991495	1291
 BV1Wh411371y	【命运石之门】给Amadeus加上一些3D效果	使用Shader及深度图给2D图像生成3D视差效果	http://s32g9y9rt.bkt.clouddn.com/bilibili-video/BV1Wh411371y.flv	http://s32g9y9rt.bkt.clouddn.com/bilibili-cover/1416884541cc5c5ae0bc3649e7455cbae0243a01	2023-03-29 05:05:38	39991495	4095
+BV1yg4y1V7cZ	自制首个黑川赤音/黑川茜 4K动态壁纸，庆祝茜宝登场！		http://s32g9y9rt.bkt.clouddn.com/bilibili-video/BV1yg4y1V7cZ.flv	http://s32g9y9rt.bkt.clouddn.com/bilibili-cover/ffcf4b2988236de722321240772ec76030b1d7a3	2023-05-17 15:44:07	39991495	9329
+BV1p8411q78f	Orangestar - Aloud 钢琴编曲	作曲：Orangestar\n编曲：Alouette\nYouTube版本：https://youtu.be/oCaSvc-QEBk	http://s32g9y9rt.bkt.clouddn.com/bilibili-video/BV1p8411q78f.flv	http://s32g9y9rt.bkt.clouddn.com/bilibili-cover/8225e35e47f9a4eed64b51f4bc6b8e721ce19e48	2023-09-17 02:11:29	3546388447103538	841
+BV1eu4y1r71b	MIMI - ルルージュ 钢琴编曲	作曲：MIMI\n编曲：Alouette\nYouTube版本：https://youtu.be/iEawqjq67II	http://s32g9y9rt.bkt.clouddn.com/bilibili-video/BV1eu4y1r71b.flv	http://s32g9y9rt.bkt.clouddn.com/bilibili-cover/8e578622fdfeb2039cac62b17bf3e4ff34fe43c5	2023-09-17 01:25:10	3546388447103538	813
+BV1mz4y1q7Xy	LabMem005 桐生萌郁哟 Happy birthday!	-	http://s32g9y9rt.bkt.clouddn.com/bilibili-video/BV1mz4y1q7Xy.flv	http://s32g9y9rt.bkt.clouddn.com/bilibili-cover/576bf942df5b5d15b6eaa65dda58249fd9d59dcb	2023-06-06 04:17:45	39991495	1292
+BV1qp4y1A7rL	MIMI - 妄想哀歌 (feat. 初音ミク＆可不) 钢琴编曲	作曲：MIMI\n编曲：Alouette\nYouTube版本：https://youtu.be/oyhEjoznVxY	http://s32g9y9rt.bkt.clouddn.com/bilibili-video/BV1qp4y1A7rL.flv	http://s32g9y9rt.bkt.clouddn.com/bilibili-cover/767a1bb46d6c99d0f0cd7103744bed73308a8a6b	2023-09-17 01:35:09	3546388447103538	2590
 BV1K14y1i7Xj	【飞羽社】你这超级大黄蜂，怎么是单垂尾的？		http://s32g9y9rt.bkt.clouddn.com/bilibili-video/BV1K14y1i7Xj.flv	http://s32g9y9rt.bkt.clouddn.com/bilibili-cover/8cb1ea39e96c0764e262c50c81b68c40bc83d764	2023-08-19 10:00:00	505274392	111094
 BV1Up4y1V7nG	【飞羽社】流浪地球UEG特种部队清剿数字生命叛军视频流出！	长春航空开放活动直10K配合直20K实施机降特种作战！\n\n摄影：IP123、民宣\n后期：苏老八	http://s32g9y9rt.bkt.clouddn.com/bilibili-video/BV1Up4y1V7nG.flv	http://s32g9y9rt.bkt.clouddn.com/bilibili-cover/9c2f2a3c25cf72b9e2e1d182f37bb372f8739d85	2023-08-04 09:43:15	505274392	97608
-BV1dx4y1X743	【飞羽社】4K拍战机，我没有放弃一镜到底！	摄影师：IP123\n后期：苏老八\n\n不用原声的原因是：1、官方BGM过于土味；2、现场C语言过多，容易影响未成年人身心健康。\n时间仓促，调色和增稳都没来得及细做，但这段近五分钟的一镜到底仍然非常稀有。\n求三连！您的三连是我们前进最大的动力！	http://s32g9y9rt.bkt.clouddn.com/bilibili-video/BV1dx4y1X743.flv	http://s32g9y9rt.bkt.clouddn.com/bilibili-cover/2080842239e5b82e12cedc8b818b36d4d8673635	2023-08-02 03:00:00	505274392	77361
 BV1PN41167ph	热血编程 （第三集）| 哈希表的典型案例	我是本人！不要去私聊我大号了 hhh\n大号教你学Python和游戏开发 @英雄哪里出来  \n小号教你学算法 @算法大师兄	http://s32g9y9rt.bkt.clouddn.com/bilibili-video/BV1PN41167ph.flv	http://s32g9y9rt.bkt.clouddn.com/bilibili-cover/4f53ec49bf49669f0939f02c4bbea862f6c4dce9	2023-08-16 04:00:00	1784235102	465455
 BV1Fm4y1y7gg	海军开放日rua052D，请把羡慕打在公屏上！	更新视频前，给大家放个上月的老素材当电子榨菜解解馋。	http://s32g9y9rt.bkt.clouddn.com/bilibili-video/BV1Fm4y1y7gg.flv	http://s32g9y9rt.bkt.clouddn.com/bilibili-cover/6401f5c6d339822b18781b3fb2ec7e44826e22b9	2023-05-05 06:09:25	505274392	145442
 BV1MG411w7pA	2022珠海航展飞行表演锦集！八一、红鹰、歼-16、直10大秀机动！	珠海的天气终于放晴了，趁此良机补拍大量飞行表演镜头。\n在太阳光的照射下，战机激励出的凝结云甚至出现了彩虹！\n本片几乎含有飞行表演的全部机型以及大部分精彩镜头，也是今年我们最后一条飞行表演题材的视频。\n专业日结束后我们将陆续对本届航展上一些有意思的装备进行分析，敬请期待。	http://s32g9y9rt.bkt.clouddn.com/bilibili-video/BV1MG411w7pA.flv	http://s32g9y9rt.bkt.clouddn.com/bilibili-cover/944c097811c47e28ca1b91ab684e52a206b08a6e	2022-11-10 02:00:00	505274392	185468
-BV1uK411U7dQ	【4K 原声】长空起舞！歼-20超近距离展示！	摄制：IP123\n最后有惊喜！最后有惊喜！	http://s32g9y9rt.bkt.clouddn.com/bilibili-video/BV1uK411U7dQ.flv	http://s32g9y9rt.bkt.clouddn.com/bilibili-cover/db39cf337be786f3a2d8ac073f08f1f7fcccacf8	2022-11-09 02:00:00	505274392	214644
-BV1te4y1178w	【飞羽社】歼-20四机编队从头顶飞过！	摄制：IP123\n后期：苏老八	http://s32g9y9rt.bkt.clouddn.com/bilibili-video/BV1te4y1178w.flv	http://s32g9y9rt.bkt.clouddn.com/bilibili-cover/0cc6bbe64c4b929ba27d3b15574902eeb37463d9	2022-11-05 12:13:30	505274392	170885
 BV1LP411Z7EW	GPT-4发布会，你想知道的全在这里！图片识别，逻辑推理，扩增字数。效果炸裂！	这gpt-3.5-turbo刚发了2周，GPT-4就来了！图片识别，逻辑推理，扩增字数。效果炸裂！	http://s32g9y9rt.bkt.clouddn.com/bilibili-video/BV1LP411Z7EW.flv	http://s32g9y9rt.bkt.clouddn.com/bilibili-cover/acaf71e5adc3511588d55ac28fc3f06497179a18	2023-03-14 23:58:51	589533168	413446
 BV17j411g7qk	让ChatGPT自己做个ChatGPT并且同时支持移动桌面和网页	纪念一下2023年3月1日，OpenAI公开了gpt-3.5-turbo模型，我们也可以自己做ChatGPT了！	http://s32g9y9rt.bkt.clouddn.com/bilibili-video/BV17j411g7qk.flv	http://s32g9y9rt.bkt.clouddn.com/bilibili-cover/6f01d9aeaaa022c9fd0b05c4300018d9a9400601	2023-03-02 04:02:15	589533168	116344
 BV1M54y137E5	ChatGPT调用StableDiffusion过程实录	先用Copilot写了半天，还不如ChatGPT手到擒来！	http://s32g9y9rt.bkt.clouddn.com/bilibili-video/BV1M54y137E5.flv	http://s32g9y9rt.bkt.clouddn.com/bilibili-cover/426de0a36348d999ed81389d00f06377f235c2f2	2023-02-28 23:22:02	589533168	4605
-BV1hs4y1b7AM	小兔子露出鸡脚了吧	前一阵子玩《仙剑奇侠传2》的时候遇到里面一道经典的“鸡兔同笼”数学题，正好借机向大家介绍一种简便的计算方法。视频中部分插图为AI作画，Stable Diffusion模型，让小兔子露出可爱的鸡脚！	http://s32g9y9rt.bkt.clouddn.com/bilibili-video/BV1hs4y1b7AM.flv	http://s32g9y9rt.bkt.clouddn.com/bilibili-cover/f4c3c987a5f6b70d0d0bbc0597ed167fd4aac3a3	2023-02-22 03:00:00	589533168	1642
 BV1CR4y1h7Ys	Flutter：跨组件选择区（网页和桌面端狂喜）	Flutter默认组件都是不可以被选中的。虽然有selectable text组件，但如果想要同时选择一大片区域里的多个组件该怎么办？别怕，用Flutter 3.3 新推出的 SelectionArea ，包裹整个页面，就可以轻松实现。	http://s32g9y9rt.bkt.clouddn.com/bilibili-video/BV1CR4y1h7Ys.flv	http://s32g9y9rt.bkt.clouddn.com/bilibili-cover/4b0a77626a041aeb81c69368e3cab1b8b7e26d12	2023-01-27 22:38:11	589533168	3509
 BV1bY411y75w	Flutter：通过监听AppLifecyle实现后台隐私遮挡	有些App在切换到后台模式时会遮住窗口，这样用户在切换窗口的时候可以得到一定程度的隐私保护。这期视频我们通过Flutter框架自带的AppLifecycle监听，试试不用插件能否实现类似的效果。	http://s32g9y9rt.bkt.clouddn.com/bilibili-video/BV1bY411y75w.flv	http://s32g9y9rt.bkt.clouddn.com/bilibili-cover/fb276c6a461bffb8dbfd708322e0a3f0092fdc9c	2023-01-19 03:15:00	589533168	7602
 BV1FK411q7sc	B站的2022总结年报｜感谢你们的陪伴	真是一个非常走心的简介	http://s32g9y9rt.bkt.clouddn.com/bilibili-video/BV1FK411q7sc.flv	http://s32g9y9rt.bkt.clouddn.com/bilibili-cover/212388a44166c77c7e980b17cb48d323df23a0aa	2022-12-31 10:00:00	589533168	653
 BV1qe4y1K7yU	Flutter：一个关于SliverFillRemaining的页面布局	半夜三更最适合更新视频了	http://s32g9y9rt.bkt.clouddn.com/bilibili-video/BV1qe4y1K7yU.flv	http://s32g9y9rt.bkt.clouddn.com/bilibili-cover/eaec088428a91076c9ddb9418c96019a4c1b60a8	2022-12-19 19:00:14	589533168	3032
 BV1dG4y1t7rL	Flutter：用ColorFiltered一键做出黑白效果/灰度效果	这期视频我们简单介绍一下ColorFiltered组件	http://s32g9y9rt.bkt.clouddn.com/bilibili-video/BV1dG4y1t7rL.flv	http://s32g9y9rt.bkt.clouddn.com/bilibili-cover/239fa444b9014a5fd3eb1ffe300e2fec58d5a5c4	2022-11-14 06:35:12	589533168	1803
-BV1yc411Z7t3	🔥点击调教雌小鬼🔥	生气了，怎么没有来救驾啊，我明明才是被众多妹妹簇拥着的一方才对啊，为什么啊！！！\n为什么没人来救我啊！！！\n生气了！！！！\n\n剪辑/轴：虚研社！\n封面：虚研社❤\n\n一键三连和转发就拜托啦汪！	http://s32g9y9rt.bkt.clouddn.com/bilibili-video/BV1yc411Z7t3.flv	http://s32g9y9rt.bkt.clouddn.com/bilibili-cover/d9e9981d4218e3ad859c8bc6e06498d13919d6a8	2023-10-26 10:31:25	1521415	47678
-BV1iS4y1F7g7	【莓用良品】 妈 妈 耳 环	导演:郭毅\n文案: 郭毅 阿科\n拍摄:孔二宝\n产品设计:郭毅 彭涛\n三维动画:韩伯宇 赵铂浩  李云山 赵家豪 韩佳乐 孟文辉\n剪辑: 郭毅	http://s32g9y9rt.bkt.clouddn.com/bilibili-video/BV1iS4y1F7g7.flv	http://s32g9y9rt.bkt.clouddn.com/bilibili-cover/cb29b2a7fa2f9d6c1873bf2cef43af6eb38a45d9	2022-02-19 11:24:21	174902557	916588
+BV1hs4y1b7AM	小兔子露出鸡脚了吧	前一阵子玩《仙剑奇侠传2》的时候遇到里面一道经典的“鸡兔同笼”数学题，正好借机向大家介绍一种简便的计算方法。视频中部分插图为AI作画，Stable Diffusion模型，让小兔子露出可爱的鸡脚！	http://s32g9y9rt.bkt.clouddn.com/bilibili-video/BV1hs4y1b7AM.flv	http://s32g9y9rt.bkt.clouddn.com/bilibili-cover/f4c3c987a5f6b70d0d0bbc0597ed167fd4aac3a3	2023-02-22 03:00:00	589533168	1643
+BV1te4y1178w	【飞羽社】歼-20四机编队从头顶飞过！	摄制：IP123\n后期：苏老八	http://s32g9y9rt.bkt.clouddn.com/bilibili-video/BV1te4y1178w.flv	http://s32g9y9rt.bkt.clouddn.com/bilibili-cover/0cc6bbe64c4b929ba27d3b15574902eeb37463d9	2022-11-05 12:13:30	505274392	170887
+BV1dx4y1X743	【飞羽社】4K拍战机，我没有放弃一镜到底！	摄影师：IP123\n后期：苏老八\n\n不用原声的原因是：1、官方BGM过于土味；2、现场C语言过多，容易影响未成年人身心健康。\n时间仓促，调色和增稳都没来得及细做，但这段近五分钟的一镜到底仍然非常稀有。\n求三连！您的三连是我们前进最大的动力！	http://s32g9y9rt.bkt.clouddn.com/bilibili-video/BV1dx4y1X743.flv	http://s32g9y9rt.bkt.clouddn.com/bilibili-cover/2080842239e5b82e12cedc8b818b36d4d8673635	2023-08-02 03:00:00	505274392	77362
 BV1914y1B7nD	热血编程 （第二集）| 递推问题的优化	不要投币！不要投币！不要投币!	http://s32g9y9rt.bkt.clouddn.com/bilibili-video/BV1914y1B7nD.flv	http://s32g9y9rt.bkt.clouddn.com/bilibili-cover/5ca754142dffca6491ba5fd2e503b071ce5f8ec3	2023-08-05 04:00:00	1784235102	312346
 BV1AV4y1B7pV	一分钟记住所有算法	Python实现的一些常用算法：BV1UP4116754	http://s32g9y9rt.bkt.clouddn.com/bilibili-video/BV1AV4y1B7pV.flv	http://s32g9y9rt.bkt.clouddn.com/bilibili-cover/df9bdae3d90ebea18ec1832e0108fb38de332f0f	2023-07-29 06:06:32	1784235102	205757
 BV14V411L7Ax	热血编程 （第一集）| 枚举算法的优化	您的三连将是我持续更新的最大动力~	http://s32g9y9rt.bkt.clouddn.com/bilibili-video/BV14V411L7Ax.flv	http://s32g9y9rt.bkt.clouddn.com/bilibili-cover/4d6fa4ae7e11124fedc95a23d590d1c3b8156289	2023-07-22 12:10:14	1784235102	95714
-BV1fY411C72X	可不能再被同事发现了哟……	建这个号的目的呢，主要是……	http://s32g9y9rt.bkt.clouddn.com/bilibili-video/BV1fY411C72X.flv	http://s32g9y9rt.bkt.clouddn.com/bilibili-cover/2f6b0511dca0f7eba30aa908e31e93c19fd585f1	2023-01-10 15:53:47	1784235102	124285
 BV1e14y117a5	ReReハロ〜終われそうにない夏〜（Miku＇s version）	也许此去经年忘了也罢\n只不过是一句了无牵挂\n\n\n\n封面是@三叶伶舟 画的！真的画得好好呜呜呜呜呜呜呜，画得真的好看！！！\nPV是@实况主小博 做的，也是做得特别好	http://s32g9y9rt.bkt.clouddn.com/bilibili-video/BV1e14y117a5.flv	http://s32g9y9rt.bkt.clouddn.com/bilibili-cover/5f779b42b7899b88ce2f0fe7da10ac4cce3e9d46	2023-08-21 15:59:48	22046289	211
 BV1ej411v7Wz	最 痛 苦 的 一 集	说实话QQ有155个G的垃圾我是真的没想到的…\n仓鼠般囤积了4年的电子垃圾以赛马娘日服作契机被全部清理了出去。\n\n感觉大脑也突然被清空了，内心此刻是无比的宁静…\n\n剪辑/轴：鸡大崽！\n封面：虚研社❤\n\n一键三连和转发就拜托啦汪！	http://s32g9y9rt.bkt.clouddn.com/bilibili-video/BV1ej411v7Wz.flv	http://s32g9y9rt.bkt.clouddn.com/bilibili-cover/ecdb0f3c21f6fb7b7f16dfce33b1cf3e77a6bbd1	2023-10-20 08:45:36	1521415	140023
 BV1Yu4y1p7N2	我什么都不明白…	我什么都不明白。\n\n翻唱：艾尔莎_Channel\n混音：果屋\n\n一键三连和转发就拜托啦汪！	http://s32g9y9rt.bkt.clouddn.com/bilibili-video/BV1Yu4y1p7N2.flv	http://s32g9y9rt.bkt.clouddn.com/bilibili-cover/97cc8facc20c267737425c1476daea6318bf813a	2023-10-17 09:00:00	1521415	49146
@@ -1759,25 +1755,29 @@ BV1F8411y7uw	长点肉怎么你了！？	其实我也没有那么胖，就是变
 BV1Eu411g7WD	你说我该不该满足他呢…	大家就仗着我温柔，然后对我乱搞八搞，我也就那天对你们比较温柔罢了！\n这一次是奖励，不是平时都是这样的，不许挑软柿子捏，都给吃脆柿子！！！\n\n剪辑/轴：大崽工作组\n封面：虚研社❤\n\n一键三连和转发就拜托啦汪！	http://s32g9y9rt.bkt.clouddn.com/bilibili-video/BV1Eu411g7WD.flv	http://s32g9y9rt.bkt.clouddn.com/bilibili-cover/bc70736e71d9147453cf59a14f8530e61b937954	2023-10-03 10:30:00	1521415	254398
 BV19C4y1o7kr	献给大家快乐国庆每一天！！！	真的真的真的！第一次唱了这么长的中文歌，希望大家能够听到最后！\n因为是长视频所以一键三连真的拜托了！（下跪）\n\n混音：果屋\n视频：虚研社❤\n\n一键三连和转发就拜托啦汪！	http://s32g9y9rt.bkt.clouddn.com/bilibili-video/BV19C4y1o7kr.flv	http://s32g9y9rt.bkt.clouddn.com/bilibili-cover/db6226c051d90a3d4b3623865ae7396d08e9bb04	2023-10-02 09:00:00	1521415	32652
 BV1em4y1V7cb	想要成为你的恋人汪❤	中秋节怎么发的是这种高羞耻度满是粉红色泡泡的视频啊啊啊啊啊…\n真的全是粉红泡泡…我去吃个草莓月饼先…\n标题这样是因为不这样喊出来根本说不出口，原谅我吧。\n\n混音：果屋\n视频：虚研社❤\n\n一键三连和转发就拜托啦汪！	http://s32g9y9rt.bkt.clouddn.com/bilibili-video/BV1em4y1V7cb.flv	http://s32g9y9rt.bkt.clouddn.com/bilibili-cover/f1800280c7ebd8c55520f28be9cc595f6f07959b	2023-09-29 09:00:00	1521415	58088
-BV1rV4y1R7NQ	【莓用良品】全球首款碳基人工智能水杯	莓用良品最新发布：全新一代碳基智能水杯\n创意支持：惠普战66	http://s32g9y9rt.bkt.clouddn.com/bilibili-video/BV1rV4y1R7NQ.flv	http://s32g9y9rt.bkt.clouddn.com/bilibili-cover/5fb95fcacacc3648d211342778dbfcb43e8a7d2f	2023-04-30 15:04:56	174902557	1529792
-BV1mM411V711	【没啥用科技】2023股东年度汇报	感谢各位股东三年来的支持与喜爱\n我们未来会更用心地做更加没用的东西	http://s32g9y9rt.bkt.clouddn.com/bilibili-video/BV1mM411V711.flv	http://s32g9y9rt.bkt.clouddn.com/bilibili-cover/3df494bcf7cdee1ecfa9dfc8fee3beaeed38530c	2023-04-22 13:44:47	174902557	684585
-BV1WV4y1S7P1	【莓用良品】莓用列车-重新定义城市通勤	没啥用科技最新发布：Useless Slow Train\n欢迎大家投币预定哦~\n导演:郭毅\n文案: 郭毅 秦子旭\n拍摄:孔二宝 \n产品设计:郭毅 吴亮亮\n三维动画:韩伯宇 赵铂浩 李云山 赵家豪 张宏禹\n平面视觉设计: 张晓明 姚紫藤 \n字体：得意黑 Smiley Sans	http://s32g9y9rt.bkt.clouddn.com/bilibili-video/BV1WV4y1S7P1.flv	http://s32g9y9rt.bkt.clouddn.com/bilibili-cover/0c801c9c2532b45d022120d073bde6c54b5062ad	2023-04-01 13:33:22	174902557	967932
-BV17d4y1q77X	【没啥用科技】智能穿戴 从头开始	没啥用科技最新发布：\nUseless Cap\n欢迎大家投币预定哦~\n导演:郭毅\n文案: 郭毅 秦子旭\n拍摄:孔二宝 申思\n产品设计:郭毅 彭涛\n三维动画:韩伯宇 赵铂浩 李云山 赵家豪 张宏禹\n平面视觉设计: 张晓明 姚紫藤	http://s32g9y9rt.bkt.clouddn.com/bilibili-video/BV17d4y1q77X.flv	http://s32g9y9rt.bkt.clouddn.com/bilibili-cover/a83a3c9f09439241322f2bb9c092cc432cbe020e	2022-10-02 10:00:00	174902557	935486
-BV1a14y1h7Ap	【莓用良品】智能跑椅 坐以待币	莓用良品最新发布：献给打工人的第一把智能跑椅	http://s32g9y9rt.bkt.clouddn.com/bilibili-video/BV1a14y1h7Ap.flv	http://s32g9y9rt.bkt.clouddn.com/bilibili-cover/d15181612f97da79741f322d899fce6f35ef7b59	2022-09-28 10:00:00	174902557	1126243
+BV1rV4y1R7NQ	【莓用良品】全球首款碳基人工智能水杯	莓用良品最新发布：全新一代碳基智能水杯\n创意支持：惠普战66	http://s32g9y9rt.bkt.clouddn.com/bilibili-video/BV1rV4y1R7NQ.flv	http://s32g9y9rt.bkt.clouddn.com/bilibili-cover/5fb95fcacacc3648d211342778dbfcb43e8a7d2f	2023-04-30 15:04:56	174902557	1529793
+BV1fY411C72X	可不能再被同事发现了哟……	建这个号的目的呢，主要是……	http://s32g9y9rt.bkt.clouddn.com/bilibili-video/BV1fY411C72X.flv	http://s32g9y9rt.bkt.clouddn.com/bilibili-cover/2f6b0511dca0f7eba30aa908e31e93c19fd585f1	2023-01-10 15:53:47	1784235102	124286
+BV1mM411V711	【没啥用科技】2023股东年度汇报	感谢各位股东三年来的支持与喜爱\n我们未来会更用心地做更加没用的东西	http://s32g9y9rt.bkt.clouddn.com/bilibili-video/BV1mM411V711.flv	http://s32g9y9rt.bkt.clouddn.com/bilibili-cover/3df494bcf7cdee1ecfa9dfc8fee3beaeed38530c	2023-04-22 13:44:47	174902557	684586
 BV1ad4y1D7zV	【莓用良品】电车的王，无限续航！	莓用良品全新首发：送给年轻人的最后一辆智能小电驴。	http://s32g9y9rt.bkt.clouddn.com/bilibili-video/BV1ad4y1D7zV.flv	http://s32g9y9rt.bkt.clouddn.com/bilibili-cover/93a5efeb4feb3dfcc5c560afe72643d8afb8b29d	2022-07-29 10:00:00	174902557	2654632
 BV1e5411m78S	【没啥用科技】2022年度特别发布会	感谢各位股东两年来的支持与喜爱\n我们未来会更用心的做更加没用的东西\n让我们一起为梦想中风吧~	http://s32g9y9rt.bkt.clouddn.com/bilibili-video/BV1e5411m78S.flv	http://s32g9y9rt.bkt.clouddn.com/bilibili-cover/23b4987b6c89654370e11601ad2d24f2dc72d02d	2022-04-22 15:55:05	174902557	2034905
-BV1fu411B7BY	【莓用良品】智能口罩，给你脸了！	莓用良品全新发布莓用智能口罩	http://s32g9y9rt.bkt.clouddn.com/bilibili-video/BV1fu411B7BY.flv	http://s32g9y9rt.bkt.clouddn.com/bilibili-cover/58035d03727d89c2c30db98c85b1f12760b677b2	2022-03-11 10:30:11	174902557	3940234
-BV1vt4y1h7sD	【莓用良品】智能电竞床 爱躺才会赢！	莓用良品全新发布莓用智能电竞床	http://s32g9y9rt.bkt.clouddn.com/bilibili-video/BV1vt4y1h7sD.flv	http://s32g9y9rt.bkt.clouddn.com/bilibili-cover/55acb708279ad2ba869b5f738fc2526bd429ea00	2022-06-15 12:26:56	174902557	1420767
 BV1HG411C7ZM	热血编程 （第五集）| 双指针的巧妙转换	我是本人！不要去私聊我大号了哟 ＹＯ~ (＾Ｕ＾)ノ~ＹＯ\n大号教你学C语言、Python、游戏开发 @英雄哪里出来  \n小号教你学算法 @算法大师兄  \n二创已开放	http://s32g9y9rt.bkt.clouddn.com/bilibili-video/BV1HG411C7ZM.flv	http://s32g9y9rt.bkt.clouddn.com/bilibili-cover/48f4603262268772c62aa8c696762dabd3fa8c10	2023-10-29 04:00:00	1784235102	86991
+BV1xN4y1f7fz	【AISinger&新模型】牧濑红莉栖 可愛くなりたい/想变得可爱	作品类型：AI翻唱、模型展示\n原唱：HoneyWorks /雨宮天 (あまみや そら)\n音源CV：今井麻美\n模型单主/委托人：@风小楼WindJack  \n建模：@是古古や  \n歌曲推理/训练: @你个老番茄  \n视频制作：@是古古や  、@风小楼WindJack	http://s32g9y9rt.bkt.clouddn.com/bilibili-video/BV1xN4y1f7fz.flv	http://s32g9y9rt.bkt.clouddn.com/bilibili-cover/b259f16d9c8bc16067ec681a7ae1c90240fe8b32	2023-09-29 03:55:00	39991495	7819
+BV1vt4y1h7sD	【莓用良品】智能电竞床 爱躺才会赢！	莓用良品全新发布莓用智能电竞床	http://s32g9y9rt.bkt.clouddn.com/bilibili-video/BV1vt4y1h7sD.flv	http://s32g9y9rt.bkt.clouddn.com/bilibili-cover/55acb708279ad2ba869b5f738fc2526bd429ea00	2022-06-15 12:26:56	174902557	1420772
+BV1a14y1h7Ap	【莓用良品】智能跑椅 坐以待币	莓用良品最新发布：献给打工人的第一把智能跑椅	http://s32g9y9rt.bkt.clouddn.com/bilibili-video/BV1a14y1h7Ap.flv	http://s32g9y9rt.bkt.clouddn.com/bilibili-cover/d15181612f97da79741f322d899fce6f35ef7b59	2022-09-28 10:00:00	174902557	1126244
+BV17d4y1q77X	【没啥用科技】智能穿戴 从头开始	没啥用科技最新发布：\nUseless Cap\n欢迎大家投币预定哦~\n导演:郭毅\n文案: 郭毅 秦子旭\n拍摄:孔二宝 申思\n产品设计:郭毅 彭涛\n三维动画:韩伯宇 赵铂浩 李云山 赵家豪 张宏禹\n平面视觉设计: 张晓明 姚紫藤	http://s32g9y9rt.bkt.clouddn.com/bilibili-video/BV17d4y1q77X.flv	http://s32g9y9rt.bkt.clouddn.com/bilibili-cover/a83a3c9f09439241322f2bb9c092cc432cbe020e	2022-10-02 10:00:00	174902557	935488
+BV1fu411B7BY	【莓用良品】智能口罩，给你脸了！	莓用良品全新发布莓用智能口罩	http://s32g9y9rt.bkt.clouddn.com/bilibili-video/BV1fu411B7BY.flv	http://s32g9y9rt.bkt.clouddn.com/bilibili-cover/58035d03727d89c2c30db98c85b1f12760b677b2	2022-03-11 10:30:11	174902557	3940235
+BV1uK411U7dQ	【4K 原声】长空起舞！歼-20超近距离展示！	摄制：IP123\n最后有惊喜！最后有惊喜！	http://s32g9y9rt.bkt.clouddn.com/bilibili-video/BV1uK411U7dQ.flv	http://s32g9y9rt.bkt.clouddn.com/bilibili-cover/db39cf337be786f3a2d8ac073f08f1f7fcccacf8	2022-11-09 02:00:00	505274392	214647
 BV1nh4y1i7tD	💢萝莉控真恶心…💢	肃清！一定要肃清！\n…………\n话虽然这么说，唱完这首歌回顾…\n竟觉得萝莉控是如此的可悲，也不想肃清了，只想安慰一下可怜的萝莉控们…\n真可怜啊（感叹）真可怜❤（再度感叹）\n\n翻唱：艾尔莎_Channel\n混音：果屋\n\n一键三连和转发就拜托啦汪！	http://s32g9y9rt.bkt.clouddn.com/bilibili-video/BV1nh4y1i7tD.flv	http://s32g9y9rt.bkt.clouddn.com/bilibili-cover/c97fcfb0e78f4dd7fc0f844ee0839bdb0db3887a	2023-10-23 11:06:11	1521415	178111
+BV1yc411Z7t3	🔥点击调教雌小鬼🔥	生气了，怎么没有来救驾啊，我明明才是被众多妹妹簇拥着的一方才对啊，为什么啊！！！\n为什么没人来救我啊！！！\n生气了！！！！\n\n剪辑/轴：虚研社！\n封面：虚研社❤\n\n一键三连和转发就拜托啦汪！	http://s32g9y9rt.bkt.clouddn.com/bilibili-video/BV1yc411Z7t3.flv	http://s32g9y9rt.bkt.clouddn.com/bilibili-cover/d9e9981d4218e3ad859c8bc6e06498d13919d6a8	2023-10-26 10:31:25	1521415	47679
+BV1rv411P7NB	【偶像大师】THE IDOLM@STER Mini Concert（远古小型live）	https://nico.ms/sm10945821?camp202103tw=GxlxXxHuZf_1628961533163\n包含大肠的嫉妒，苍鸟，THE IDOLM@STER三首曲目	http://s32g9y9rt.bkt.clouddn.com/bilibili-video/BV1rv411P7NB.flv	http://s32g9y9rt.bkt.clouddn.com/bilibili-cover/28af4a66edf169b63bb92a63830f4d8851f2efeb	2021-08-14 17:35:18	3087782	2346
+BV1kH4y1f7Ab	【温太绝游戏】大鱼吃小鱼	-	http://s32g9y9rt.bkt.clouddn.com/bilibili-video/BV1kH4y1f7Ab.flv	http://s32g9y9rt.bkt.clouddn.com/bilibili-cover/c34c99b6d25c732bf01bcc9aa7f0a5a6ff098552	2023-10-05 12:38:09	3087782	210
+BV1WV4y1S7P1	【莓用良品】莓用列车-重新定义城市通勤	没啥用科技最新发布：Useless Slow Train\n欢迎大家投币预定哦~\n导演:郭毅\n文案: 郭毅 秦子旭\n拍摄:孔二宝 \n产品设计:郭毅 吴亮亮\n三维动画:韩伯宇 赵铂浩 李云山 赵家豪 张宏禹\n平面视觉设计: 张晓明 姚紫藤 \n字体：得意黑 Smiley Sans	http://s32g9y9rt.bkt.clouddn.com/bilibili-video/BV1WV4y1S7P1.flv	http://s32g9y9rt.bkt.clouddn.com/bilibili-cover/0c801c9c2532b45d022120d073bde6c54b5062ad	2023-04-01 13:33:22	174902557	967933
 BV16N41117Rz	试着用洛天依唱了《星间旅行》	新人调教，参数什么的都不会调，随便听听就好	http://s32g9y9rt.bkt.clouddn.com/bilibili-video/BV16N41117Rz.flv	http://s32g9y9rt.bkt.clouddn.com/bilibili-cover/a7143703b820449590cbd34590541ddd6b2e2d09	2023-05-31 04:03:39	22046289	1032
 BV1CM4y147du	fw也想让Miku唱宝可梦地平线op	呃啊啥也不会，宝可梦新作非常喜欢，就想到用Miku来翻调了，不会混音，不会调教，呜呜呜呜呜呜呜呜低技术力渣作	http://s32g9y9rt.bkt.clouddn.com/bilibili-video/BV1CM4y147du.flv	http://s32g9y9rt.bkt.clouddn.com/bilibili-cover/926ce8d73b7593538f3fc819367698211b6becee	2023-05-07 15:51:14	22046289	1348
-BV1kH4y1f7Ab	【温太绝游戏】大鱼吃小鱼	-	http://s32g9y9rt.bkt.clouddn.com/bilibili-video/BV1kH4y1f7Ab.flv	http://s32g9y9rt.bkt.clouddn.com/bilibili-cover/c34c99b6d25c732bf01bcc9aa7f0a5a6ff098552	2023-10-05 12:38:09	3087782	209
 BV13u411g7vp	【温太绝游戏】小试CS1.6 电脑都会报点 打CS不开麦的好好看好好学	系列名称为Vintage Gaming音译，拍摄在老机器上游玩游戏的日常。	http://s32g9y9rt.bkt.clouddn.com/bilibili-video/BV13u411g7vp.flv	http://s32g9y9rt.bkt.clouddn.com/bilibili-cover/72c79cd95c84d78eab115695fa7182081c41a709	2023-10-03 13:57:51	3087782	188
 BV15z4y1n799	hf2	-	http://s32g9y9rt.bkt.clouddn.com/bilibili-video/BV15z4y1n799.flv	http://s32g9y9rt.bkt.clouddn.com/bilibili-cover/6fb349a436284c1d83881463309191ed6966ddb3	2023-07-02 03:20:27	3087782	247
 BV1Lf4y1T7Xa	【偶像大师街机版】千早如月-序章教程瞎玩	-	http://s32g9y9rt.bkt.clouddn.com/bilibili-video/BV1Lf4y1T7Xa.flv	http://s32g9y9rt.bkt.clouddn.com/bilibili-cover/eb9e3857a533754eee2d00b70830bd5c756145aa	2021-11-08 13:46:16	3087782	1207
 BV1YQ4y1h7tc	【偶像大师CM】为Xbox360打广告的今井麻美	https://nico.ms/sm889489?camp202103tw=t7gHMCckTZ_1630257099048\n人美歌好听的名构	http://s32g9y9rt.bkt.clouddn.com/bilibili-video/BV1YQ4y1h7tc.flv	http://s32g9y9rt.bkt.clouddn.com/bilibili-cover/61c3aa8bc81934dfd3b1418ed4db75b11b70b68d	2021-08-29 17:50:26	3087782	540
-BV1rv411P7NB	【偶像大师】THE IDOLM@STER Mini Concert（远古小型live）	https://nico.ms/sm10945821?camp202103tw=GxlxXxHuZf_1628961533163\n包含大肠的嫉妒，苍鸟，THE IDOLM@STER三首曲目	http://s32g9y9rt.bkt.clouddn.com/bilibili-video/BV1rv411P7NB.flv	http://s32g9y9rt.bkt.clouddn.com/bilibili-cover/28af4a66edf169b63bb92a63830f4d8851f2efeb	2021-08-14 17:35:18	3087782	2345
 BV14Q4y1f77Y	【偶像大师】蒼い鳥（远古现场版）	https://nico.ms/sm10945821?camp202103tw=i3jZIsQD10_1627722481907\n行走的CD小歌神	http://s32g9y9rt.bkt.clouddn.com/bilibili-video/BV14Q4y1f77Y.flv	http://s32g9y9rt.bkt.clouddn.com/bilibili-cover/ed15fd6773c17f65a00209b17090ea28860844ba	2021-07-31 09:33:15	3087782	2969
 BV1Fy4y177Qy	【弹幕付】【偶像大师】大腸のジェラシー	https://nico.ms/sm10018878?camp202103tw=sMFVDoM6GV_1627705238538\n巨草空耳版本	http://s32g9y9rt.bkt.clouddn.com/bilibili-video/BV1Fy4y177Qy.flv	http://s32g9y9rt.bkt.clouddn.com/bilibili-cover/d75ed3cf04b8113f0a4676b22abc7970e9a96b36	2021-07-31 04:51:19	3087782	5336
 BV1RK4y1R72s	【雀魂】国士无双逆风翻盘	-	http://s32g9y9rt.bkt.clouddn.com/bilibili-video/BV1RK4y1R72s.flv	http://s32g9y9rt.bkt.clouddn.com/bilibili-cover/1f132ceeb965dd3f32c379afb3e0d96c1a0fef05	2021-04-29 16:52:35	3087782	30
@@ -3312,6 +3312,21 @@ clon3ad1f00026kz5wmnq5xyx	niaho	\N	2023-11-06 16:01:06.436	clon2zh5600006kz5dtaa
 --
 
 COPY public."Follow" ("createdAt", "followerId", "followingId") FROM stdin;
+2023-11-07 11:09:38.987	clojxwar70004zah0ala3k78l	3546388447103538
+2023-11-07 11:09:41.316	clojxwar70004zah0ala3k78l	1784235102
+\.
+
+
+--
+-- Data for Name: History; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public."History" ("userId", "videoId", "viewedAt") FROM stdin;
+clon50p6x0000jnp04t8s92tu	BV1qe4y1K7yU	2023-11-07 11:29:51.192
+clon50p6x0000jnp04t8s92tu	BV1e14y117a5	2023-11-07 11:47:51.35
+clon50p6x0000jnp04t8s92tu	BV1ej411v7Wz	2023-11-07 11:47:58.27
+clon50p6x0000jnp04t8s92tu	BV1bY411y75w	2023-11-07 11:54:16.415
+clon50p6x0000jnp04t8s92tu	BV1Sg411q7GW	2023-11-07 11:55:28.502
 \.
 
 
@@ -3328,6 +3343,10 @@ COPY public."Like" ("createdAt", "userId", "videoId") FROM stdin;
 2023-11-06 16:02:22.233	clon2zh5600006kz5dtaaqv27	BV1vt4y1h7sD
 2023-11-06 16:48:21.661	clojw08ht000gjnr3bx7ze9wk	BV1em4y1V7cb
 2023-11-07 03:59:33.735	clon50p6x0000jnp04t8s92tu	clonsy5fl0008jnp0f6fpst9f
+2023-11-07 08:36:47.126	clojxwar70004zah0ala3k78l	BV1vt4y1h7sD
+2023-11-07 08:46:25.346	clon50p6x0000jnp04t8s92tu	BV1nt4y1b7pw
+2023-11-07 08:46:37.124	clon50p6x0000jnp04t8s92tu	BV1mM411V711
+2023-11-07 09:18:07.572	clon50p6x0000jnp04t8s92tu	BV16u4y1e7xh
 \.
 
 
@@ -3708,14 +3727,6 @@ clon3gp3800046kz5e17cenen	BV1rV4y1R7NQ
 clon3gp3800046kz5e17cenen	BV1sY4y1n7i8
 clonz7mrg000hza6c4eljfzlv	BV1rV4y1R7NQ
 clonz7mrg000hza6c4eljfzlv	BV1iS4y1F7g7
-\.
-
-
---
--- Data for Name: _History; Type: TABLE DATA; Schema: public; Owner: postgres
---
-
-COPY public."_History" ("A", "B") FROM stdin;
 \.
 
 
@@ -4484,6 +4495,64 @@ clon3ad1f00026kz5wmnq5xyx	clon2zh5600006kz5dtaaqv27
 --
 
 COPY recommend.feedback (feedback_type, user_id, item_id, time_stamp, comment) FROM stdin;
+read	clon50p6x0000jnp04t8s92tu	BV1yg4y1V7cZ	2023-11-07 16:35:47.906+08	
+read_all	clon50p6x0000jnp04t8s92tu	BV1yg4y1V7cZ	2023-11-07 16:36:02.205+08	
+read	clon50p6x0000jnp04t8s92tu	BV1sY4y1n7i8	2023-11-07 16:39:27.292+08	
+read	clon50p6x0000jnp04t8s92tu	BV1wH4y1S7aC	2023-11-07 16:39:32.131+08	
+read	clon50p6x0000jnp04t8s92tu	BV1te4y1178w	2023-11-07 16:39:35.227+08	
+read	clon50p6x0000jnp04t8s92tu	BV1rV4y1R7NQ	2023-11-07 16:39:36.65+08	
+read	clon50p6x0000jnp04t8s92tu	BV1rv411P7NB	2023-11-07 16:41:51.981+08	
+read	clon50p6x0000jnp04t8s92tu	BV1kH4y1f7Ab	2023-11-07 16:41:58.971+08	
+read	clon50p6x0000jnp04t8s92tu	BV1iS4y1F7g7	2023-11-07 16:42:06.276+08	
+read	clon50p6x0000jnp04t8s92tu	BV1eu4y1r71b	2023-11-07 16:42:13.339+08	
+read	clon50p6x0000jnp04t8s92tu	BV1fY411C72X	2023-11-07 16:42:15.335+08	
+read	clon50p6x0000jnp04t8s92tu	BV1fu411B7BY	2023-11-07 16:42:16.288+08	
+read	clon50p6x0000jnp04t8s92tu	BV1vt4y1h7sD	2023-11-07 16:42:34.729+08	
+read	clon50p6x0000jnp04t8s92tu	BV1hs4y1b7AM	2023-11-07 16:42:42.344+08	
+read	clon50p6x0000jnp04t8s92tu	BV1hg411s7Xh	2023-11-07 16:42:44.266+08	
+read	clon50p6x0000jnp04t8s92tu	BV1dx4y1X743	2023-11-07 16:42:50.723+08	
+read	clon50p6x0000jnp04t8s92tu	BV1uK411U7dQ	2023-11-07 16:43:00.255+08	
+read	clojxwar70004zah0ala3k78l	BV1vt4y1h7sD	2023-11-07 16:44:14.954+08	
+liked	clon50p6x0000jnp04t8s92tu	BV1nt4y1b7pw	2023-11-07 16:46:25.483+08	
+read	clon50p6x0000jnp04t8s92tu	BV1mM411V711	2023-11-07 16:46:34.919+08	
+liked	clon50p6x0000jnp04t8s92tu	BV1mM411V711	2023-11-07 16:46:37.171+08	
+read	clon50p6x0000jnp04t8s92tu	BV1Ra41177RB	2023-11-07 16:46:57.741+08	
+read	clon50p6x0000jnp04t8s92tu	BV1WV4y1S7P1	2023-11-07 16:47:03.547+08	
+read	clon50p6x0000jnp04t8s92tu	BV1a14y1h7Ap	2023-11-07 16:47:10.819+08	
+read_all	clon50p6x0000jnp04t8s92tu	BV1a14y1h7Ap	2023-11-07 16:52:52.084+08	
+read	clojxwar70004zah0ala3k78l	BV1iS4y1F7g7	2023-11-07 16:57:41.596+08	
+read_all	clojxwar70004zah0ala3k78l	BV1iS4y1F7g7	2023-11-07 16:58:00.326+08	
+read	clojxwar70004zah0ala3k78l	BV1sY4y1n7i8	2023-11-07 16:58:49.307+08	
+read	clojxwar70004zah0ala3k78l	BV1wH4y1S7aC	2023-11-07 16:58:51.736+08	
+read	clojxwar70004zah0ala3k78l	BV1qp4y1A7rL	2023-11-07 17:01:05.398+08	
+read_all	clojxwar70004zah0ala3k78l	BV1eu4y1r71b	2023-11-07 17:03:24.399+08	
+read	clojxwar70004zah0ala3k78l	BV1eu4y1r71b	2023-11-07 17:12:29.322+08	
+read	clon50p6x0000jnp04t8s92tu	BV16u4y1e7xh	2023-11-07 17:18:02.05+08	
+liked	clon50p6x0000jnp04t8s92tu	BV16u4y1e7xh	2023-11-07 17:18:07.666+08	
+read	clon50p6x0000jnp04t8s92tu	BV1ju4y1671R	2023-11-07 17:24:32.459+08	
+read	clon50p6x0000jnp04t8s92tu	BV1p8411q78f	2023-11-07 17:25:31.15+08	
+read_all	clojxwar70004zah0ala3k78l	BV1p8411q78f	2023-11-07 17:27:48.459+08	
+read	clon50p6x0000jnp04t8s92tu	BV1mz4y1q7Xy	2023-11-07 17:28:00.259+08	
+read	clon50p6x0000jnp04t8s92tu	BV1qp4y1A7rL	2023-11-07 17:28:01.891+08	
+read	clojxwar70004zah0ala3k78l	BV1p8411q78f	2023-11-07 17:40:05.152+08	
+read	clon50p6x0000jnp04t8s92tu	BV1dw411m7wE	2023-11-07 17:52:09.867+08	
+read	clojxwar70004zah0ala3k78l	BV17d4y1q77X	2023-11-07 18:38:11.355+08	
+read	clojxwar70004zah0ala3k78l	cloo782th0001zaikqi6i5zim	2023-11-07 18:39:08.38+08	
+liked	clojxwar70004zah0ala3k78l	cloo792030004zaik6ke6bfy2	2023-11-07 18:40:13.582+08	
+read	clojxwar70004zah0ala3k78l	cloo792030004zaik6ke6bfy2	2023-11-07 18:40:13.72+08	
+read_all	clojxwar70004zah0ala3k78l	BV138411v7cT	2023-11-07 19:04:37.927+08	
+read	clon50p6x0000jnp04t8s92tu	BV1nh4y1i7tD	2023-11-07 19:13:06.187+08	
+read	clon50p6x0000jnp04t8s92tu	BV1ds4y127Kh	2023-11-07 19:13:32.919+08	
+read	clon50p6x0000jnp04t8s92tu	BV138411v7cT	2023-11-07 19:20:07.465+08	
+read_all	clojxwar70004zah0ala3k78l	BV1au4y1B7k1	2023-11-07 19:29:07.368+08	
+read	clon50p6x0000jnp04t8s92tu	BV1qe4y1K7yU	2023-11-07 19:29:51.336+08	
+read_all	clojxwar70004zah0ala3k78l	BV1Wh411371y	2023-11-07 19:29:57.541+08	
+read_all	clojxwar70004zah0ala3k78l	BV1SG411m79X	2023-11-07 19:32:45.862+08	
+read_all	clon50p6x0000jnp04t8s92tu	BV1qe4y1K7yU	2023-11-07 19:34:22.572+08	
+read	clon50p6x0000jnp04t8s92tu	BV1e14y117a5	2023-11-07 19:47:51.413+08	
+read	clon50p6x0000jnp04t8s92tu	BV1ej411v7Wz	2023-11-07 19:47:58.359+08	
+read	clon50p6x0000jnp04t8s92tu	BV1bY411y75w	2023-11-07 19:54:16.649+08	
+read	clon50p6x0000jnp04t8s92tu	BV1Sg411q7GW	2023-11-07 19:55:28.69+08	
 \.
 
 
@@ -4589,6 +4658,8 @@ BV1Yu4y1p7N2	f	["4429874"]	2023-11-05 15:26:00.172+08	["2423","85689","8780303",
 BV1Zs4y177fM	f	[]	2023-11-05 15:26:00.172+08	["46183","3221","85972","5858","2828639","20063","1907","15775524"]	
 BV1Zz4y1H7G9	f	[]	2023-11-05 15:26:00.172+08	["290","2510064","937","286776","2516708"]	
 cloo0l18d000uza6candxtecp	f	["10009"]	2023-11-07 15:33:13.483+08	["207892"]	
+cloo782th0001zaikqi6i5zim	f	["1742"]	2023-11-07 18:39:05.634+08	["1057109"]	
+cloo792030004zaik6ke6bfy2	f	["1742"]	2023-11-07 18:39:50.657+08	["1057109"]	
 \.
 
 
@@ -6237,6 +6308,9 @@ clojw08ht000gjnr3bx7ze9wk	[]	null
 630620958	[]	null	
 288178523	[]	null	
 19633401	[]	null	
+clon50p6x0000jnp04t8s92tu	[]	[]	
+cloo4anzr000xza6ckrx4gkgw	[]	null	
+cloo4dkpa000yza6cts5ozg9s	[]	null	
 \.
 
 
