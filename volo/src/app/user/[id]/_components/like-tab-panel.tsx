@@ -20,7 +20,7 @@ export const LikeTabPanel = ({ userId }: { userId: string }) => {
       {videos != undefined ? (
         <VideoGrid videos={videos} />
       ) : (
-        <Typography textAlign="center">无数据</Typography>
+        !isLoading && <Typography textAlign="center">无数据</Typography>
       )}
     </Stack>
   );

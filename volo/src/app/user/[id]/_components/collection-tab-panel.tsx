@@ -41,27 +41,23 @@ export const CollectionTabPanel = () => {
               加载中
             </Tab>
           )}
-          {collections != undefined && collections.length > 0 ? (
-            collections.map((collection) => (
-              <Tab key={collection.id}>
-                <VideoLibrary />
-                {collection.name}
-              </Tab>
-            ))
-          ) : (
-            <Typography textAlign="center">无数据</Typography>
-          )}
+          {collections != undefined && collections.length > 0
+            ? collections.map((collection) => (
+                <Tab key={collection.id}>
+                  <VideoLibrary />
+                  {collection.name}
+                </Tab>
+              ))
+            : !isLoading && <Typography textAlign="center">无数据</Typography>}
         </TabList>
 
-        {collections != undefined ? (
-          collections.map((collection, index) => (
-            <TabPanel value={index} key={collection.id}>
-              <CollectionGrid collectionId={collection.id} />
-            </TabPanel>
-          ))
-        ) : (
-          <Typography textAlign="center">无数据</Typography>
-        )}
+        {collections != undefined
+          ? collections.map((collection, index) => (
+              <TabPanel value={index} key={collection.id}>
+                <CollectionGrid collectionId={collection.id} />
+              </TabPanel>
+            ))
+          : !isLoading && <Typography textAlign="center">无数据</Typography>}
       </Tabs>
       <CreateCollectionModal
         open={showCreateCollection}
