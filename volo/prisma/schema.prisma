@@ -7,25 +7,6 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-// Necessary for Next auth
-model Account {
-  id                       String  @id @default(cuid())
-  userId                   String
-  type                     String
-  provider                 String
-  providerAccountId        String
-  refresh_token            String?
-  refresh_token_expires_in Int?
-  access_token             String?
-  expires_in               Int?
-  token_type               String?
-  scope                    String?
-  id_token                 String?
-  user                     User    @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-  @@unique([provider, providerAccountId])
-}
-
 model User {
   id        String  @id @default(cuid())
   name      String  @default("")
@@ -35,7 +16,6 @@ model User {
   avatarUrl String?
   bannerUrl String?
 
-  accounts    Account[]
   videos      Video[]
   comments    Comment[]
   likes       Like[]
