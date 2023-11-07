@@ -21,6 +21,7 @@ import { useStore } from "../store";
 import { useSession } from "next-auth/react";
 import { type Recommendation } from "~/server/api/routers/gorse";
 import { Videocam } from "@mui/icons-material";
+import Link from "next/link";
 
 export type NavigationDrawer = Pick<DrawerProps, "open" | "onClose">;
 
@@ -38,7 +39,6 @@ export function NavigationDrawer({ open, onClose }: NavigationDrawer) {
     ...(session.status === "authenticated" && {
       recommendation: "推荐",
     }),
-    popular: "热门",
     latest: "最新",
   } as Record<Recommendation, string>;
 
@@ -61,14 +61,16 @@ export function NavigationDrawer({ open, onClose }: NavigationDrawer) {
       <ModalClose />
       <Divider />
       <List>
-        <ListItem>
-          <ListItemButton>
-            <ListItemDecorator>
-              <Videocam />
-            </ListItemDecorator>
-            视频首页
-          </ListItemButton>
-        </ListItem>
+        <Link href="/video">
+          <ListItem>
+            <ListItemButton>
+              <ListItemDecorator>
+                <Videocam />
+              </ListItemDecorator>
+              视频首页
+            </ListItemButton>
+          </ListItem>
+        </Link>
       </List>
       <Divider />
       <DialogContent sx={{ p: 1.3 }}>
