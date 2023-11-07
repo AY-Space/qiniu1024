@@ -1,4 +1,4 @@
-version: "3"
+version: '3'
 services:
   app:
     build:
@@ -10,13 +10,13 @@ services:
       QINIU_ACCESS_KEY: # required
       QINIU_SECRET_KEY: # required
       QINIU_BUCKET: volo # required 要提前配置好 bucket 为可以公开访问
-      QINIU_BASE_URL: # required 七牛云 分配 的临时域名 或者是 绑定的域名
+      QINIU_BASE_URL: # required 七牛云 kodo 服务的端点URL，末尾不含 `/`
       GORSE_URL: http://recommend:8088
       REDIS_URL: redis://cache:6379/8
       ES_URL: http://es:9200
       INIT_DB: true # if need load mock dataset
     ports:
-      - "3000:3000"
+      - '3000:3000'
     depends_on:
       - db
       - cache
@@ -37,12 +37,12 @@ services:
     depends_on:
       - cache
       - db
-    
+
   cache:
     image: redis:alpine
     restart: always
     ports:
-      - "6379:6379"
+      - '6379:6379'
 
   db:
     image: postgres:alpine
@@ -54,14 +54,14 @@ services:
     volumes:
       - ./gorse/schema.sql:/docker-entrypoint-initdb.d/schema.sql # create recommend schema for gorse
     ports:
-      - "5432:5432"
-  
+      - '5432:5432'
+
   es:
-    build: 
+    build:
       context: ./elasticsearch
     environment:
-      - "discovery.type=single-node"
-      - "ES_JAVA_OPTS=-Xmx512m -Xms512m"
+      - 'discovery.type=single-node'
+      - 'ES_JAVA_OPTS=-Xmx512m -Xms512m'
     ports:
-      - "9200:9200"
+      - '9200:9200'
       # - "9300:9300" if need to deploy cluster

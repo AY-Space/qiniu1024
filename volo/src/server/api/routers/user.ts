@@ -97,7 +97,7 @@ export const userRouter = createTRPCRouter({
     .input(
       z.object({
         name: z.string().min(1).max(32),
-        email: z.string().email().min(1).max(64),
+        email: z.string().min(1).max(64),
         password: z.string().min(1).max(32),
         bio: z.string(),
         avatarFileKey: z.string().min(1).optional(),
