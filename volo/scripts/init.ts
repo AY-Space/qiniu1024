@@ -22,7 +22,7 @@ const pgInit = async (): Promise<boolean> => {
   }
 
   shell.exec(
-    'psql "postgresql://volo:volo@db:5432/volo?sslmode=disable" -f init.sql',
+    'psql "postgresql://volo:volo@db:5432/volo?sslmode=disable" -f prisma/data.sql',
   );
   return true;
 };
