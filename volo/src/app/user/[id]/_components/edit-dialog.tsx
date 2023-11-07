@@ -19,7 +19,6 @@ import {
 import {
   coverImageToCenter,
   dataURLtoFile,
-  getBilibiliImageUrl,
   readFileInputEventAsDataURL,
 } from "~/app/utils";
 import { type UserDetailedPublic } from "~/types";
@@ -114,12 +113,7 @@ export function EditDialog({
           <Stack spacing={1}>
             <Stack alignItems="center" gap={1}>
               <Avatar
-                src={
-                  croppedImg ??
-                  (user.avatarUrl
-                    ? getBilibiliImageUrl(user.avatarUrl)
-                    : undefined)
-                }
+                src={croppedImg ?? user.avatarUrl ?? undefined}
                 sx={{
                   "&": {
                     "--Avatar-size": "128px",

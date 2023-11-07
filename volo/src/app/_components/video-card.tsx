@@ -1,7 +1,7 @@
 "use client";
 import { Box, Card, CardContent, CardCover, Typography } from "@mui/joy";
 import { Flex } from "~/app/_components/flex";
-import { formatNumber, getBilibiliImageUrl } from "~/app/utils";
+import { formatNumber } from "~/app/utils";
 import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
 import Link from "next/link";
 import { type UserHomeProps } from "../user/[id]/_components/user-home";
@@ -23,7 +23,7 @@ export const VideoCard = ({
           <Box
             sx={{
               borderRadius: "lg",
-              backgroundImage: `url(${getBilibiliImageUrl(video.coverUrl)})`,
+              backgroundImage: `url(${video.coverUrl})`,
               backgroundSize: "cover",
               backgroundPosition: "center",
             }}

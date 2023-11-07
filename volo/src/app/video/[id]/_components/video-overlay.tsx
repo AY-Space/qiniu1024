@@ -1,6 +1,5 @@
 "use client";
 import { Avatar, Stack, Typography, Link as JoyLink, Chip } from "@mui/joy";
-import { getBilibiliImageUrl } from "~/app/utils";
 import { Flex } from "~/app/_components/flex";
 import { type VideoDetailedPublic } from "~/types";
 import Link from "next/link";
@@ -13,13 +12,7 @@ export const VideoOverlay = ({ video }: { video: VideoDetailedPublic }) => {
     <Stack spacing={1} p={2}>
       <Flex spacing={2} alignItems="center">
         <Link href={`/user/${video.author.id}`}>
-          <Avatar
-            src={
-              video.author.avatarUrl !== null
-                ? getBilibiliImageUrl(video.author.avatarUrl)
-                : undefined
-            }
-          />
+          <Avatar src={video.author.avatarUrl ?? undefined} />
         </Link>
         <Stack>
           <Link

@@ -12,7 +12,6 @@ import {
   Typography,
 } from "@mui/joy";
 import { Flex } from "~/app/_components/flex";
-import { getBilibiliImageUrl } from "~/app/utils";
 import { type VideoPublic, type UserDetailedPublic } from "~/types";
 import { VideoTabPanel } from "./video-tab-panel";
 import { LikeTabPanel } from "./like-tab-panel";
@@ -38,7 +37,7 @@ export const UserHome = ({ user, uploadedVideos }: UserHomeProps) => {
         <Box
           sx={{
             borderRadius: "lg",
-            backgroundImage: `url(${getBilibiliImageUrl(user.bannerUrl)})`,
+            backgroundImage: `url(${user.bannerUrl})`,
             backgroundSize: "cover",
             backgroundPosition: "center",
             aspectRatio: 5 / 1,
@@ -48,7 +47,7 @@ export const UserHome = ({ user, uploadedVideos }: UserHomeProps) => {
 
       <Flex spacing={3}>
         <Avatar
-          src={user.avatarUrl ? getBilibiliImageUrl(user.avatarUrl) : undefined}
+          src={user.avatarUrl ?? undefined}
           sx={{
             "&": {
               "--Avatar-size": "128px",

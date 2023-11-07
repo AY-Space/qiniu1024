@@ -8,7 +8,6 @@ import {
   Link as JoyLink,
 } from "@mui/joy";
 import Image from "next/image";
-import { getBilibiliImageUrl } from "../../../utils";
 import dayjs from "dayjs";
 import { Delete, ThumbDown, ThumbUp } from "@mui/icons-material";
 import { type CommentPublic } from "../../../../types";
@@ -30,9 +29,7 @@ export const CommentComponent = ({
 }) => {
   return (
     <Flex spacing={1}>
-      {comment.author.avatarUrl && (
-        <Avatar src={getBilibiliImageUrl(comment.author.avatarUrl)} />
-      )}
+      {<Avatar src={comment.author.avatarUrl ?? undefined} />}
       <Stack spacing={1} flex={1}>
         <Flex alignItems="center">
           <Stack>
@@ -64,7 +61,7 @@ export const CommentComponent = ({
         {comment.imgUrl && (
           <Box width={160} height={160} position={"relative"}>
             <Image
-              src={getBilibiliImageUrl(comment.imgUrl)}
+              src={comment.imgUrl}
               alt={comment.imgUrl}
               fill
               style={{ objectFit: "cover" }}

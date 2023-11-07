@@ -1,12 +1,3 @@
-export const getBilibiliImageUrl = (srcUrl: string) => {
-  if (!srcUrl.includes("hdslb.com")) {
-    return srcUrl;
-  }
-  return `http://localhost:3080/bilibili-image?${new URLSearchParams({
-    url: srcUrl.replace("http://", "https://"),
-  }).toString()}`;
-};
-
 export const sleep = (ms: number) => {
   return new Promise((resolve) => setTimeout(resolve, ms));
 };
