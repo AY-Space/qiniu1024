@@ -28,7 +28,7 @@
 
 # 📸 示例
 
-<video src=".github/video/demo.mp4"/>
+https://github.com/AY-Space/qiniu1024/.github/video/demo.mp4
 
 # 📦 使用方式
 
