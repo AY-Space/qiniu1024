@@ -13,10 +13,12 @@
 
 # 📸 示例
 
-访问在线 demo: <http://volo.ay7295.space>
+访问在线 demo: <http://volo.ay7295.space:30123>
 演示视频：
 
 # 📦 使用方式
+
+_测试过的环境：OrbStack on M1 Mac_
 
 复制一份 compose.yaml：
 
