@@ -101,7 +101,7 @@ const SearchUserPanel = ({ text }: { text: string }) => {
   );
 
   return (
-    <Stack sx={{ alignItems: "center" }}>
+    <Stack>
       {isLoading && text.length > 0 && <CircularProgress />}
       {users != undefined && text ? (
         <Grid

@@ -31,15 +31,15 @@ export const VideoTabPanel = ({
       {videos.length > 0 ? (
         <VideoGrid
           videos={videos}
-          actions={
+          Action={
             isSelf
-              ? (e) => (
+              ? ({ video }) => (
                   <IconButton
                     color="danger"
                     size="sm"
                     variant="soft"
                     onClick={() => {
-                      deleteVideo.mutate({ videoId: e.id });
+                      deleteVideo.mutate({ videoId: video.id });
                     }}
                   >
                     <Delete />

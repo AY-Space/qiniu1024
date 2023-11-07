@@ -5,10 +5,10 @@ import { VideoCard } from "./video-card";
 
 export const VideoGrid = ({
   videos,
-  actions,
+  Action,
 }: {
   videos: VideoPublic[];
-  actions?: (e: VideoPublic) => JSX.Element;
+  Action?: (props: { video: VideoPublic }) => JSX.Element;
 }) => {
   return videos.length > 0 ? (
     <Grid
@@ -29,16 +29,18 @@ export const VideoGrid = ({
           }}
         >
           <VideoCard video={e} />
-          <Stack
-            sx={{
-              position: "absolute",
-              top: 16,
-              right: 16,
-              zIndex: 1,
-            }}
-          >
-            {actions?.(e)}
-          </Stack>
+          {Action && (
+            <Stack
+              sx={{
+                position: "absolute",
+                top: 16,
+                right: 16,
+                zIndex: 1,
+              }}
+            >
+              <Action video={e} />
+            </Stack>
+          )}
         </Grid>
       ))}
     </Grid>

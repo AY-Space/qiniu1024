@@ -9,7 +9,7 @@ import {
   MenuItem,
 } from "@mui/joy";
 import Link from "next/link";
-import { History, Home, Logout, Upload } from "@mui/icons-material";
+import { History, Home, Logout, Upload, Videocam } from "@mui/icons-material";
 import { api } from "~/trpc/react";
 import { signOut } from "next-auth/react";
 
@@ -33,6 +33,14 @@ export const UserMenu = () => {
         {user?.name && <MenuItem color="primary">{user.name}</MenuItem>}
         <MenuItem>{user?.email}</MenuItem>
         <Divider />
+        <Link href="/video">
+          <MenuItem>
+            <ListItemDecorator>
+              <Videocam />
+            </ListItemDecorator>
+            视频首页
+          </MenuItem>
+        </Link>
         <Link href="/user">
           <MenuItem>
             <ListItemDecorator>

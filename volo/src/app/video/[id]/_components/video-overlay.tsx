@@ -36,9 +36,15 @@ export const VideoOverlay = ({ video }: { video: VideoDetailedPublic }) => {
                 {video.author.name}
               </JoyLink>
             </Link>
-            {session?.userId != video.author.id && (
-              <FollowButton followUserId={video.author.id} />
-            )}
+            <Stack
+              sx={{
+                opacity: 0.7,
+              }}
+            >
+              {session?.userId != video.author.id && (
+                <FollowButton followUserId={video.author.id} />
+              )}
+            </Stack>
           </Flex>
           <Typography level="body-xs">
             {video.createdAt.toLocaleDateString()}

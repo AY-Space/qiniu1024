@@ -25,9 +25,6 @@ export function FollowButton({ followUserId }: { followUserId: string }) {
       <Button
         size="sm"
         variant="soft"
-        sx={{
-          opacity: 0.6,
-        }}
         onClick={() => {
           followed != undefined &&
             follow.mutate({

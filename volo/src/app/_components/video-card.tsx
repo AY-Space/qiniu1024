@@ -8,7 +8,6 @@ import { type UserHomeProps } from "../user/[id]/_components/user-home";
 
 export const VideoCard = ({
   video,
-  height,
 }: {
   video: UserHomeProps["uploadedVideos"][0];
   height?: string;
@@ -18,7 +17,6 @@ export const VideoCard = ({
       <Card
         sx={{
           aspectRatio: 4 / 3,
-          height: height,
         }}
         data-joy-color-scheme="dark"
       >
