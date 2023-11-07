@@ -89,4 +89,30 @@ export const userRouter = createTRPCRouter({
       });
       return users;
     }),
+
+  register: publicProcedure
+    .input(
+      z.object({
+        name: z.string().min(1).max(32),
+        email: z.string().email().min(1).max(64),
+        password: z.string().min(1).max(32),
+        bio: z.string(),
+        avatarFileKey: z.string().min(1).optional(),
+      }),
+    )
+    .mutation(
+      async ({ input: { name, email, password, bio, avatarFileKey }, ctx }) => {
+        const avatarUrl =
+          avatarFileKey && `${env.STATIC_FILES_BASE_URL}/${avatarFileKey}`;
+        await ctx.db.user.create({
+          data: {
+            name,
+            email,
+            password,
+            bio,
+            avatarUrl,
+          },
+        });
+      },
+    ),
 });
