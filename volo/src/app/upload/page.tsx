@@ -20,7 +20,6 @@ import {
   Stack,
   Textarea,
   Typography,
-  styled,
 } from "@mui/joy";
 import { Upload, VideoFile } from "@mui/icons-material";
 import { Flex } from "../_components/flex";
@@ -30,18 +29,7 @@ import {
   dataURLtoFile,
   readFileInputEventAsDataURL,
 } from "../utils";
-
-export const VisuallyHiddenInput = styled("input")`
-  clip: rect(0 0 0 0);
-  clip-path: inset(50%);
-  height: 1px;
-  overflow: hidden;
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  white-space: nowrap;
-  width: 1px;
-`;
+import { VisuallyHiddenInput } from "../_components/visually-hidden-input";
 
 export default function UploadPage() {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);

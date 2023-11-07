@@ -1,7 +1,7 @@
 import { type PrismaClient } from "@prisma/client";
-import { type VideoDetailedPublic } from "~/types";
+import { type Page, type VideoDetailedPublic } from "~/types";
 import { getVideos } from "../db/video";
-import { getLatests, getPopulars, getRecommends, type Page } from "./base";
+import { getLatests, getPopulars, getRecommends } from "./base";
 
 // categoryId: null -> all catgories
 export const getLatest = async (
