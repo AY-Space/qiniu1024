@@ -9,6 +9,7 @@ import {
   Input,
   Snackbar,
   Stack,
+  Textarea,
   Typography,
 } from "@mui/joy";
 import { signIn } from "next-auth/react";
@@ -18,6 +19,8 @@ import Link from "next/link";
 
 export default function SignUpPage() {
   const [credentials, setCredentials] = useState({
+    name: "",
+    bio: "",
     email: "",
     password: "",
   });
@@ -91,6 +94,7 @@ export default function SignUpPage() {
                     email: event.target.value,
                   });
                 }}
+                placeholder="必填"
                 error={error}
               />
             </FormControl>
@@ -108,6 +112,30 @@ export default function SignUpPage() {
                     password: event.target.value,
                   });
                 }}
+                placeholder="必填"
+                error={error}
+              />
+            </FormControl>
+            <FormControl>
+              <FormLabel>名称</FormLabel>
+              <Input
+                value={credentials.name}
+                onChange={(event) =>
+                  setCredentials({ ...credentials, name: event.target.value })
+                }
+                placeholder="为空自动生成"
+                error={error}
+              />
+            </FormControl>
+            <FormControl>
+              <FormLabel>简介</FormLabel>
+              <Textarea
+                minRows={2}
+                value={credentials.bio}
+                onChange={(event) =>
+                  setCredentials({ ...credentials, bio: event.target.value })
+                }
+                placeholder="为空自动生成"
                 error={error}
               />
             </FormControl>
