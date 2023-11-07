@@ -3,11 +3,11 @@ import {
   Avatar,
   CircularProgress,
   DialogContent,
-  DialogTitle,
   Divider,
   Grid,
   Input,
   Modal,
+  ModalClose,
   ModalDialog,
   Stack,
   Tab,
@@ -21,6 +21,7 @@ import { api } from "~/trpc/react";
 import { VideoGrid } from "./video-grid";
 import { useState } from "react";
 import Link from "next/link";
+import { Flex } from "./flex";
 
 export function SearchDialog({
   open,
@@ -33,16 +34,26 @@ export function SearchDialog({
 
   return (
     <Modal open={open} onClose={onClose}>
-      <ModalDialog size="lg">
-        <DialogTitle>
+      <ModalDialog
+        sx={{
+          width: "800px",
+          maxWidth: "95vw",
+        }}
+      >
+        <Flex spacing={2} alignItems="center">
           <Input
             fullWidth
-            size="lg"
             placeholder="请输入关键词"
             startDecorator={<SearchIcon />}
             onChange={(e) => setText(e.target.value)}
-          ></Input>
-        </DialogTitle>
+          />
+          <ModalClose
+            sx={{
+              position: "static",
+            }}
+          />
+        </Flex>
+
         <Divider />
         <DialogContent>
           <Tabs defaultValue={0}>
@@ -72,10 +83,12 @@ const SearchVideoPanel = ({ text }: { text: string }) => {
   return (
     <Stack sx={{ alignItems: "center" }}>
       {isLoading && text.length > 0 && <CircularProgress />}
-      {videos != undefined ? (
+      {videos != undefined && text ? (
         <VideoGrid videos={videos} />
       ) : (
-        !isLoading && <Typography textAlign="center">无数据</Typography>
+        (!isLoading || !text) && (
+          <Typography textAlign="center">无数据</Typography>
+        )
       )}
     </Stack>
   );
@@ -90,28 +103,34 @@ const SearchUserPanel = ({ text }: { text: string }) => {
   return (
     <Stack sx={{ alignItems: "center" }}>
       {isLoading && text.length > 0 && <CircularProgress />}
-      {users != undefined ? (
-        <Grid container>
+      {users != undefined && text ? (
+        <Grid
+          container
+          columns={{
+            xs: 3,
+            sm: 4,
+            md: 5,
+          }}
+          columnSpacing={1}
+          rowSpacing={2}
+        >
           {users.map((user) => (
-            <Grid key={user.id}>
+            <Grid key={user.id} xs={1}>
               <Link href={`user/${user.id}`}>
-                <Stack sx={{ alignItems: "center" }}>
-                  <Avatar
-                    src={user.avatarUrl ?? undefined}
-                    sx={{
-                      "&": {
-                        "--Avatar-size": "64px",
-                      },
-                    }}
-                  />
-                  <Typography textAlign="center">{user.name}</Typography>
+                <Stack sx={{ alignItems: "center" }} spacing={1}>
+                  <Avatar src={user.avatarUrl ?? undefined} size="lg" />
+                  <Typography textAlign="center" level="title-sm">
+                    {user.name}
+                  </Typography>
                 </Stack>
               </Link>
             </Grid>
           ))}
         </Grid>
       ) : (
-        !isLoading && <Typography textAlign="center">无数据</Typography>
+        (!isLoading || !text) && (
+          <Typography textAlign="center">无数据</Typography>
+        )
       )}
     </Stack>
   );
