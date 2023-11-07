@@ -57,12 +57,14 @@ const newFeedback = (
   userId: string,
   itemId: string,
   feedbackType: GorseFeedback,
-): Feedback => ({
-  FeedbackType: feedbackType,
-  ItemId: itemId,
-  Timestamp: new Date(),
-  UserId: userId,
-});
+): Feedback[] => [
+  {
+    FeedbackType: feedbackType,
+    ItemId: itemId,
+    Timestamp: new Date(),
+    UserId: userId,
+  },
+];
 
 export const insertVideo = async (
   videoId: string,
