@@ -1,3 +1,4 @@
+import { hash } from "bcrypt";
 import { z } from "zod";
 import { env } from "~/env.mjs";
 import {
@@ -108,7 +109,7 @@ export const userRouter = createTRPCRouter({
           data: {
             name,
             email,
-            password,
+            password: await hash(password, 10),
             bio,
             avatarUrl,
           },

@@ -4,7 +4,7 @@ import Credentials from "next-auth/providers/credentials";
 
 import { env } from "~/env.mjs";
 import { db } from "~/server/db";
-import { loginOrRegister } from "~/server/lib/db/user";
+import { login } from "~/server/lib/db/user";
 
 declare module "next-auth" {
   interface Session {
@@ -55,7 +55,7 @@ export const authOptions: NextAuthOptions = {
 };
 
 const auth = async (email: string, password: string) => {
-  const user = await loginOrRegister(email, password);
+  const user = await login(email, password);
   return user ? { id: user.id } : null;
 };
 
