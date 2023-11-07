@@ -16,10 +16,16 @@ async function sleep(ms: number): Promise<void> {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
-const pgInit = () => {
+const pgInit = async (): Promise<boolean> => {
+  if ((await db.video.count()) > 0) {
+    console.log("pg data already init");
+    return false;
+  }
+
   shell.exec(
-    "psql postgresql://volo:volo@db:5432/postgres?sslmode=disable -f ./scripts/init.sql",
+    "psql postgresql://volo:volo@db:5432/postgres?sslmode=disable -f init.sql'",
   );
+  return true;
 };
 
 const gorseInit = async () => {
@@ -130,9 +136,18 @@ const esInit = async () => {
 };
 
 const main = async () => {
-  pgInit();
+  const needInit = await pgInit();
+  if (!needInit) {
+    console.log("pg data already init");
+    return;
+  }
+  console.log("pg data init done");
+
   await gorseInit();
+  console.log("gorse data init done");
+
   await esInit();
+  console.log("es data init done");
 };
 
 void main();
