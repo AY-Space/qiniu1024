@@ -116,7 +116,7 @@ const SearchUserPanel = ({ text }: { text: string }) => {
         >
           {users.map((user) => (
             <Grid key={user.id} xs={1}>
-              <Link href={`user/${user.id}`}>
+              <Link href={`/user/${user.id}`}>
                 <Stack sx={{ alignItems: "center" }} spacing={1}>
                   <Avatar src={user.avatarUrl ?? undefined} size="lg" />
                   <Typography textAlign="center" level="title-sm">
