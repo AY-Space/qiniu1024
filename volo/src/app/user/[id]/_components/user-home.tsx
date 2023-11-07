@@ -89,7 +89,7 @@ export const UserHome = ({ user, uploadedVideos }: UserHomeProps) => {
           )}
         </TabList>
         <TabPanel value={0}>
-          <VideoTabPanel videos={uploadedVideos} />
+          <VideoTabPanel videos={uploadedVideos} isSelf={isSelf} />
         </TabPanel>
         {isSelf && (
           <TabPanel value={1}>

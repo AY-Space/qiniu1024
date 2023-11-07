@@ -3,7 +3,13 @@ import { Grid, Typography } from "@mui/joy";
 import { type VideoPublic } from "~/types";
 import { VideoCard } from "./video-card";
 
-export const VideoGrid = ({ videos: videos }: { videos: VideoPublic[] }) => {
+export const VideoGrid = ({
+  videos,
+  actions,
+}: {
+  videos: VideoPublic[];
+  actions?: (e: VideoPublic) => JSX.Element;
+}) => {
   return videos.length > 0 ? (
     <Grid
       container
@@ -22,6 +28,7 @@ export const VideoGrid = ({ videos: videos }: { videos: VideoPublic[] }) => {
           }}
         >
           <VideoCard video={e} />
+          {actions?.(e)}
         </Grid>
       ))}
     </Grid>

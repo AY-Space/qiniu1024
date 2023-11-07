@@ -1,5 +1,11 @@
 "use client";
-import { Box, Card, CardContent, CardCover, Typography } from "@mui/joy";
+import {
+  Box,
+  Card,
+  CardContent,
+  CardCover,
+  Typography,
+} from "@mui/joy";
 import { Flex } from "~/app/_components/flex";
 import { formatNumber } from "~/app/utils";
 import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
@@ -10,6 +16,7 @@ export const VideoCard = ({
   video,
 }: {
   video: UserHomeProps["uploadedVideos"][0];
+  deletable?: boolean;
 }) => {
   return (
     <Link href={`/video/${video.id}`}>
