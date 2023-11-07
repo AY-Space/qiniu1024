@@ -53,7 +53,7 @@ export const CollectionTabPanel = () => {
           )}
         </TabList>
 
-        {collections != undefined && collections.length > 0 ? (
+        {collections != undefined ? (
           collections.map((collection, index) => (
             <TabPanel value={index} key={collection.id}>
               <CollectionGrid collectionId={collection.id} />

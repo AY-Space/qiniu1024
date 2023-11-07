@@ -36,7 +36,7 @@ export function SearchDialog({
         </DialogTitle>
         <Divider />
         <DialogContent>
-          {videos != undefined && videos.length > 0 ? (
+          {videos != undefined ? (
             <VideoGrid videos={videos} />
           ) : (
             <Typography textAlign="center">无数据</Typography>
