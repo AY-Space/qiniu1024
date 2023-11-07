@@ -148,4 +148,22 @@ export const userRouter = createTRPCRouter({
         },
       });
     }),
+
+  hasFollowed: protectedProcedure
+    .input(
+      z.object({
+        userId: z.string(),
+      }),
+    )
+    .query(async ({ input: { userId }, ctx }) => {
+      const relation = await ctx.db.follow.findUnique({
+        where: {
+          followingId_followerId: {
+            followerId: ctx.session.userId,
+            followingId: userId,
+          },
+        },
+      });
+      return !!relation;
+    }),
 });
