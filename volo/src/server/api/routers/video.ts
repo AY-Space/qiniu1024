@@ -5,6 +5,8 @@ import {
   protectedProcedure,
   publicProcedure,
 } from "~/server/api/trpc";
+import { getVideos } from "~/server/lib/db/video";
+import { searchVideo } from "~/server/lib/search/elasticsearch";
 import { createUploadParameters } from "~/server/lib/util/kodo";
 import { type VideoPublic, type CommentPublic } from "~/types";
 
@@ -282,4 +284,18 @@ export const videoRouter = createTRPCRouter({
         return video.id;
       },
     ),
+
+  search: publicProcedure
+    .input(
+      z.object({
+        query: z.string().min(1).max(100),
+      }),
+    )
+    .query(async ({ ctx, input: { query } }): Promise<VideoPublic[]> => {
+      const videoIds = await searchVideo(query, {
+        limit: 50,
+      });
+      const videos = await getVideos(ctx.db, videoIds);
+      return videos;
+    }),
 });

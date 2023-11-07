@@ -1,6 +1,11 @@
 import { z } from "zod";
 import { env } from "~/env.mjs";
-import { createTRPCRouter, protectedProcedure } from "~/server/api/trpc";
+import {
+  createTRPCRouter,
+  protectedProcedure,
+  publicProcedure,
+} from "~/server/api/trpc";
+import { searchUser } from "~/server/lib/search/elasticsearch";
 import { createUploadParameters } from "~/server/lib/util/kodo";
 import { type UserPublic } from "~/types";
 
@@ -58,5 +63,30 @@ export const userRouter = createTRPCRouter({
           avatarUrl,
         },
       });
+    }),
+
+  search: publicProcedure
+    .input(
+      z.object({
+        query: z.string().min(1).max(100),
+      }),
+    )
+    .query(async ({ input: { query }, ctx }): Promise<UserPublic[]> => {
+      const userIds = await searchUser(query, {
+        limit: 10,
+      });
+      const users = await ctx.db.user.findMany({
+        where: {
+          id: {
+            in: userIds,
+          },
+        },
+        select: {
+          id: true,
+          name: true,
+          avatarUrl: true,
+        },
+      });
+      return users;
     }),
 });

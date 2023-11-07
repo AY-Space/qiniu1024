@@ -96,7 +96,7 @@ const indexFileds = {
   [ESIndex.USER]: ["name"],
 };
 
-export const serachItem = async (
+const serachItem = async (
   query: string,
   index: ESIndex,
   page: Page = { limit: 10 },
@@ -115,4 +115,18 @@ export const serachItem = async (
     _source: false, // 不需要具体内容，只要 id
   });
   return res.hits.hits.map((hit) => hit._id);
+};
+
+export const searchVideo = async (
+  query: string,
+  page: Page = { limit: 10 },
+): Promise<string[]> => {
+  return serachItem(query, ESIndex.VIDEO, page);
+};
+
+export const searchUser = async (
+  query: string,
+  page: Page = { limit: 10 },
+): Promise<string[]> => {
+  return serachItem(query, ESIndex.USER, page);
 };
