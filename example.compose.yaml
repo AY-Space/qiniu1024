@@ -9,7 +9,7 @@ services:
       NEXTAUTH_SECRET: '1234567890'
       QINIU_ACCESS_KEY: # required
       QINIU_SECRET_KEY: # required
-      QINIU_BUCKET: volo # need pre-create
+      QINIU_BUCKET: volo # required 要提前配置好 bucket 为可以公开访问
       QINIU_BASE_URL: # required 七牛云 分配 的临时域名 或者是 绑定的域名
       GORSE_URL: http://recommend:8088
       REDIS_URL: redis://cache:6379/8

@@ -6,44 +6,48 @@
 
 </div>
 
-`最后更新于：2023-11-07 15:44:01`
-
-[📚 简介](#-简介)
-
-[📸 示例](#-示例)
-
-[📦 使用方式](#-使用方式)
-
-[⏳ 进度](#-进度)
-
-[📌 注意事项](#-注意事项)
-
-[🧑‍💻 贡献者](#-贡献者)
-
-[🔦 声明](#-声明)
-
 # 📚 简介
 
-【】
+2023年 **七牛云校园马拉松** 参赛作品 **volo 短视频平台**
+[项目架构](./docs/architecture.md)
+
 
 # 📸 示例
-
-https://github.com/AY-Space/qiniu1024/.github/video/demo.mp4
+访问在线 demo: http://volo.ay7295.space 
+演示  视频：
 
 # 📦 使用方式
 
-【】
+
+
+## docker cpmpose
+
+```shell
+$ docker compose up -d
+```
+### 📌 注意事项
+一定要先填写 compose.yaml 中 **required** 的字段
+```yaml
+QINIU_ACCESS_KEY: # required
+QINIU_SECRET_KEY: # required
+QINIU_BUCKET: # required 要提前配置好 bucket 为可以公开访问
+QINIU_BASE_URL: # required 七牛云 分配的临时域名 或者是 绑定的域名
+```
 
 # ⏳ 进度
 
 已完成
 
-# 📌 注意事项
+# 🔦 声明
 
-【】
+1. 自己部署的话
+mock dataset 在**2023年12月1日**之后将**不再可用**
+2. 在线演示 demo 
+   在**2023年12月1日**之后将**不可访问**
 
 # 🧑‍💻 贡献者
 
 <a href="https://github.com/AY-Space/qiniu1024/graphs/contributors">
   <img src="https://contrib.rocks/image?repo=AY-Space/qiniu1024" />
 </a>
+
