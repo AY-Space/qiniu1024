@@ -57,15 +57,12 @@ const newFeedback = (
   userId: string,
   itemId: string,
   feedbackType: GorseFeedback,
-): Feedback[] => [
-  {
-    FeedbackType: feedbackType,
-    ItemId: itemId,
-    Timestamp: new Date(),
-    UserId: userId,
-  },
-];
-
+): Feedback => ({
+  FeedbackType: feedbackType,
+  ItemId: itemId,
+  Timestamp: new Date(),
+  UserId: userId,
+});
 export const insertVideo = async (
   videoId: string,
   tags: TagReference[],
@@ -123,7 +120,7 @@ export const insertFeedback = async (
   videoId: string,
   feedbackType: GorseFeedback,
 ) => {
-  await axios.put("/feedback", newFeedback(userId, videoId, feedbackType));
+  await axios.put("/feedback", [newFeedback(userId, videoId, feedbackType)]);
 };
 
 export const deleteFeedback = async (
