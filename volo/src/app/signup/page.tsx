@@ -16,22 +16,20 @@ import { signIn } from "next-auth/react";
 import { useState } from "react";
 import { sleep } from "../utils";
 import Link from "next/link";
+import { api } from "~/trpc/react";
 
 export default function SignUpPage() {
   const [credentials, setCredentials] = useState({
     name: "",
-    bio: "",
     email: "",
     password: "",
+    bio: "",
   });
   const [submitting, setSubmitting] = useState(false);
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState(false);
-
-  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    await (async () => {
-      setSubmitting(true);
+  const register = api.user.register.useMutation({
+    onSuccess: async () => {
       const result = await signIn("credentials", {
         ...credentials,
         redirect: false,
@@ -44,6 +42,19 @@ export default function SignUpPage() {
         setError(!result?.ok);
       }
       setSubmitting(false);
+    },
+
+    onError: () => {
+      setSubmitting(false);
+      setError(true);
+    },
+  });
+
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    (() => {
+      setSubmitting(true);
+      register.mutate(credentials);
     })();
   };
 
@@ -88,6 +99,7 @@ export default function SignUpPage() {
                 fullWidth
                 required
                 value={credentials.email}
+                type="email"
                 onChange={(event) => {
                   setCredentials({
                     ...credentials,
@@ -120,10 +132,11 @@ export default function SignUpPage() {
               <FormLabel>名称</FormLabel>
               <Input
                 value={credentials.name}
+                required
                 onChange={(event) =>
                   setCredentials({ ...credentials, name: event.target.value })
                 }
-                placeholder="为空自动生成"
+                placeholder="必填"
                 error={error}
               />
             </FormControl>
@@ -135,7 +148,7 @@ export default function SignUpPage() {
                 onChange={(event) =>
                   setCredentials({ ...credentials, bio: event.target.value })
                 }
-                placeholder="为空自动生成"
+                placeholder="可为空"
                 error={error}
               />
             </FormControl>
