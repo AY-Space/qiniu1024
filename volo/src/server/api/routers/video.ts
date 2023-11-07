@@ -9,7 +9,7 @@ import { getVideos } from "~/server/lib/db/video";
 import * as es from "~/server/lib/search/elasticsearch";
 import * as gorse from "~/server/lib/gorse/base";
 import { createUploadParameters } from "~/server/lib/util/kodo";
-import { type CommentPublic, type VideoPublic } from "~/types";
+import { GorseFeedback, type CommentPublic, type VideoPublic } from "~/types";
 
 export const videoRouter = createTRPCRouter({
   uploadVideoFile: publicProcedure.mutation(() => {
@@ -106,6 +106,11 @@ export const videoRouter = createTRPCRouter({
             videoId,
           },
         });
+        await gorse.insertFeedback(
+          ctx.session.userId,
+          videoId,
+          GorseFeedback.LIKED,
+        );
       } else {
         await ctx.db.like.delete({
           where: {
@@ -115,6 +120,11 @@ export const videoRouter = createTRPCRouter({
             },
           },
         });
+        await gorse.deleteFeedback(
+          ctx.session.userId,
+          videoId,
+          GorseFeedback.LIKED,
+        );
       }
     }),
 
@@ -326,5 +336,48 @@ export const videoRouter = createTRPCRouter({
           authorId: ctx.session.userId,
         },
       });
+    }),
+
+  startedView: protectedProcedure
+    .input(
+      z.object({
+        videoId: z.string(),
+      }),
+    )
+    .mutation(async ({ ctx, input: { videoId } }) => {
+      await ctx.db.video.update({
+        where: {
+          id: videoId,
+        },
+        data: {
+          views: {
+            increment: 1,
+          },
+          viewed: {
+            connect: {
+              id: ctx.session.userId,
+            },
+          },
+        },
+      });
+      await gorse.insertFeedback(
+        ctx.session.userId,
+        videoId,
+        GorseFeedback.READ,
+      );
+    }),
+
+  finishedView: protectedProcedure
+    .input(
+      z.object({
+        videoId: z.string(),
+      }),
+    )
+    .mutation(async ({ ctx, input: { videoId } }) => {
+      await gorse.insertFeedback(
+        ctx.session.userId,
+        videoId,
+        GorseFeedback.READALL,
+      );
     }),
 });

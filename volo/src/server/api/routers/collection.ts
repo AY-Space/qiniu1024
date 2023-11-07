@@ -1,6 +1,11 @@
 import { z } from "zod";
-import { type CollectionPublic, type VideoPublic } from "~/types";
+import {
+  GorseFeedback,
+  type CollectionPublic,
+  type VideoPublic,
+} from "~/types";
 import { createTRPCRouter, protectedProcedure } from "../trpc";
+import * as gorse from "~/server/lib/gorse/base";
 
 export const collectionRouter = createTRPCRouter({
   myCollections: protectedProcedure.query(
@@ -43,6 +48,19 @@ export const collectionRouter = createTRPCRouter({
             },
           },
         });
+        if (operation === "connect") {
+          await gorse.insertFeedback(
+            session.userId,
+            videoId,
+            GorseFeedback.COLLECTED,
+          );
+        } else {
+          await gorse.deleteFeedback(
+            session.userId,
+            videoId,
+            GorseFeedback.COLLECTED,
+          );
+        }
       },
     ),
 
