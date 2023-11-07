@@ -1,15 +1,15 @@
 import { type Prisma, type PrismaClient, type User } from "@prisma/client";
-import { compare, hash } from "bcrypt";
+import { compare } from "bcrypt";
 import { db } from "~/server/db";
 import { type UserPublic } from "~/types";
 
-export const loginOrRegister = async (
+export const login = async (
   email: string,
   password: string,
 ): Promise<UserPublic | null> => {
   const user = await findUserByEmail(db, email);
   if (!user) {
-    return await createUser(db, email, await hash(password, 10));
+    throw new Error("User not found");
   }
 
   if (user.password === null) {
@@ -47,18 +47,4 @@ const findUserByEmail = async (
   email: string,
 ): Promise<User | null> => {
   return findUser(prisma, { email });
-};
-
-const createUser = async (
-  prisma: PrismaClient,
-  email: string,
-  encryptedPassword: string,
-): Promise<User> => {
-  return await prisma.user.create({
-    data: {
-      email,
-      password: encryptedPassword,
-      name: email,
-    },
-  });
 };

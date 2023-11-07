@@ -24,10 +24,10 @@ import {
 import { type UserDetailedPublic } from "~/types";
 import { Upload } from "@mui/icons-material";
 import { useState } from "react";
-import { VisuallyHiddenInput } from "~/app/upload/page";
 import { api } from "~/trpc/react";
 import { upload } from "qiniu-js";
 import { useRouter } from "next/navigation";
+import { VisuallyHiddenInput } from "~/app/_components/visually-hidden-input";
 
 export function EditDialog({
   user,

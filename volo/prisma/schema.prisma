@@ -28,10 +28,10 @@ model Account {
 
 model User {
   id        String  @id @default(cuid())
-  name      String? @db.VarChar(30)
+  name      String  @default("")
   email     String  @unique
   password  String?
-  bio       String?
+  bio       String  @default("")
   avatarUrl String?
   bannerUrl String?
 
@@ -41,7 +41,7 @@ model User {
   likes       Like[]
   tags        Tag[]
   collections Collection[]
-  history     Video[] @relation("History")
+  history     Video[]      @relation("History")
 
   followedByUsers Follow[] @relation("FollowedBy")
   usersFollowed   Follow[] @relation("UserFollows")
@@ -76,7 +76,7 @@ model Video {
   comments    Comment[] // 评论
   likes       Like[] // 点赞
   collections Collection[] // 收藏
-  viewed      User[] @relation("History") // 浏览历史
+  viewed      User[]       @relation("History") // 浏览历史
 
   tags Tag[] // 视频标签
 }
@@ -126,11 +126,9 @@ enum TagType {
 model Tag {
   id          String   @id @default(cuid())
   type        TagType  @default(Tag)
-  name        String
+  name        String   @unique
   description String?
   createdAt   DateTime @default(now())
   users       User[]
   videos      Video[]
-
-  @@unique([name])
 }
