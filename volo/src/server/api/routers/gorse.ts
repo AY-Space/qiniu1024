@@ -24,7 +24,7 @@ import { GorseFeedback, type VideoDetailedPublic } from "~/types";
 
 const FeedbackTypeZ = z.nativeEnum(GorseFeedback);
 const TagTypeZ = z.nativeEnum(TagType);
-const RecommendationZ = z.enum(["recommendation", "popular", "latest"]);
+const RecommendationZ = z.enum(["recommendation", "latest"]);
 
 export type Recommendation = z.infer<typeof RecommendationZ>;
 
@@ -58,8 +58,6 @@ export const gorseRouter = createTRPCRouter({
             } else {
               throw new Error("Invalid recommendation type");
             }
-          } else if (recommendationType === "popular") {
-            return getPopular;
           } else {
             return getLatest;
           }
