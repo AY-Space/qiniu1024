@@ -21,7 +21,7 @@ model User {
   likes       Like[]
   tags        Tag[]
   collections Collection[]
-  history     Video[]      @relation("History")
+  histories   History[]
 
   followedByUsers Follow[] @relation("FollowedBy")
   usersFollowed   Follow[] @relation("UserFollows")
@@ -53,12 +53,23 @@ model Video {
 
   author User @relation(fields: [authorId], references: [id])
 
-  comments    Comment[] // 评论
-  likes       Like[] // 点赞
+  comments    Comment[]
+  likes       Like[]
   collections Collection[] // 收藏
-  viewed      User[]       @relation("History") // 浏览历史
+  histories   History[]
 
   tags Tag[] // 视频标签
+}
+
+model History {
+  createdAt DateTime @default(now())
+  userId    String
+  videoId   String
+
+  user  User  @relation(fields: [userId], references: [id], onDelete: Cascade)
+  video Video @relation(fields: [videoId], references: [id], onDelete: Cascade)
+
+  @@id([userId, videoId])
 }
 
 model Comment {
@@ -69,8 +80,8 @@ model Comment {
   authorId  String
   videoId   String
 
-  author        User   @relation(fields: [authorId], references: [id])
-  video         Video  @relation(fields: [videoId], references: [id])
+  author        User   @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  video         Video  @relation(fields: [videoId], references: [id], onDelete: Cascade)
   likedUsers    User[] @relation("UserLikeComment")
   dislikedUsers User[] @relation("UserDislikeComment")
 }
@@ -80,8 +91,8 @@ model Like {
   userId    String
   videoId   String
 
-  user  User  @relation(fields: [userId], references: [id])
-  video Video @relation(fields: [videoId], references: [id])
+  user  User  @relation(fields: [userId], references: [id], onDelete: Cascade)
+  video Video @relation(fields: [videoId], references: [id], onDelete: Cascade)
 
   @@id([userId, videoId])
 }
