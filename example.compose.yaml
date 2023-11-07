@@ -3,7 +3,6 @@ services:
   app:
     build:
       context: ./volo
-      dockerfile: ./volo/Dockerfile
     restart: always
     environment:
       DATABASE_URL: postgres://volo:volo@db:5432/volo?sslmode=disable
@@ -14,7 +13,7 @@ services:
       GORSE_URL: http://recommend:8088
       REDIS_URL: redis://cache:6379/8
       ES_URL: http://es:9200
-      # INIT_DB: true // if need load mock dataset
+      INIT_DB: true # if need load mock dataset
     ports:
       - "3000:3000"
     depends_on:
@@ -27,8 +26,7 @@ services:
     image: zhenghaoz/gorse-in-one:latest
     restart: always
     ports:
-      # - 8086:8086   # gRPC port
-      - 8088:8088   # HTTP port
+      - 8088:8088
     command: >
       -c /etc/gorse/config.toml
       --log-path /var/log/gorse/master.log
@@ -51,6 +49,7 @@ services:
     environment:
       POSTGRES_USER: volo
       POSTGRES_PASSWORD: volo
+      POSTGRES_DB: volo
     volumes:
       - ./gorse/schema.sql:/docker-entrypoint-initdb.d/schema.sql # create recommend schema for gorse
     ports:
@@ -61,8 +60,6 @@ services:
       context: ./elasticsearch
     environment:
       - "discovery.type=single-node"
-      - "xpack.security.enabled=true"
-      - "ELASTIC_PASSWORD=espwd"
       - "ES_JAVA_OPTS=-Xmx512m -Xms512m"
     ports:
       - "9200:9200"
