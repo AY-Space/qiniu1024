@@ -5,18 +5,22 @@ import {
   Drawer,
   type DrawerProps,
   Typography,
-  DialogTitle,
   Card,
   Grid,
   Radio,
   DialogContent,
   Stack,
+  List,
+  ListItem,
+  ListItemButton,
+  ListItemDecorator,
+  ModalClose,
 } from "@mui/joy";
-import Link from "next/link";
 import { api } from "~/trpc/react";
 import { useStore } from "../store";
 import { useSession } from "next-auth/react";
 import { type Recommendation } from "~/server/api/routers/gorse";
+import { Videocam } from "@mui/icons-material";
 
 export type NavigationDrawer = Pick<DrawerProps, "open" | "onClose">;
 
@@ -51,11 +55,21 @@ export function NavigationDrawer({ open, onClose }: NavigationDrawer) {
         },
       }}
     >
-      <DialogTitle>
-        <Link href="/">
-          <Typography level="body-lg">Volo</Typography>
-        </Link>
-      </DialogTitle>
+      <Stack height="48px" px={2} justifyContent="center">
+        <Typography level="h4">Volo</Typography>
+      </Stack>
+      <ModalClose />
+      <Divider />
+      <List>
+        <ListItem>
+          <ListItemButton>
+            <ListItemDecorator>
+              <Videocam />
+            </ListItemDecorator>
+            视频首页
+          </ListItemButton>
+        </ListItem>
+      </List>
       <Divider />
       <DialogContent sx={{ p: 1.3 }}>
         <Stack>
