@@ -1,5 +1,5 @@
 "use client";
-import { Grid, Typography } from "@mui/joy";
+import { Grid, Stack, Typography } from "@mui/joy";
 import { type VideoPublic } from "~/types";
 import { VideoCard } from "./video-card";
 
@@ -25,10 +25,20 @@ export const VideoGrid = ({
           xs={1}
           sx={{
             p: 1,
+            position: "relative",
           }}
         >
           <VideoCard video={e} />
-          {actions?.(e)}
+          <Stack
+            sx={{
+              position: "absolute",
+              top: 16,
+              right: 16,
+              zIndex: 1,
+            }}
+          >
+            {actions?.(e)}
+          </Stack>
         </Grid>
       ))}
     </Grid>

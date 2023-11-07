@@ -35,6 +35,9 @@ export const VideoTabPanel = ({
             isSelf
               ? (e) => (
                   <IconButton
+                    color="danger"
+                    size="sm"
+                    variant="soft"
                     onClick={() => {
                       deleteVideo.mutate({ videoId: e.id });
                     }}
