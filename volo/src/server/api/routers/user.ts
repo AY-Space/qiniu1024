@@ -9,6 +9,8 @@ import {
 import { searchUser } from "~/server/lib/search/elasticsearch";
 import { createUploadParameters } from "~/server/lib/util/kodo";
 import { type UserPublic } from "~/types";
+import * as es from "~/server/lib/search/elasticsearch";
+import * as gorse from "~/server/lib/gorse/base";
 
 export const userRouter = createTRPCRouter({
   currentUser: protectedProcedure.query(
@@ -105,7 +107,7 @@ export const userRouter = createTRPCRouter({
       async ({ input: { name, email, password, bio, avatarFileKey }, ctx }) => {
         const avatarUrl =
           avatarFileKey && `${env.QINIU_BASE_URL}/${avatarFileKey}`;
-        await ctx.db.user.create({
+        const user = await ctx.db.user.create({
           data: {
             name,
             email,
@@ -113,7 +115,15 @@ export const userRouter = createTRPCRouter({
             bio,
             avatarUrl,
           },
+          select: {
+            id: true,
+          },
         });
+        await es.insertUser({
+          id: user.id,
+          name,
+        });
+        await gorse.insertUser(user.id, []);
       },
     ),
 });

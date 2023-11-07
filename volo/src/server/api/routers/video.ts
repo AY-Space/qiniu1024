@@ -6,7 +6,8 @@ import {
   publicProcedure,
 } from "~/server/api/trpc";
 import { getVideos } from "~/server/lib/db/video";
-import { searchVideo } from "~/server/lib/search/elasticsearch";
+import * as es from "~/server/lib/search/elasticsearch";
+import * as gorse from "~/server/lib/gorse/base";
 import { createUploadParameters } from "~/server/lib/util/kodo";
 import { type CommentPublic, type VideoPublic } from "~/types";
 
@@ -279,8 +280,21 @@ export const videoRouter = createTRPCRouter({
           },
           select: {
             id: true,
+            tags: {
+              select: {
+                id: true,
+                type: true,
+              },
+            },
           },
         });
+        await es.insertVideo({
+          id: video.id,
+          title,
+          description,
+          tags,
+        });
+        await gorse.insertVideo(video.id, video.tags);
         return video.id;
       },
     ),
@@ -292,7 +306,7 @@ export const videoRouter = createTRPCRouter({
       }),
     )
     .query(async ({ ctx, input: { query } }): Promise<VideoPublic[]> => {
-      const videoIds = await searchVideo(query, {
+      const videoIds = await es.searchVideo(query, {
         limit: 50,
       });
       const videos = await getVideos(ctx.db, videoIds);
