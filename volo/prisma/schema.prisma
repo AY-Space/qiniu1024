@@ -62,9 +62,9 @@ model Video {
 }
 
 model History {
-  createdAt DateTime @default(now())
-  userId    String
-  videoId   String
+  viewedAt DateTime @default(now())
+  userId   String
+  videoId  String
 
   user  User  @relation(fields: [userId], references: [id], onDelete: Cascade)
   video Video @relation(fields: [videoId], references: [id], onDelete: Cascade)

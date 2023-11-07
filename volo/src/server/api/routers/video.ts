@@ -345,18 +345,18 @@ export const videoRouter = createTRPCRouter({
       }),
     )
     .mutation(async ({ ctx, input: { videoId } }) => {
-      await ctx.db.video.update({
-        where: {
-          id: videoId,
+      await ctx.db.history.upsert({
+        create: {
+          videoId,
+          userId: ctx.session.userId,
         },
-        data: {
-          views: {
-            increment: 1,
-          },
-          viewed: {
-            connect: {
-              id: ctx.session.userId,
-            },
+        update: {
+          viewedAt: new Date(),
+        },
+        where: {
+          userId_videoId: {
+            userId: ctx.session.userId,
+            videoId,
           },
         },
       });
@@ -380,4 +380,38 @@ export const videoRouter = createTRPCRouter({
         GorseFeedback.READALL,
       );
     }),
+
+  histories: protectedProcedure.query(
+    async ({
+      ctx,
+    }): Promise<
+      {
+        video: VideoPublic;
+        viewedAt: Date;
+      }[]
+    > => {
+      const histories = await ctx.db.history.findMany({
+        where: {
+          userId: ctx.session.userId,
+        },
+        orderBy: {
+          viewedAt: "desc",
+        },
+        take: 50,
+        select: {
+          viewedAt: true,
+          video: {
+            select: {
+              id: true,
+              title: true,
+              views: true,
+              coverUrl: true,
+              createdAt: true,
+            },
+          },
+        },
+      });
+      return histories;
+    },
+  ),
 });
