@@ -14,7 +14,7 @@
 # 📸 示例
 
 访问在线 demo: <http://volo.ay7295.space:30123>
-演示视频：
+演示视频：<https://www.bilibili.com/video/BV1iG411971W>
 
 # 📦 使用方式
 
