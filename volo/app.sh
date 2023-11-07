@@ -10,8 +10,5 @@ if [ -n "$INIT_DB" ]; then
   pnpm script scripts/init.ts
 fi
 
-echo "building app..."
-pnpm build
-
 echo "starting app..."
 exec pnpm start
