@@ -7,7 +7,7 @@ export const useStore = create<{
   setRecommendationType: (recommendationType: Recommendation) => void;
   setCategory: (categoryId: string | null) => void;
 }>((set) => ({
-  recommendationType: "latest",
+  recommendationType: "popular",
   category: null,
   setRecommendationType: (recommendationType: Recommendation) =>
     set({ recommendationType }),
