@@ -14,6 +14,7 @@ services:
       GORSE_URL: http://recommend:8088
       REDIS_URL: redis://cache:6379/8
       ES_URL: http://es:9200
+      # INIT_DB: true // if need load mock dataset
     ports:
       - "3000:3000"
     depends_on:
