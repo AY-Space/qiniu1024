@@ -4,6 +4,7 @@ import { Pause, PlayArrow, VolumeOff, VolumeUp } from "@mui/icons-material";
 import { IconButton, Stack } from "@mui/joy";
 import { useState, useEffect, useRef, type ReactNode } from "react";
 import { Flex } from "~/app/_components/flex";
+import { api } from "~/trpc/react";
 
 interface VideoPlayerProps {
   src: string;
@@ -12,6 +13,7 @@ interface VideoPlayerProps {
   overlay: ReactNode;
   muted: boolean;
   setMuted: (muted: boolean) => void;
+  videoId: string;
 }
 
 export const VideoPlayer = ({
@@ -21,12 +23,21 @@ export const VideoPlayer = ({
   overlay,
   muted,
   setMuted,
+  videoId,
 }: VideoPlayerProps) => {
   const videoRef = useRef<HTMLVideoElement>(null!);
   const [progress, setProgress] = useState<number>(0);
   const [duration, setDuration] = useState<number>(0);
 
   const [playing, setPlaying] = useState<boolean>(false);
+
+  const startedView = api.video.startedView.useMutation();
+  const finishedView = api.video.finishedView.useMutation();
+
+  const mutateRef = useRef({
+    started: false,
+    finished: false,
+  });
 
   useEffect(() => {
     const videoElement = videoRef.current;
@@ -36,7 +47,27 @@ export const VideoPlayer = ({
     };
 
     const handleTimeUpdate = () => {
-      setProgress(videoElement.currentTime ?? 0);
+      const progress = videoElement.currentTime ?? 0;
+      const duration = videoElement.duration ?? 0;
+      setProgress(progress);
+
+      if (!mutateRef.current.started && duration && progress >= 1) {
+        mutateRef.current.started = true;
+        startedView.mutate({
+          videoId,
+        });
+      }
+
+      if (
+        !mutateRef.current.finished &&
+        duration &&
+        progress >= duration * 0.67
+      ) {
+        mutateRef.current.finished = true;
+        finishedView.mutate({
+          videoId,
+        });
+      }
     };
 
     if (videoElement && videoElement.readyState >= 1) {
@@ -62,7 +93,7 @@ export const VideoPlayer = ({
       videoElement.removeEventListener("pause", handlePause);
       videoElement.removeEventListener("play", handlePlay);
     };
-  }, []);
+  }, [finishedView, startedView, videoId]);
 
   useEffect(() => {
     if (active) {

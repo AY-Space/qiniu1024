@@ -47,6 +47,7 @@ export const VideoWithOverlay = ({
             overlay={<VideoOverlay video={video} />}
             muted={muted}
             setMuted={setMuted}
+            videoId={video.id}
           />
           <VideoActions videoId={video.id} state={state} />
         </>
