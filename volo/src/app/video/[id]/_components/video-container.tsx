@@ -1,6 +1,6 @@
 "use client";
 
-import { Stack, Typography } from "@mui/joy";
+import { Alert, Stack } from "@mui/joy";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { VideoWithOverlay } from "./video-with-overlay";
 import { api } from "~/trpc/react";
@@ -24,7 +24,7 @@ export function VideoContainer({
     useShallow((state) => [state.recommendationType, state.category]),
   );
 
-  const { data, fetchNextPage } =
+  const { data, fetchNextPage, isLoading } =
     api.videoRecommender.recommendation.useInfiniteQuery(
       {
         recommendationType: recommendationType,
@@ -105,8 +105,14 @@ export function VideoContainer({
   // Calculate the page of the current active video
   const activeVideoPage = Math.floor(activeVideoIndex / pageSize);
 
-  if (videos.length === 0) {
-    return <Typography level="title-lg">没有更多视频了</Typography>;
+  if (videos.length === 0 && !isLoading) {
+    return (
+      <Stack p={2}>
+        <Alert color="warning" size="lg">
+          没有更多视频了
+        </Alert>
+      </Stack>
+    );
   }
 
   return (

@@ -39,7 +39,18 @@ export function NavigationDrawer({ open, onClose }: NavigationDrawer) {
   } as Record<Recommendation, string>;
 
   return (
-    <Drawer open={open} onClose={onClose}>
+    <Drawer
+      open={open}
+      onClose={onClose}
+      slotProps={{
+        content: {
+          sx: {
+            width: 420,
+            maxWidth: "90vw",
+          },
+        },
+      }}
+    >
       <DialogTitle>
         <Link href="/">
           <Typography level="body-lg">Volo</Typography>
