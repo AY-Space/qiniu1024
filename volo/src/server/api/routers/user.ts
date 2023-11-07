@@ -142,7 +142,10 @@ export const userRouter = createTRPCRouter({
         data: {
           usersFollowed: {
             [operation]: {
-              id: userId,
+              followingId_followerId: {
+                followingId: userId,
+                followerId: ctx.session.userId,
+              },
             },
           },
         },
