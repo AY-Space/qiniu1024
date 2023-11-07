@@ -124,4 +124,19 @@ export const collectionRouter = createTRPCRouter({
         return collection.videos;
       },
     ),
+
+  delete: protectedProcedure
+    .input(
+      z.object({
+        collectionId: z.string(),
+      }),
+    )
+    .mutation(async ({ input: { collectionId }, ctx: { db, session } }) => {
+      await db.collection.delete({
+        where: {
+          id: collectionId,
+          ownerId: session.userId,
+        },
+      });
+    }),
 });
