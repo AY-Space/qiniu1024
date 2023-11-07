@@ -13,6 +13,10 @@ export const videoRouter = createTRPCRouter({
     return createUploadParameters("video");
   }),
 
+  uploadCoverFile: publicProcedure.mutation(() => {
+    return createUploadParameters("cover");
+  }),
+
   comments: publicProcedure
     .input(
       z.object({
@@ -229,8 +233,8 @@ export const videoRouter = createTRPCRouter({
       z.object({
         title: z.string().min(1).max(100),
         description: z.string().max(1000),
-        coverFileKey: z.string(),
-        videoFileKey: z.string(),
+        coverFileKey: z.string().min(1),
+        videoFileKey: z.string().min(1),
         tags: z.array(z.string().min(1)),
         category: z.string().min(1),
       }),

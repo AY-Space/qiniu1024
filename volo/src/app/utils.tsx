@@ -97,3 +97,28 @@ export const readFileInputEventAsDataURL = (
     reader.readAsDataURL(file);
   });
 };
+
+export const dataURLtoFile = (dataurl: string, filename: string): File => {
+  // Split the data URL at the comma to get the base64 encoded data
+  const arr = dataurl.split(",");
+  if (arr.length !== 2) {
+    throw new Error("Invalid data URL");
+  }
+  // Match the content type from the Data URL
+  const mime = arr[0]!.match(/:(.*?);/)?.[1];
+  // Decode the base64 data
+  const bstr = atob(arr[1]!);
+  let n = bstr.length;
+  // Create a Uint8Array with the size of the decoded data
+  const u8arr = new Uint8Array(n);
+
+  // Populate the array with the decoded data
+  while (n--) {
+    u8arr[n] = bstr.charCodeAt(n);
+  }
+
+  // Create a blob from the Uint8Array
+  const blob = new Blob([u8arr], { type: mime });
+  // Return a new File object
+  return new File([blob], filename, { type: mime });
+};
