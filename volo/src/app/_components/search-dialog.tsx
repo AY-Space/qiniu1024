@@ -81,7 +81,7 @@ const SearchVideoPanel = ({ text }: { text: string }) => {
   );
 
   return (
-    <Stack sx={{ alignItems: "center" }}>
+    <Stack>
       {isLoading && text.length > 0 && <CircularProgress />}
       {videos != undefined && text ? (
         <VideoGrid videos={videos} />
