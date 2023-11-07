@@ -40,6 +40,7 @@ export function NavigationDrawer({ open, onClose }: NavigationDrawer) {
       recommendation: "推荐",
     }),
     latest: "最新",
+    popular: "热门",
   } as Record<Recommendation, string>;
 
   return (
