@@ -8,7 +8,7 @@ import {
 import { getVideos } from "~/server/lib/db/video";
 import { searchVideo } from "~/server/lib/search/elasticsearch";
 import { createUploadParameters } from "~/server/lib/util/kodo";
-import { type VideoPublic, type CommentPublic } from "~/types";
+import { type CommentPublic, type VideoPublic } from "~/types";
 
 export const videoRouter = createTRPCRouter({
   uploadVideoFile: publicProcedure.mutation(() => {
@@ -253,8 +253,8 @@ export const videoRouter = createTRPCRouter({
           tags,
         },
       }) => {
-        const coverUrl = `${env.STATIC_FILES_BASE_URL}/${coverFileKey}`;
-        const videoUrl = `${env.STATIC_FILES_BASE_URL}/${videoFileKey}`;
+        const coverUrl = `${env.QINIU_BASE_URL}/${coverFileKey}`;
+        const videoUrl = `${env.QINIU_BASE_URL}/${videoFileKey}`;
         const video = await ctx.db.video.create({
           data: {
             title,

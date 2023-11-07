@@ -37,7 +37,7 @@ export const env = createEnv({
     // elasticsearch
     ES_URL: z.string().url(),
 
-    STATIC_FILES_BASE_URL: z.string().url(),
+    QINIU_BASE_URL: z.string().url(),
   },
 
   /**
@@ -62,7 +62,7 @@ export const env = createEnv({
     GORSE_URL: process.env.GORSE_URL,
     REDIS_URL: process.env.REDIS_URL,
     ES_URL: process.env.ES_URL,
-    STATIC_FILES_BASE_URL: process.env.STATIC_FILES_BASE_URL,
+    QINIU_BASE_URL: process.env.QINIU_BASE_URL,
   },
   /**
    * Run `build` or `dev` with `SKIP_ENV_VALIDATION` to skip env validation. This is especially

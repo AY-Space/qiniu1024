@@ -10,6 +10,7 @@ services:
       QINIU_ACCESS_KEY: # required
       QINIU_SECRET_KEY: # required
       QINIU_BUCKET: volo # need pre-create
+      QINIU_BASE_URL: # required 七牛云 分配 的临时域名 或者是 绑定的域名
       GORSE_URL: http://recommend:8088
       REDIS_URL: redis://cache:6379/8
       ES_URL: http://es:9200

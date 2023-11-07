@@ -53,7 +53,7 @@ export const userRouter = createTRPCRouter({
     .mutation(async ({ input: { name, bio, avatarFileKey }, ctx }) => {
       const { userId } = ctx.session;
       const avatarUrl =
-        avatarFileKey && `${env.STATIC_FILES_BASE_URL}/${avatarFileKey}`;
+        avatarFileKey && `${env.QINIU_BASE_URL}/${avatarFileKey}`;
       await ctx.db.user.update({
         where: {
           id: userId,
@@ -104,7 +104,7 @@ export const userRouter = createTRPCRouter({
     .mutation(
       async ({ input: { name, email, password, bio, avatarFileKey }, ctx }) => {
         const avatarUrl =
-          avatarFileKey && `${env.STATIC_FILES_BASE_URL}/${avatarFileKey}`;
+          avatarFileKey && `${env.QINIU_BASE_URL}/${avatarFileKey}`;
         await ctx.db.user.create({
           data: {
             name,
