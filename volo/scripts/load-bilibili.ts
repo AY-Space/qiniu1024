@@ -1,6 +1,7 @@
-import { TagType } from "@prisma/client";
-import "dotenv/config";
-import { db } from "~/server/db";
+// import { TagType } from "@prisma/client";
+// import "dotenv/config";
+// import { db } from "~/server/db";
+// import { env } from "~/env.mjs";
 
 // import { db } from "~/server/db";
 
@@ -11,74 +12,74 @@ import { db } from "~/server/db";
 // import commentJson from "./comments.json";
 // import raw_video_tags from "spider/video_tags.json";
 
-const updateCategories = async () => {
-  const categories = [
-    "番剧",
-    "电影",
-    "国创",
-    "电视剧",
-    "综艺",
-    "纪录片",
-    "动画",
-    "游戏",
-    "鬼畜",
-    "音乐",
-    "舞蹈",
-    "影视",
-    "娱乐",
-    "知识",
-    "科技",
-    "资讯",
-    "美食",
-    "生活",
-    "汽车",
-    "时尚",
-    "运动",
-    "动物圈",
-    "VLOG",
-    "搞笑",
-    "单机游戏",
-    "虚拟UP主",
-    "公益",
-    "公开课",
-    "专栏",
-    "直播",
-    "活动",
-    "课堂",
-    "社区中心",
-    "新歌热榜",
-  ];
-  await db.tag.updateMany({
-    where: {
-      name: {
-        in: categories,
-      },
-    },
-    data: {
-      type: TagType.Category,
-    },
-  });
-};
+// const updateCategories = async () => {
+//   const categories = [
+//     "番剧",
+//     "电影",
+//     "国创",
+//     "电视剧",
+//     "综艺",
+//     "纪录片",
+//     "动画",
+//     "游戏",
+//     "鬼畜",
+//     "音乐",
+//     "舞蹈",
+//     "影视",
+//     "娱乐",
+//     "知识",
+//     "科技",
+//     "资讯",
+//     "美食",
+//     "生活",
+//     "汽车",
+//     "时尚",
+//     "运动",
+//     "动物圈",
+//     "VLOG",
+//     "搞笑",
+//     "单机游戏",
+//     "虚拟UP主",
+//     "公益",
+//     "公开课",
+//     "专栏",
+//     "直播",
+//     "活动",
+//     "课堂",
+//     "社区中心",
+//     "新歌热榜",
+//   ];
+//   await db.tag.updateMany({
+//     where: {
+//       name: {
+//         in: categories,
+//       },
+//     },
+//     data: {
+//       type: TagType.Category,
+//     },
+//   });
+// };
 
 const main = async () => {
-  await updateCategories();
-  await db.video.update({
-    where: {
-      id: "BV1Wj411d72A",
-    },
-    data: {
-      tags: {
-        connect: [
-          {
-            id: "1",
-          },
-          {
-            id: "2",
-          },
-        ],
-      },
-    },
-  });
+  // await updateCategories();
+  // await db.video.update({
+  //   where: {
+  //     id: "BV1Wj411d72A",
+  //   },
+  //   data: {
+  //     tags: {
+  //       connect: [
+  //         {
+  //           id: "1",
+  //         },
+  //         {
+  //           id: "2",
+  //         },
+  //       ],
+  //     },
+  //   },
+  // });
   // for (const user of usersJson) {
   //   console.log(user.id);
   //   await db.user.upsert({

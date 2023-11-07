@@ -155,7 +155,7 @@ export function EditDialog({
                 }
               />
             </FormControl>
-            {error && <Alert color="danger">{error.message}</Alert>}
+            {error && <Alert color="danger">修改失败</Alert>}
           </Stack>
         </DialogContent>
         <DialogActions>

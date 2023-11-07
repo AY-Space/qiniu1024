@@ -77,22 +77,30 @@ export const UserHome = ({ user, uploadedVideos }: UserHomeProps) => {
           <Tab variant="plain" color="neutral">
             视频
           </Tab>
-          <Tab variant="plain" color="neutral">
-            喜欢
-          </Tab>
-          <Tab variant="plain" color="neutral">
-            收藏
-          </Tab>
+          {isSelf && (
+            <Tab variant="plain" color="neutral">
+              喜欢
+            </Tab>
+          )}
+          {isSelf && (
+            <Tab variant="plain" color="neutral">
+              收藏
+            </Tab>
+          )}
         </TabList>
         <TabPanel value={0}>
           <VideoTabPanel videos={uploadedVideos} />
         </TabPanel>
-        <TabPanel value={1}>
-          <LikeTabPanel userId={user.id} />
-        </TabPanel>
-        <TabPanel value={2}>
-          <CollectionTabPanel />
-        </TabPanel>
+        {isSelf && (
+          <TabPanel value={1}>
+            <LikeTabPanel userId={user.id} />
+          </TabPanel>
+        )}
+        {isSelf && (
+          <TabPanel value={2}>
+            <CollectionTabPanel />
+          </TabPanel>
+        )}
       </Tabs>
 
       {isSelf && (

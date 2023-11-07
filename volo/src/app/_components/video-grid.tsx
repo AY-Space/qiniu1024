@@ -1,10 +1,10 @@
 "use client";
-import { Grid } from "@mui/joy";
+import { Grid, Typography } from "@mui/joy";
 import { type VideoPublic } from "~/types";
 import { VideoCard } from "./video-card";
 
 export const VideoGrid = ({ videos: videos }: { videos: VideoPublic[] }) => {
-  return (
+  return videos.length > 0 ? (
     <Grid
       container
       columns={{
@@ -25,5 +25,7 @@ export const VideoGrid = ({ videos: videos }: { videos: VideoPublic[] }) => {
         </Grid>
       ))}
     </Grid>
+  ) : (
+    <Typography textAlign="center">无数据</Typography>
   );
 };
