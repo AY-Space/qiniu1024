@@ -1,11 +1,5 @@
 "use client";
-import {
-  Box,
-  Card,
-  CardContent,
-  CardCover,
-  Typography,
-} from "@mui/joy";
+import { Box, Card, CardContent, CardCover, Typography } from "@mui/joy";
 import { Flex } from "~/app/_components/flex";
 import { formatNumber } from "~/app/utils";
 import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
@@ -14,15 +8,17 @@ import { type UserHomeProps } from "../user/[id]/_components/user-home";
 
 export const VideoCard = ({
   video,
+  height,
 }: {
   video: UserHomeProps["uploadedVideos"][0];
-  deletable?: boolean;
+  height?: string;
 }) => {
   return (
     <Link href={`/video/${video.id}`}>
       <Card
         sx={{
           aspectRatio: 4 / 3,
+          height: height,
         }}
         data-joy-color-scheme="dark"
       >
