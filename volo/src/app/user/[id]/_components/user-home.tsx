@@ -20,6 +20,7 @@ import { useSession } from "next-auth/react";
 import { Edit } from "@mui/icons-material";
 import { useState } from "react";
 import { EditDialog } from "./edit-dialog";
+import { FollowButton } from "~/app/_components/follow-button";
 
 export interface UserHomeProps {
   user: UserDetailedPublic;
@@ -58,10 +59,12 @@ export const UserHome = ({ user, uploadedVideos }: UserHomeProps) => {
           <Typography
             level="h1"
             endDecorator={
-              isSelf && (
+              isSelf ? (
                 <IconButton onClick={() => setShowEditDialog(true)}>
                   <Edit />
                 </IconButton>
+              ) : (
+                <FollowButton followUserId={user.id} />
               )
             }
           >

@@ -3,8 +3,11 @@ import { Avatar, Stack, Typography, Link as JoyLink, Chip } from "@mui/joy";
 import { Flex } from "~/app/_components/flex";
 import { type VideoDetailedPublic } from "~/types";
 import Link from "next/link";
+import { FollowButton } from "~/app/_components/follow-button";
+import { useSession } from "next-auth/react";
 
 export const VideoOverlay = ({ video }: { video: VideoDetailedPublic }) => {
+  const { data: session } = useSession();
   const categories = video.tags.filter((tag) => tag.type === "Category");
   const tags = video.tags.filter((tag) => tag.type === "Tag");
 
@@ -15,23 +18,28 @@ export const VideoOverlay = ({ video }: { video: VideoDetailedPublic }) => {
           <Avatar src={video.author.avatarUrl ?? undefined} />
         </Link>
         <Stack>
-          <Link
-            href={`/user/${video.author.id}`}
-            style={{
-              color: "var(--joy-palette-text-primary)",
-            }}
-          >
-            <JoyLink
-              level="title-md"
-              color="neutral"
-              sx={{
+          <Flex alignItems="center" gap={1}>
+            <Link
+              href={`/user/${video.author.id}`}
+              style={{
                 color: "var(--joy-palette-text-primary)",
               }}
-              component="span"
             >
-              {video.author.name}
-            </JoyLink>
-          </Link>
+              <JoyLink
+                level="title-md"
+                color="neutral"
+                sx={{
+                  color: "var(--joy-palette-text-primary)",
+                }}
+                component="span"
+              >
+                {video.author.name}
+              </JoyLink>
+            </Link>
+            {session?.userId != video.author.id && (
+              <FollowButton followUserId={video.author.id} />
+            )}
+          </Flex>
           <Typography level="body-xs">
             {video.createdAt.toLocaleDateString()}
           </Typography>
