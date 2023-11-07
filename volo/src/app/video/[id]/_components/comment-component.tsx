@@ -60,14 +60,15 @@ export const CommentComponent = ({
         </Flex>
         <Typography>{comment.text}</Typography>
         {comment.imgUrl && (
-          <Box width={160} height={160} position={"relative"}>
-            <Image
-              src={comment.imgUrl}
-              alt={comment.imgUrl}
-              fill
-              style={{ objectFit: "cover" }}
-            />
-          </Box>
+          <Box
+            width={160}
+            height={160}
+            position={"relative"}
+            sx={{
+              background: `url(${comment.imgUrl})`,
+              backgroundSize: "cover",
+            }}
+          />
         )}
         <Flex spacing={1}>
           <IconButton
