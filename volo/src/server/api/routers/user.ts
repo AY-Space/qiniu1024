@@ -131,25 +131,27 @@ export const userRouter = createTRPCRouter({
     .input(
       z.object({
         userId: z.string(),
-        operation: z.enum(["connect", "disconnect"]),
+        follow: z.boolean(),
       }),
     )
-    .mutation(async ({ input: { userId, operation }, ctx }) => {
-      await ctx.db.user.update({
-        where: {
-          id: ctx.session.userId,
-        },
-        data: {
-          usersFollowed: {
-            [operation]: {
-              followingId_followerId: {
-                followingId: userId,
-                followerId: ctx.session.userId,
-              },
+    .mutation(async ({ input: { userId, follow }, ctx }) => {
+      if (follow) {
+        await ctx.db.follow.create({
+          data: {
+            followerId: ctx.session.userId,
+            followingId: userId,
+          },
+        });
+      } else {
+        await ctx.db.follow.delete({
+          where: {
+            followingId_followerId: {
+              followerId: ctx.session.userId,
+              followingId: userId,
             },
           },
-        },
-      });
+        });
+      }
     }),
 
   hasFollowed: protectedProcedure
