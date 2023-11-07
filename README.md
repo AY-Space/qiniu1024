@@ -20,12 +20,35 @@
 
 _测试过的环境：OrbStack on M1 Mac_
 
+复制一份 volo/.env.example
+  
+```shell  
+  $ cp volo/.env.example volo/.env
+```
+
 复制一份 compose.yaml：
 
 ```shell
 $ cp example.compose.yaml compose.yaml
 ```
+根据配置填写 .env 文件。 **!!! 必须保证docker容器中有 .env !!!**
+```
+DATABASE_URL="postgresql://volo:volo@db:5432/volo"
 
+GORSE_URL="http://recommend:8088"
+
+REDIS_URL="redis://cache:6379"
+
+ES_URL="http://es:9200"
+
+NEXTAUTH_SECRET="12345abcde"
+NEXTAUTH_URL="http://localhost:3000"
+
+QINIU_ACCESS_KEY="123"
+QINIU_SECRET_KEY="123"
+QINIU_BUCKET="volo" #要提前创建
+QINIU_BASE_URL="example.com" # 七牛云 分配 的临时域名 或者是 绑定的域名
+```
 修改 compose.yaml 中的环境变量
 
 ```yaml
