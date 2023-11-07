@@ -18,11 +18,39 @@ export interface User {
   name: string;
 }
 
+export const createIndexes = async () => {
+  await es.indices.create({
+    index: ESIndex.VIDEO,
+    body: {
+      mappings: {
+        properties: {
+          id: { type: "keyword" },
+          title: { type: "text" },
+          description: { type: "text" },
+          tags: { type: "keyword" },
+        },
+      },
+    },
+  });
+  await es.indices.create({
+    index: ESIndex.USER,
+    body: {
+      mappings: {
+        properties: {
+          id: { type: "keyword" },
+          name: { type: "text" },
+        },
+      },
+    },
+  });
+};
+
 export const insertVideo = async (item: Video) => {
   const { result } = await es.index({
     index: ESIndex.VIDEO,
     id: item.id,
     document: {
+      id: item.id,
       title: item.title,
       description: item.description,
       tags: item.tags,
@@ -38,6 +66,7 @@ export const insertVideos = async (items: Video[]) => {
   const body = items.flatMap((item) => [
     { index: { _index: ESIndex.VIDEO, _id: item.id } },
     {
+      id: item.id,
       title: item.title,
       description: item.description,
       tags: item.tags,
@@ -56,6 +85,7 @@ export const insertUser = async (item: User) => {
     index: ESIndex.USER,
     id: item.id,
     document: {
+      id: item.id,
       name: item.name,
     },
     refresh: "wait_for",
@@ -69,6 +99,7 @@ export const insertUsers = async (items: User[]) => {
   const body = items.flatMap((item) => [
     { index: { _index: ESIndex.USER, _id: item.id } },
     {
+      id: item.id,
       name: item.name,
     },
   ]);

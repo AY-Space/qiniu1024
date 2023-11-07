@@ -6,9 +6,8 @@ import {
   insertVideos as gorseInsertVideos,
 } from "~/server/lib/gorse/base";
 import {
-  insertUser as esInsertUser,
+  createIndexes,
   insertUsers as esInsertUsers,
-  insertVideo as esInsertVideo,
   insertVideos as esInsertVideos,
 } from "../src/server/lib/search/elasticsearch";
 
@@ -18,12 +17,12 @@ async function sleep(ms: number): Promise<void> {
 
 const pgInit = async (): Promise<boolean> => {
   if ((await db.video.count()) > 0) {
-    console.log("pg data already init");
+    shell.echo("pg data already init");
     return false;
   }
 
   shell.exec(
-    "psql postgresql://volo:volo@db:5432/postgres?sslmode=disable -f init.sql'",
+    'psql "postgresql://volo:volo@db:5432/volo?sslmode=disable" -f init.sql',
   );
   return true;
 };
@@ -41,7 +40,7 @@ const gorseInit = async () => {
     },
   });
   if (!users) {
-    console.error("load user error");
+    shell.echo("load user error: null| undefined users");
     return;
   }
 
@@ -69,7 +68,7 @@ const gorseInit = async () => {
     },
   });
   if (!videos) {
-    console.error("load video error");
+    shell.echo("load video error: null| undefined videos");
     return;
   }
 
@@ -86,6 +85,8 @@ const gorseInit = async () => {
 };
 
 const esInit = async () => {
+  await createIndexes();
+
   const videos = await db.video
     .findMany({
       select: {
@@ -106,11 +107,9 @@ const esInit = async () => {
 
   const video = videos.shift();
   if (!video) {
-    console.log("video is null");
+    shell.echo("video is null");
     return;
   }
-  await esInsertVideo(video); // should insert one first to create index
-  await esInsertVideos(videos);
 
   const users = await db.user
     .findMany({
@@ -128,26 +127,32 @@ const esInit = async () => {
 
   const user = users.shift();
   if (!user) {
-    console.log("user is null");
+    shell.echo("user is null");
     return;
   }
-  await esInsertUser(user); // should insert one first to create index
+
+  await esInsertVideos(videos);
   await esInsertUsers(users.slice(0, 100));
 };
 
 const main = async () => {
-  const needInit = await pgInit();
-  if (!needInit) {
-    console.log("pg data already init");
-    return;
+  try {
+    const needInit = await pgInit();
+    if (!needInit) {
+      shell.echo("pg data already init");
+      return;
+    }
+    shell.echo("pg data init done");
+
+    await gorseInit();
+    shell.echo("gorse data init done");
+
+    await esInit();
+    shell.echo("es data init done");
+  } catch (e) {
+    shell.echo(String(e));
+    shell.exit(1);
   }
-  console.log("pg data init done");
-
-  await gorseInit();
-  console.log("gorse data init done");
-
-  await esInit();
-  console.log("es data init done");
 };
 
 void main();
