@@ -1,14 +1,16 @@
+"use client";
+
 import { Card, Container, IconButton, List, Stack, Typography } from "@mui/joy";
-import { db } from "~/server/db";
 import { VideoCard } from "../_components/video-card";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import { Delete } from "@mui/icons-material";
 import { Flex } from "../_components/flex";
+import { type VideoPublic } from "~/types";
 dayjs.extend(relativeTime);
 
-export default async function HistoryPage() {
-  const videos = await db.video.findMany({ take: 10 });
+export default function HistoryPage() {
+  const videos: VideoPublic[] = [];
 
   return (
     <Container>
