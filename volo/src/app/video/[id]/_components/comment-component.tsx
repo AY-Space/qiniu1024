@@ -8,7 +8,6 @@ import {
   Typography,
   Link as JoyLink,
 } from "@mui/joy";
-import Image from "next/image";
 import dayjs from "dayjs";
 import { Delete, ThumbDown, ThumbUp } from "@mui/icons-material";
 import { type CommentPublic } from "../../../../types";
